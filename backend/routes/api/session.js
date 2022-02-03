@@ -15,7 +15,7 @@ router.post('/', asyncHandler(async(req, res, next) => {
         const err = new Error('Login failed');
         err.status = 401;
         err.title = 'Login failed';
-        err.status = ['The provided credentials were invalid.'];
+        err.errors = ['The provided credentials were invalid.'];
         return next(err);
     }
 
@@ -25,5 +25,10 @@ router.post('/', asyncHandler(async(req, res, next) => {
         user
     });
 }));
+
+router.delete('/', (req, res) => {
+    res.clearCookie('token');
+    return res.json({ message: 'success' });
+});
 
 module.exports = router;
