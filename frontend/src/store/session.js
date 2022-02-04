@@ -27,9 +27,17 @@ export const login = (user) => async (dispatch) => {
     });
 
     const data = await response.json();
-    dispatch(setUser(data.user));
-    return data.user;
+    const currentUser = data.user;
+    dispatch(setUser(currentUser));
+    return currentUser;
 };
+
+export const restoreUser = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session');
+    const data = await response.json();
+    const user = data.user;
+    dispatch(setUser(user));
+}
 
 const initialState = { user: null };
 

@@ -11,6 +11,10 @@ const LoginFormPage = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
+    if (sessionUser) return (
+        <Redirect to='/' />
+    );
+
     const handleSubmit = async(e) => {
         e.preventDefault();
         setErrors([]);
@@ -22,14 +26,11 @@ const LoginFormPage = () => {
             let currentUser = await dispatch(login(user));
             console.log('currentUser', currentUser);
         } catch (err) {
+            // console.log(err);
             let resBody = await err.json();
             setErrors(resBody.errors);
         }
     }
-
-    if (sessionUser) return (
-        <Redirect to='/' />
-    );
 
     return (
         <div id='login-page'>
