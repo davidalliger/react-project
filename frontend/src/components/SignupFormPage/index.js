@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../store/session';
+import { signup } from '../../store/session';
 import { Redirect } from 'react-router-dom';
-import './LoginForm.css';
 
-const LoginFormPage = () => {
-    const [credential, setCredential] = useState('');
+const SignupFormPage = () => {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
@@ -19,11 +19,12 @@ const LoginFormPage = () => {
         e.preventDefault();
         setErrors([]);
         const user = {
-            credential,
+            username,
+            email,
             password
         };
         try {
-            let currentUser = await dispatch(login(user));
+            let currentUser = await dispatch(signup(user));
             console.log('currentUser', currentUser);
         } catch (err) {
             // console.log(err);
@@ -48,15 +49,29 @@ const LoginFormPage = () => {
                 onSubmit={handleSubmit}
             >
                 <div className='auth-form-field'>
-                    <label htmlFor='credential'>
-                        Username or Email Address:
+                    <label htmlFor='username'>
+                        Username:
                     </label>
                     <input
                         type='text'
-                        name='credential'
-                        id='credential'
-                        onChange={e => setCredential(e.target.value)}
-                        value={credential}
+                        name='username'
+                        id='username'
+                        onChange={e => setUsername(e.target.value)}
+                        value={username}
+                        className='auth-form-input'
+                    >
+                    </input>
+                </div>
+                <div className='auth-form-field'>
+                    <label htmlFor='email'>
+                        Email:
+                    </label>
+                    <input
+                        type='text'
+                        name='email'
+                        id='email'
+                        onChange={e => setEmail(e.target.value)}
+                        value={email}
                         className='auth-form-input'
                     >
                     </input>
@@ -76,11 +91,11 @@ const LoginFormPage = () => {
                     </input>
                 </div>
                 <button className='auth-button'>
-                    Log In
+                    Sign Up
                 </button>
             </form>
         </div>
     )
-}
+};
 
-export default LoginFormPage;
+export default SignupFormPage;
