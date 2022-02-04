@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/session';
 import { Redirect } from 'react-router-dom';
-import './LoginForm.css';
+// import './LoginForm.css';
 
 const LoginFormPage = () => {
     const [credential, setCredential] = useState('');

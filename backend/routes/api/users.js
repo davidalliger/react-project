@@ -31,6 +31,13 @@ const validateSignup = [
         .if(check('password').exists({checkFalsy: true}))
         .isLength({ min: 6 })
         .withMessage('Password must be at least 6 characters long.'),
+    check('confirmPassword')
+        .if(check('password').exists({checkFalsy: true}).isLength({ min: 6 }))
+        .exists({ checkFalsy: true })
+        .withMessage('Please confirm password.')
+        .if(check('confirmPassword').exists({checkFalsy: true}))
+        .matches('password')
+        .withMessage('Password and Confirm Password fields must match.'),
     handleValidationErrors
 ];
 
