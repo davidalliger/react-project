@@ -36,7 +36,7 @@ const validateSignup = [
         .exists({ checkFalsy: true })
         .withMessage('Please confirm password.')
         .if(check('confirmPassword').exists({checkFalsy: true}))
-        .matches('password')
+        .custom((value, { req }) => value === req.body.password)
         .withMessage('Password and Confirm Password fields must match.'),
     handleValidationErrors
 ];
