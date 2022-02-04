@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/session';
 import { Redirect } from 'react-router-dom';
+import './LoginForm.css';
 
 const LoginFormPage = () => {
     const [credential, setCredential] = useState('');
@@ -31,44 +32,53 @@ const LoginFormPage = () => {
     );
 
     return (
-        <>
-            <ul>
-                {errors.map((error, index) => (
-                        <li key={index}>
-                            {error}
-                        </li>
-                    ))}
-            </ul>
+        <div id='login-page'>
+            <div id={errors.length ? 'login-errors-div' : 'login-errors-hidden'}>
+                <ul id='login-errors-ul'>
+                    {errors.map((error, index) => (
+                            <li key={index}>
+                                {error}
+                            </li>
+                        ))}
+                </ul>
+            </div>
             <form
+            id='login-form'
                 onSubmit={handleSubmit}
             >
-                <label htmlFor='credential'>
-                    Username or Email Address:
+                <div className='login-form-field'>
+                    <label htmlFor='credential'>
+                        Username or Email Address:
+                    </label>
                     <input
                         type='text'
                         name='credential'
                         id='credential'
                         onChange={e => setCredential(e.target.value)}
                         value={credential}
+                        className='login-form-input'
                     >
                     </input>
-                </label>
-                <label htmlFor='password'>
-                    Password:
+                </div>
+                <div className='login-form-field'>
+                    <label htmlFor='password'>
+                        Password:
+                    </label>
                     <input
                         type='password'
                         name='password'
                         id='password'
                         onChange={e => setPassword(e.target.value)}
                         value={password}
+                        className='login-form-input'
                     >
                     </input>
-                </label>
-                <button>
+                </div>
+                <button id='login-button'>
                     Log In
                 </button>
             </form>
-        </>
+        </div>
     )
 }
 
