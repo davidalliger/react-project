@@ -1,7 +1,7 @@
 /* TODO Add site wide styles */
 html, body, #root {
     height: 100%;
-
+    margin: 0;
 }
 
 .form-page {
@@ -21,12 +21,9 @@ html, body, #root {
     color: red;
     margin: 0 0 10px;
     border-radius: 5px;
-    /* border: 2px dashed red; */
     width: 300px;
     padding: 5px 20px;
     font-size: 15px;
-    /* box-shadow: 5px 5px 15px rgba(0, 0, 0, .25); */
-    /* box-sizing: content-box; */
 }
 
 .errors-ul {
@@ -43,11 +40,10 @@ html, body, #root {
     align-items: center;
     justify-content: center;
     width: 300px;
-    margin: 0 0 100px;
+    margin: 0;
     padding: 20px 20px 10px;
     border-radius: 5px;
     background-color: aliceblue;
-    /* box-shadow: 5px 5px 15px rgba(0, 0, 0, .25); */
 }
 
 .auth-form-field {

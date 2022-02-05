@@ -11,6 +11,7 @@ const setUser = (user) => {
 };
 
 const removeUser = () => {
+    console.log('Inside removeUser.')
     return {
         type: REMOVE_USER
     };
@@ -50,11 +51,22 @@ export const login = (user) => async (dispatch) => {
     return currentUser;
 };
 
+export const logout = () => async (dispatch) => {
+    console.log('Inside logout');
+    const response = await csrfFetch('/api/session', {
+        method: 'DELETE'
+    });
+    dispatch(removeUser());
+    console.log('User should be null.')
+    return response;
+};
+
 export const restoreUser = () => async (dispatch) => {
     const response = await csrfFetch('/api/session');
     const data = await response.json();
     const user = data.user;
     dispatch(setUser(user));
+    return response;
 }
 
 const initialState = { user: null };

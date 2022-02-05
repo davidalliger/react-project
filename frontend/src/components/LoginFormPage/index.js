@@ -30,6 +30,7 @@ const LoginFormPage = () => {
             let resBody = await err.json();
             setErrors(resBody.errors);
         }
+        setPassword('');
     }
 
     return (

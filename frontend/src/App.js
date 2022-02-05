@@ -1,25 +1,35 @@
 import { Route, Switch } from 'react-router-dom';
 import SignupFormPage from './components/SignupFormPage';
 import LoginFormPage from './components/LoginFormPage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { restoreUser } from './store/session'
+import { restoreUser } from './store/session';
+import Navigation from './components/Navigation';
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(restoreUser());
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(async() => {
+    await dispatch(restoreUser());
+    setIsLoaded(true);
   }, [dispatch]);
 
   return (
-    <Switch>
-      <Route path='/signup'>
-        <SignupFormPage />
-      </Route>
-      <Route path='/login'>
-        <LoginFormPage />
-      </Route>
-    </Switch>
+    <>
+      {isLoaded && (
+        <>
+          <Navigation isLoaded={isLoaded} />
+          <Switch>
+            <Route path='/signup'>
+              <SignupFormPage />
+            </Route>
+            <Route path='/login'>
+              <LoginFormPage />
+            </Route>
+          </Switch>
+        </>
+      )}
+    </>
   );
 }
 

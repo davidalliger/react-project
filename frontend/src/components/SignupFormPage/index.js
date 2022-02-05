@@ -36,6 +36,8 @@ const SignupFormPage = () => {
             let resBody = await err.json();
             setErrors(resBody.errors);
         }
+        setPassword('');
+        setConfirmPassword('');
     };
 
     return (
