@@ -1,0 +1,5 @@
+Clone: AirBnB
+My Project: ScareBnB
+Project Github Link: https://github.com/davidalliger/react-project
+Scorecard Link:
+DB Schema Link: https://dbdiagram.io/d/6200391585022f4ee5488a5b

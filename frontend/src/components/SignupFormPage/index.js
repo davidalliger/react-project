@@ -28,11 +28,9 @@ const SignupFormPage = () => {
             confirmPassword
         };
         try {
-            let currentUser = await dispatch(signup(user));
-            console.log('currentUser', currentUser);
+            await dispatch(signup(user));
             return;
         } catch (err) {
-            // console.log(err);
             let resBody = await err.json();
             setErrors(resBody.errors);
         }

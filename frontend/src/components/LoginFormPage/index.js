@@ -23,10 +23,8 @@ const LoginFormPage = () => {
             password
         };
         try {
-            let currentUser = await dispatch(login(user));
-            console.log('currentUser', currentUser);
+            await dispatch(login(user));
         } catch (err) {
-            // console.log(err);
             let resBody = await err.json();
             setErrors(resBody.errors);
         }

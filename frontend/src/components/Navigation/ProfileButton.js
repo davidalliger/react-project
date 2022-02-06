@@ -12,9 +12,7 @@ const ProfileButton = ({user}) => {
     };
 
     const logoutUser = async() => {
-        console.log('In logoutUser');
         const response = await dispatch(logout());
-        console.log('User should be logged out.');
         return response;
     }
 
