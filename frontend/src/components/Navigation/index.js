@@ -10,30 +10,23 @@ const Navigation = ({isLoaded}) => {
         <>
             {isLoaded && (
                 <nav id='nav-bar'>
-                    <ul id='nav-ul'>
-                        <li className='nav-li'>
-                            <NavLink exact to='/' id='nav-title'>
-                                <p>
+                    <div id='nav-container'>
+                        <div id='nav-title-div'>
+                            <NavLink exact to='/' id='nav-title-link'>
+                                    <img src='/images/logo-white.png' id='nav-logo' />
                                     scarebnb
-                                </p>
                             </NavLink>
-                        </li>
-                        <li className='nav-li'>
-                            <p>
-                                Find a new haunt
-                            </p>
-                        </li>
-                        <div id='nav-user-div'>
-                            <li className='nav-li'>
-                                <p>
-                                    Share your haunt
-                                </p>
-                            </li>
-                            <li className='nav-li'>
-                                <ProfileButton sessionUser={sessionUser}/>
-                            </li>
                         </div>
-                    </ul>
+                        <div id='nav-middle-div'>
+                                Find a new haunt
+                        </div>
+                        <div id='nav-user-div'>
+                            Share your haunt
+                            <div id='nav-user-menu'>
+                                <ProfileButton sessionUser={sessionUser}/>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
             )}
         </>
