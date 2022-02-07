@@ -39,9 +39,9 @@ const ProfileButton = ({ sessionUser }) => {
                 <p>
                     Trips
                 </p>
-                <p>
+                <button id='nav-share-haunt'>
                     Share your haunt
-                </p>
+                </button>
                 <button className='menu-button'
                     onClick={logoutUser}
                 >
@@ -62,21 +62,22 @@ const ProfileButton = ({ sessionUser }) => {
                             Sign Up
                         </button>
                 </NavLink>
-                <p>
+                <button>
                     Share your haunt
-                </p>
+                </button>
             </div>
         )
     }
 
     return (
         <>
-            <div
+            <button
                 id='profile-button'
                 onClick={openMenu}
             >
-                <i class="fas fa-user-circle"></i>
-            </div>
+                <img src='/images/hamburger.png' id='nav-hamburger' />
+                <img src='/images/user-icon-lavender.png' id='nav-user-icon' />
+            </button>
             {showMenu && menu}
         </>
     )
