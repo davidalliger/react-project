@@ -13,18 +13,20 @@ const Navigation = ({isLoaded}) => {
                     <div id='nav-container'>
                         <div id='nav-title-div'>
                             <NavLink exact to='/' id='nav-title-link'>
-                                    <img src='/images/logo-white.png' id='nav-logo' />
+                                    <img src='/images/logo-white-20.png' id='nav-logo' />
                                     scarebnb
                             </NavLink>
                         </div>
                         <div id='nav-middle-div'>
+                            <button id='nav-find-haunt'>
                                 Find a new haunt
+                            </button>
                         </div>
                         <div id='nav-user-div'>
-                            Share your haunt
-                            <div id='nav-user-menu'>
-                                <ProfileButton sessionUser={sessionUser}/>
-                            </div>
+                            <button id='nav-share-haunt'>
+                                Share your haunt
+                            </button>
+                            <ProfileButton sessionUser={sessionUser}/>
                         </div>
                     </div>
                 </nav>

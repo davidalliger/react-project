@@ -1,5 +1,6 @@
 #nav-bar {
-    background-color: #5f438d;
+    background-color: #6f50a0;
+    /* background-color: #ad76c7; */
     padding: 0 90px;
     position: fixed;
     width: 100%;
@@ -73,6 +74,7 @@
     align-items: center;
 }
 
+
 #menu {
     position: absolute;
     top: 70px;
@@ -89,8 +91,66 @@
 
 #profile-button {
     color: white;
-    margin: 5px;
     font-size: 35px;
+    max-height: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #6f50a0;
+    border-radius: 24px;
+    padding: 7px 7px 7px 14px;
+    margin: 0;
+    width: fit-content;
+}
+
+#profile-button:hover {
+    cursor: pointer;
+    box-shadow: 0px 5px 5px ;
+}
+
+#nav-share-haunt {
+    padding: 7px 14px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    border: 1px solid #6f50a0;
+    height: 48px;
+    border-radius: 24px;
+    margin-right: 10px;
+    background-color: transparent;
+}
+
+#nav-share-haunt:hover {
+    background-color: #ad76c7;
+    cursor: pointer;
+}
+
+#nav-find-haunt {
+    padding: 7px 14px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    border: 1px solid #6f50a0;
+    height: 48px;
+    border-radius: 24px;
+    margin-right: 10px;
+    background-color: transparent;
+}
+
+#nav-find-haunt:hover {
+    background-color: #ad76c7;
+    cursor: pointer;
+}
+
+#nav-hamburger {
+    width: 15px;
+    margin-right: 12px;
+}
+
+#nav-user-icon {
+    height: 35px;
+    margin: 0;
 }
 
 .menu-button {
