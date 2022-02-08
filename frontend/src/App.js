@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { restoreUser } from './store/session';
 import Navigation from './components/Navigation';
 import SplashPage from './components/SplashPage';
+import HauntsPage from './components/HauntsPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route path='/login'>
               <LoginFormPage />
+            </Route>
+            <Route path='/haunts'>
+              <HauntsPage />
             </Route>
           </Switch>
         </>

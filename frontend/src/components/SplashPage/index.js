@@ -20,6 +20,7 @@ const SplashPage = () => {
                     Image by <a target='_blank' className='credit-text-link' href="https://pixabay.com/users/tama66-1032521/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3237114">Peter H</a> from <a target='_blank' className='credit-text-link' href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3237114">Pixabay</a>
                 </p>
             </div>
+            <div id='splash-page-background'></div>
         </>
     );
 }
