@@ -10,7 +10,7 @@ const SplashPage = () => {
                         Make your next trip spooktacular!
                     </h1>
                     <button id='splash-image-button'>
-                        Find a new haunt
+                        Search for haunts
                     </button>
                 </div>
                 <img src='/images/hauntedhouse.jpg' id='splash-image' />

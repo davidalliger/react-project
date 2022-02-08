@@ -4,7 +4,7 @@ html, body, #root {
 }
 
 #splash-image-container {
-    padding: 100px 90px 10px;
+    padding: 90px 80px 10px;
     width: 100%;
     box-sizing: border-box;
     display: flex;
@@ -27,14 +27,14 @@ html, body, #root {
     position: absolute;
     background-color: black;
     opacity: 25%;
-    padding: 100px 90px 10px;
+    padding: 90px 80px 10px;
     top: 0;
 }
 
 #splash-image-content {
     color: white;
     font-family: 'Roboto', sans-serif;
-    font-size: 30px;
+    font-size: 28px;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@ html, body, #root {
     background-color: white;
     border: none;
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: #6f50a0;
     padding: 20px 30px;

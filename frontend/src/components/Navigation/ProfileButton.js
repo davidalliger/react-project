@@ -42,7 +42,7 @@ const ProfileButton = ({ sessionUser }) => {
                     Spookings
                 </div>
                 <div className='menu-div'>
-                    Share your haunt
+                    Host a ghost
                 </div>
                 <div className='menu-div'
                     onClick={logoutUser}
@@ -65,7 +65,7 @@ const ProfileButton = ({ sessionUser }) => {
                         </div>
                 </NavLink>
                 <div className='menu-div'>
-                    Share your spooky spot
+                    Host a ghost
                 </div>
             </div>
         )

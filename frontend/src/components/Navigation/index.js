@@ -19,12 +19,12 @@ const Navigation = ({isLoaded}) => {
                         </div>
                         <div id='nav-middle-div'>
                             <button id='nav-find-haunt'>
-                                Find a new haunt
+                                Search for haunts
                             </button>
                         </div>
                         <div id='nav-user-div'>
                             <button id='nav-share-haunt'>
-                                Share your haunt
+                                Host a ghost
                             </button>
                             <ProfileButton sessionUser={sessionUser}/>
                         </div>
