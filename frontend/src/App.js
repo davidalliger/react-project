@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { restoreUser } from './store/session';
 import Navigation from './components/Navigation';
+import SplashPage from './components/SplashPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,6 +21,9 @@ function App() {
         <>
           <Navigation isLoaded={isLoaded} />
           <Switch>
+            <Route exact path='/'>
+              <SplashPage />
+            </Route>
             <Route path='/signup'>
               <SignupFormPage />
             </Route>

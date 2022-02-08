@@ -10,6 +10,7 @@ const ProfileButton = ({ sessionUser }) => {
 
     const openMenu = e => {
         if (showMenu) return;
+        e.currentTarget.classList.add('profile-button-active');
         setShowMenu(true);
     };
 
@@ -21,6 +22,7 @@ const ProfileButton = ({ sessionUser }) => {
     useEffect(() => {
         const closeMenu = () => {
             setShowMenu(false);
+            document.getElementById('profile-button').classList.remove('profile-button-active');
         }
         if (showMenu) {
             document.addEventListener('click', closeMenu);
@@ -52,19 +54,19 @@ const ProfileButton = ({ sessionUser }) => {
     } else {
         menu = (
             <div id='menu'>
-                <NavLink to='/login'>
-                        <button className='nav-button'>
+                <NavLink to='/login' className='menu-link'>
+                        <div className='menu-div'>
                             Log In
-                        </button>
+                        </div>
                 </NavLink>
-                <NavLink to='/signup'>
-                        <button className='nav-button'>
+                <NavLink to='/signup' className='menu-link'>
+                        <div className='menu-div'>
                             Sign Up
-                        </button>
+                        </div>
                 </NavLink>
-                <button>
+                <div className='menu-div'>
                     Share your haunt
-                </button>
+                </div>
             </div>
         )
     }
