@@ -35,20 +35,20 @@ const ProfileButton = ({ sessionUser }) => {
     if (sessionUser) {
         menu = (
             <div id='menu'>
-                <p>
+                <div className='menu-div'>
                     {sessionUser.username}
-                </p>
-                <p>
-                    Trips
-                </p>
-                <button id='nav-share-haunt'>
+                </div>
+                <div className='menu-div'>
+                    Spookings
+                </div>
+                <div className='menu-div'>
                     Share your haunt
-                </button>
-                <button className='menu-button'
+                </div>
+                <div className='menu-div'
                     onClick={logoutUser}
                 >
                     Log Out
-                </button>
+                </div>
             </div>
         )
     } else {
@@ -65,7 +65,7 @@ const ProfileButton = ({ sessionUser }) => {
                         </div>
                 </NavLink>
                 <div className='menu-div'>
-                    Share your haunt
+                    Share your spooky spot
                 </div>
             </div>
         )
@@ -78,7 +78,12 @@ const ProfileButton = ({ sessionUser }) => {
                 onClick={openMenu}
             >
                 <img src='/images/hamburger.png' id='nav-hamburger' />
-                <img src='/images/user-icon-lavender.png' id='nav-user-icon' />
+                {!sessionUser && (
+                    <img src='/images/user-icon-gray.png' id='nav-user-icon' />
+                )}
+                {sessionUser && (
+                    <img src='/images/user-icon-lavender.png' id='nav-user-icon' />
+                )}
             </button>
             {showMenu && menu}
         </>
