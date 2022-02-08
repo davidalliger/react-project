@@ -1,6 +1,9 @@
-html, body, #root {
+#splash-page-background {
     background-color: black;
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    position: fixed;
 }
 
 #splash-image-container {
@@ -11,6 +14,7 @@ html, body, #root {
     justify-content: center;
     align-items: center;
     position: relative;
+    background-color: black;
 }
 
 #splash-image {
@@ -68,6 +72,7 @@ html, body, #root {
     justify-content: center;
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
+    background-color: black;
 }
 
 .credit-text-link {
