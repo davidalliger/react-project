@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -5,11 +6,23 @@ import './Navigation.css';
 
 const Navigation = ({isLoaded}) => {
     const sessionUser = useSelector(state => state.session.user)
+    // const [narrow, setNarrow] = useState(false);
+
+    // useEffect(() => {
+    //     const navBar = document.getElementById('nav-bar');
+    //     if (window.location.pathname === `/haunts`) {
+    //         navBar.classList.remove('normal');
+    //         navBar.classList.add('narrow');
+    //     } else {
+    //         navBar.classList.remove('narrow');
+    //         navBar.classList.add('normal');
+    //     }
+    // }, []);
 
     return (
         <>
             {isLoaded && (
-                <nav id='nav-bar'>
+                <nav id='nav-bar' className='normal'>
                     <div id='nav-container'>
                         <div id='nav-title-div'>
                             <NavLink exact to='/' id='nav-title-link'>

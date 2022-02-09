@@ -1,0 +1,52 @@
+#haunt-detail-container {
+    margin: 104px 185px;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+#haunt-detail-container h1 {
+    font-size: 26px;
+    margin: 0;
+}
+
+#haunt-detail-info-bar {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(83, 83, 83);
+    padding-top: 5px;
+}
+
+/* #haunt-image-grid {
+    display: grid;
+    height:
+} */
+
+.haunt-detail-image-container {
+    position: relative;
+    width: 100%;
+    display: grid;
+    overflow: hidden;
+    box-sizing: content-box;
+    border-radius: 12px;
+    /* font-size: 0; */
+    background-color: red;
+}
+
+.haunt-detail-image-container::before {
+    /* line-height: 100%; */
+    padding-top: 50%;
+    content: '';
+    box-sizing: content-box;
+    display: block;
+    padding-top: 100%;
+    /* border: 1px solid red; */
+    /* display: block; */
+}
+
+.haunt-detail-image-container img {
+    background-color: red;
+    box-sizing: content-box;
+    display: block;
+    position: absolute;
+    height: 100%;
+}

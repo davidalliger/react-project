@@ -15,9 +15,9 @@ export const getHaunts = () => async(dispatch) => {
         const hauntsList = await response.json();
         dispatch(loadHaunts(hauntsList));
     }
-};
+}
 
-
+const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB - hauntA);
 
 const hauntsReducer = (state = {}, action) => {
     let newState;
@@ -29,7 +29,8 @@ const hauntsReducer = (state = {}, action) => {
             });
             newState = {
                 ...allHaunts,
-                ...state
+                ...state,
+                list: sortHaunts(action.hauntsList)
             };
             return newState;
         default:

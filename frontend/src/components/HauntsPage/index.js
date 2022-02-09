@@ -1,16 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHaunts } from '../../store/haunts';
+import { Link } from 'react-router-dom';
 import './HauntsPage.css';
 
 const HauntsPage = () => {
-    const dispatch = useDispatch();
-    const hauntsList = useSelector(state => state.haunts);
-    const haunts = Object.values(hauntsList);
-
-    useEffect(async()=>{
-        await dispatch(getHaunts());
-    }, [dispatch])
+    const haunts = useSelector(state => state.haunts.list);
+    console.log(haunts);
 
     const defaultUrl = 'images/hauntedhouse.jpg';
 
@@ -22,15 +18,17 @@ const HauntsPage = () => {
                 </div>
             )}
             {haunts.map(haunt => (
-                <div key={haunt.id} className='haunt-div'>
-                    <div className='haunt-image-container'>
-                        <img src={haunt.Images[0].url || defaultUrl} className='haunt-image' />
+                <Link to={`/haunts/${haunt.id}`} className='haunt-link' key={haunt.id}>
+                    <div className='haunt-div'>
+                        <div className='haunt-image-container'>
+                            <img src={haunt.Images[0].url || defaultUrl} className='haunt-image' />
+                        </div>
+                        <div className='haunt-label-div'>
+                            <p className='haunt-name'>{haunt.city}, {haunt.state}</p>
+                            <p className='haunt-rate'>${Math.round(haunt.rate)} / night</p>
+                        </div>
                     </div>
-                    <div className='haunt-label-div'>
-                        <p className='haunt-name'>{haunt.city}, {haunt.state}</p>
-                        <p className='haunt-rate'>${Math.round(haunt.rate)} / night</p>
-                    </div>
-                </div>
+                </Link>
             ))}
         </div>
     )

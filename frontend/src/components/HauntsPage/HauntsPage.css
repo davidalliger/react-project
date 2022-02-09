@@ -10,7 +10,7 @@
 
 .haunt-div:hover {
     cursor: pointer;
-    box-sizing: border-box;
+
 }
 
 /* .haunt-image-div {
@@ -61,13 +61,13 @@
 }
 
 .haunt-image-container::before {
-    line-height: 100%;
+    /* line-height: 100%; */
     content: '';
-    box-sizing: content-box;
+    /* box-sizing: content-box; */
     display: block;
     padding-top: 100%;
     /* border: 1px solid red; */
-    display: block;
+    /* display: block; */
 }
 
 .haunt-image-container img {
@@ -88,4 +88,9 @@
     100% {
         transform: scale(125%) rotate(10deg);
     }
+}
+
+.haunt-link {
+    text-decoration: none;
+    color: black;
 }

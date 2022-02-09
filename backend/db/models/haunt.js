@@ -47,6 +47,9 @@ module.exports = (sequelize, DataTypes) => {
     Haunt.hasMany(models.Image, {
       foreignKey: 'hauntId'
     });
+    Haunt.belongsTo(models.User, {
+      foreignKey: 'userId'
+    });
   };
   return Haunt;
 };

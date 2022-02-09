@@ -46,35 +46,35 @@ module.exports = {
         url: 'https://static.wikia.nocookie.net/villains/images/5/5d/Samara_Morgan.v1.jpg/revision/latest/scale-to-width-down/1000?cb=20180419112621'
       },
       {
-        hauntId: 1,
+        hauntId: 8,
         url: 'https://i.guim.co.uk/img/media/796041dfc9f5d09e2195dc8fedac64d2d54730dd/19_106_4444_2665/master/4444.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=a70aba14781ea2ae9ea2d0ec216fb93d'
       },
       {
-        hauntId: 2,
+        hauntId: 7,
         url: 'https://static.wikia.nocookie.net/casper/images/9/96/Whipstaff_Manor.jpg'
       },
       {
-        hauntId: 3,
+        hauntId: 6,
         url: 'https://static.wikia.nocookie.net/stephenking/images/a/a7/The_Overlook_Hotel.jpg'
       },
       {
-        hauntId: 4,
+        hauntId: 5,
         url: 'https://static.wikia.nocookie.net/marvelcrossroads/images/7/78/Loc_ny_55cpw_movie07.jpg'
       },
       {
-        hauntId: 5,
+        hauntId: 4,
         url: 'https://static.wikia.nocookie.net/timburton/images/0/03/443FE8EB-8D60-475C-902D-C7AFC75EAAC3.jpeg'
       },
       {
-        hauntId: 6,
+        hauntId: 3,
         url: 'https://wallpaperaccess.com/full/562431.jpg'
       },
       {
-        hauntId: 7,
+        hauntId: 2,
         url: 'https://i.pinimg.com/564x/73/ba/13/73ba13f08f4fa92802a59efa0778c16c.jpg'
       },
       {
-        hauntId: 8,
+        hauntId: 1,
         url: 'https://www.gbhbl.com/wp-content/uploads/2016/08/thering04.jpg'
       },
     ], {});
