@@ -11,7 +11,15 @@ const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
     const haunts = await Haunt.findAll({
-        include: [ Image, User ]
+        include: [
+            {
+                model: Image
+            },
+            {
+                model: User,
+                include: [Image]
+            }
+        ]
     });
     return res.json(haunts);
 }));
