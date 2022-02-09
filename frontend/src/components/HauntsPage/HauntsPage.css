@@ -1,5 +1,5 @@
 #haunts-container {
-    margin: 100px 80px 600px;
+    margin: 100px 80px 35px;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     display: grid;
@@ -8,19 +8,36 @@
     grid-row-gap: 35px;
 }
 
-.haunt-image-div {
+.haunt-div:hover {
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* .haunt-image-div {
     width: 100%;
     padding-bottom: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: transparent;
+    position: relative;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    border-radius: 12px;
-}
+} */
+
+/* .haunt-image-div {
+    /* content: ""; */
+    /* position: absolute;
+    height: 100%;
+    z-index: -1;
+} */
+
 
 .haunt-label-div {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+    letter-spacing: normal;
 }
 
 .haunt-name {
@@ -30,4 +47,45 @@
 
 .haunt-rate {
     margin: 0;
+}
+
+.haunt-image-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: content-box;
+    border-radius: 12px;
+    font-size: 0;
+}
+
+.haunt-image-container::before {
+    line-height: 100%;
+    content: '';
+    box-sizing: content-box;
+    display: block;
+    padding-top: 100%;
+    /* border: 1px solid red; */
+    display: block;
+}
+
+.haunt-image-container img {
+    box-sizing: content-box;
+    display: block;
+    position: absolute;
+    height: 100%;
+}
+
+.haunt-image:hover {
+    box-sizing: content-box;
+    animation-name: haunt-image-on-hover;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes haunt-image-on-hover {
+    100% {
+        transform: scale(125%) rotate(10deg);
+    }
 }

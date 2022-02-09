@@ -19,7 +19,7 @@ function App() {
   return (
     <>
       {isLoaded && (
-        <>
+        <div id='content-wrapper'>
           <Navigation isLoaded={isLoaded} />
           <Switch>
             <Route exact path='/'>
@@ -35,7 +35,7 @@ function App() {
               <HauntsPage />
             </Route>
           </Switch>
-        </>
+        </div>
       )}
     </>
   );
