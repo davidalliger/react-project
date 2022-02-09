@@ -35,18 +35,9 @@ const HauntDetail = () => {
                 </div>
                 <div id='haunt-host-image' style={{backgroundImage: `url(${haunt.User.Images[0].url})`}}></div>
             </div>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
-            <p>Info</p>
+            <div id='haunt-description'>
+                <p>{haunt.description}</p>
+            </div>
         </div>
     )
 }
