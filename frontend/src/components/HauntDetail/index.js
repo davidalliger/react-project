@@ -18,8 +18,10 @@ const HauntDetail = () => {
                     {haunt.city}, {haunt.state}, {haunt.country}
                 </span>
             </div>
-            <div id='haunt-detail-image-container'>
-                {/* <img src={haunt.Images[0].url} /> */}
+            <div id='haunt-detail-image-grid'>
+                <div id='haunt-detail-image-one'>
+                    <img src={haunt.Images[0].url} />
+                </div>
             </div>
             <p>Info</p>
             <p>Info</p>
