@@ -18,9 +18,11 @@ const Navigation = ({isLoaded}) => {
                             </NavLink>
                         </div>
                         <div id='nav-middle-div'>
-                            <button id='nav-find-haunt'>
-                                Search for haunts
-                            </button>
+                            <NavLink to='/haunts'>
+                                <button id='nav-find-haunt'>
+                                    Search for haunts
+                                </button>
+                            </NavLink>
                         </div>
                         <div id='nav-user-div'>
                             <button id='nav-share-haunt'>

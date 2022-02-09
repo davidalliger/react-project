@@ -1,3 +1,33 @@
 #haunts-container {
-    padding-top: 90px;
+    margin: 100px 80px 600px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 24px;
+    grid-row-gap: 35px;
+}
+
+.haunt-image-div {
+    width: 100%;
+    padding-bottom: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 12px;
+}
+
+.haunt-label-div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.haunt-name {
+    font-weight: bold;
+    margin: 0;
+}
+
+.haunt-rate {
+    margin: 0;
 }

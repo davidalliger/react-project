@@ -15,9 +15,14 @@ const HauntsPage = () => {
     const defaultUrl = 'images/hauntedhouse.jpg';
     console.log(haunts[0]);
 
+    const hauntImage = haunt => {
+        return {
+            backgroundImage: `url(${haunt.Images[0].url})`,
+        };
+    }
+
     return (
         <div id='haunts-container'>
-            hello
             {!haunts.length && (
                 <div id='no-haunts'>
                     No haunts available right now.
@@ -25,10 +30,10 @@ const HauntsPage = () => {
             )}
             {haunts.map(haunt => (
                 <div key={haunt.id} className='haunt-div'>
-                    <img src={haunt.Images[0].url || defaultUrl} />
+                    <div className='haunt-image-div' style={hauntImage(haunt)}></div>
                     <div className='haunt-label-div'>
-                        <p className='haunt-name'>{haunt.name}, {haunt.state}</p>
-                        <p>${haunt.rate}/night</p>
+                        <p className='haunt-name'>{haunt.city}, {haunt.state}</p>
+                        <p className='haunt-rate'>${haunt.rate}/night</p>
                     </div>
                 </div>
             ))}

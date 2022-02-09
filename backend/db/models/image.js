@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Image.belongsTo(models.Haunt, {
       foreignKey: 'hauntId'
-    })
+    });
+    Image.belongsTo(models.User, {
+      foreignKey: 'userId'
+    });
   };
   return Image;
 };
