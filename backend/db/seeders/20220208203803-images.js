@@ -11,7 +11,7 @@ module.exports = {
     return queryInterface.bulkInsert('Images', [
       {
         userId: 1,
-        url: 'https://static.wikia.nocookie.net/ghostbusters/images/7/71/SlimergbII720p001.png/revision/latest/scale-to-width-down/776?cb=20121005091456'
+        url: 'https://static.wikia.nocookie.net/ghostbusters/images/7/71/SlimergbII720p001.png'
       },
       {
         userId: 2,
@@ -23,7 +23,7 @@ module.exports = {
       },
       {
         userId: 4,
-        url: 'https://static.wikia.nocookie.net/stephenking/images/a/a5/Thegradytwins.jpeg/revision/latest/scale-to-width-down/643?cb=20190908020001'
+        url: 'https://static.wikia.nocookie.net/stephenking/images/a/a5/Thegradytwins.jpeg'
       },
       {
         userId: 5,
@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         userId: 6,
-        url: 'https://static.wikia.nocookie.net/beetlejuice/images/4/47/Rs_500x532-150217133120-lydia.jpg/revision/latest/scale-to-width-down/500?cb=20200120224343'
+        url: 'https://static.wikia.nocookie.net/beetlejuice/images/4/47/Rs_500x532-150217133120-lydia.jpg'
       },
       {
         userId: 7,
@@ -39,11 +39,11 @@ module.exports = {
       },
       {
         userId: 8,
-        url: 'https://static.wikia.nocookie.net/addamsfamily/images/b/b9/F3.jpg/revision/latest?cb=20170324003822'
+        url: 'https://static.wikia.nocookie.net/addamsfamily/images/b/b9/F3.jpg'
       },
       {
         userId: 9,
-        url: 'https://static.wikia.nocookie.net/villains/images/5/5d/Samara_Morgan.v1.jpg/revision/latest/scale-to-width-down/1000?cb=20180419112621'
+        url: 'https://static.wikia.nocookie.net/villains/images/5/5d/Samara_Morgan.v1.jpg'
       },
       {
         hauntId: 8,
