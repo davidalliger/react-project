@@ -25,7 +25,7 @@ Haunts
         url: https://static.wikia.nocookie.net/casper/images/9/96/Whipstaff_Manor.jpg/revision/latest/scale-to-width-down/720?cb=20150425233702
         url: https://static.wikia.nocookie.net/casper/images/b/b1/A012ee193c56380c30843e196e0a7417.jpg/revision/latest/scale-to-width-down/478?cb=20150512021537
     3. The Overlook Hotel
-        url: https://d.newsweek.com/en/full/386977/stanley-hotel.jpg
+        url: https://static.wikia.nocookie.net/stephenking/images/a/a7/The_Overlook_Hotel.jpg
     4. The Shandor Building
         url: https://static.wikia.nocookie.net/marvelcrossroads/images/7/78/Loc_ny_55cpw_movie07.jpg/revision/latest?cb=20180923221824
     5. The Maitland Residence

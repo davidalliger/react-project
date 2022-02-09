@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './SplashPage.css'
 
 const SplashPage = () => {
@@ -9,9 +10,11 @@ const SplashPage = () => {
                     <h1 id='splash-image-text'>
                         Make your next trip spooktacular!
                     </h1>
-                    <button id='splash-image-button'>
-                        Search for haunts
-                    </button>
+                    <Link to='/haunts'>
+                        <button id='splash-image-button'>
+                            Search for haunts
+                        </button>
+                    </Link>
                 </div>
                 <img src='/images/hauntedhouse.jpg' id='splash-image' />
             </div>

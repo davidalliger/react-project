@@ -51,19 +51,19 @@ module.exports = {
       },
       {
         hauntId: 2,
-        url: 'https://static.wikia.nocookie.net/casper/images/9/96/Whipstaff_Manor.jpg/revision/latest/scale-to-width-down/720?cb=20150425233702'
+        url: 'https://static.wikia.nocookie.net/casper/images/9/96/Whipstaff_Manor.jpg'
       },
       {
         hauntId: 3,
-        url: 'https://d.newsweek.com/en/full/386977/stanley-hotel.jpg'
+        url: 'https://static.wikia.nocookie.net/stephenking/images/a/a7/The_Overlook_Hotel.jpg'
       },
       {
         hauntId: 4,
-        url: 'https://static.wikia.nocookie.net/marvelcrossroads/images/7/78/Loc_ny_55cpw_movie07.jpg/revision/latest?cb=20180923221824'
+        url: 'https://static.wikia.nocookie.net/marvelcrossroads/images/7/78/Loc_ny_55cpw_movie07.jpg'
       },
       {
         hauntId: 5,
-        url: 'https://static.wikia.nocookie.net/timburton/images/0/03/443FE8EB-8D60-475C-902D-C7AFC75EAAC3.jpeg/revision/latest?cb=20190918015237'
+        url: 'https://static.wikia.nocookie.net/timburton/images/0/03/443FE8EB-8D60-475C-902D-C7AFC75EAAC3.jpeg'
       },
       {
         hauntId: 6,
