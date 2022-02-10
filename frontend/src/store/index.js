@@ -7,6 +7,7 @@ import hauntsReducer from './haunts';
 const rootReducer = combineReducers({
     session: sessionReducer,
     haunts: hauntsReducer
+    // images: imagesReducer
 });
 
 let enhancer;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createHaunt } from '../../store/haunts';
+import { editHaunt, getHaunts } from '../../store/haunts';
 import { useHistory, useParams } from 'react-router-dom';
 import '../AddHauntForm/AddHauntForm.css'
 
@@ -94,7 +94,7 @@ const EditHauntForm = () => {
     const [longitude, setLongitude] = useState(haunt.longitude);
     const [rate, setRate] = useState(haunt.rate);
     const [description, setDescription] = useState(haunt.description);
-    const [imageUrl, setImageUrl] = useState(haunt.Images.length ? haunt.Images[0].url : '');
+    // const [imageUrl, setImageUrl] = useState(haunt.Images.length ? haunt.Images[0].url : '');
     const [showState, setShowState] = useState(haunt.country === 'United States');
     const [showOther, setShowOther] = useState(!(countries.includes(haunt.country)));
     const [errors, setErrors] = useState([]);
@@ -128,7 +128,7 @@ const EditHauntForm = () => {
         e.preventDefault();
         setErrors([]);
         const haunt = {
-            userId: sessionUser.id,
+            id: hauntId,
             name,
             address,
             city,
@@ -140,10 +140,13 @@ const EditHauntForm = () => {
             rate,
             description
         };
+        // console.log('Haunt in handleSubmit is ', haunt);
         try {
-            let newHaunt = await dispatch(createHaunt(haunt));
-            if (newHaunt) {
-                history.push(`/haunts/${newHaunt.id}`);
+            let updatedHaunt = await dispatch(editHaunt(haunt));
+            console.log('updatedHaunt in handleSubmit is ', updatedHaunt)
+            await dispatch(getHaunts());
+            if (updatedHaunt) {
+                history.push(`/haunts/${updatedHaunt.id}`);
             }
         } catch (err) {
             let resBody = await err.json();
@@ -308,7 +311,7 @@ const EditHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        <div className='auth-form-field'>
+                        {/* <div className='auth-form-field'>
                             <label htmlFor='image-url'>
                                 Image URL:
                                 <textarea
@@ -318,7 +321,7 @@ const EditHauntForm = () => {
                                     value={imageUrl}
                                 />
                             </label>
-                        </div>
+                        </div> */}
                     </div>
                     <div id='add-haunt-form-footer'>
                         <button

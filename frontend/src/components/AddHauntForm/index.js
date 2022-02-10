@@ -15,7 +15,7 @@ const AddHauntForm = () => {
     const [longitude, setLongitude] = useState('');
     const [rate, setRate] = useState('');
     const [description, setDescription] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
+    // const [imageUrl, setImageUrl] = useState('');
     const [showState, setShowState] = useState(false);
     const [showOther, setShowOther] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -136,7 +136,8 @@ const AddHauntForm = () => {
             latitude,
             longitude,
             rate,
-            description
+            description,
+            // imageUrl
         };
         try {
             let newHaunt = await dispatch(createHaunt(haunt));
@@ -308,7 +309,7 @@ const AddHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        <div className='auth-form-field'>
+                        {/* <div className='auth-form-field'>
                             <label htmlFor='image-url'>
                                 Image URL:
                                 <textarea
@@ -318,7 +319,7 @@ const AddHauntForm = () => {
                                     value={imageUrl}
                                 />
                             </label>
-                        </div>
+                        </div> */}
                     </div>
                     <div id='add-haunt-form-footer'>
                         <button

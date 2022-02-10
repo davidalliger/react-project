@@ -2,6 +2,7 @@ import { csrfFetch } from './csrf';
 
 const LOAD_HAUNTS = 'haunts/LOAD_HAUNTS';
 const ADD_HAUNT = 'haunts/ADD_HAUNT';
+const UPDATE_HAUNT = 'haunts/UPDATE_HAUNT';
 
 const loadHaunts = hauntsList => {
     return {
@@ -17,11 +18,18 @@ const addHaunt = newHaunt => {
     }
 }
 
+const updateHaunt = updatedHaunt => {
+    return {
+        type: UPDATE_HAUNT,
+        updatedHaunt
+    }
+}
+
 export const getHaunts = () => async(dispatch) => {
     const response = await csrfFetch('/api/haunts');
     if (response.ok) {
         const hauntsList = await response.json();
-        dispatch(loadHaunts(hauntsList));
+        const newState = dispatch(loadHaunts(hauntsList));
     }
 }
 
@@ -30,24 +38,29 @@ export const createHaunt = (haunt) => async(dispatch) => {
         method: 'POST',
         body: JSON.stringify(haunt)
     });
-
-    console.log(response);
-    const data = await response.json();
-    console.log(data);
-    const newHaunt = data.haunt;
-    console.log(newHaunt);
-    dispatch(addHaunt(newHaunt));
-    return newHaunt;
+    if (response.ok) {
+        const data = await response.json();
+        const newHaunt = data.haunt;
+        dispatch(addHaunt(newHaunt));
+        return newHaunt;
+    }
 }
 
 export const editHaunt = (haunt) => async(dispatch) => {
-    const response = await csrfFetch('api/haunts', {
-        method: 'PUT'
+    const response = await csrfFetch(`/api/haunts/${haunt.id}`, {
+        method: 'PUT',
         body: JSON.stringify(haunt)
-    })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        const updatedHaunt = data.haunt;
+        dispatch(updateHaunt(updatedHaunt));
+        return updatedHaunt;
+    }
 }
 
-const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB - hauntA);
+const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB.id - hauntA.id);
 
 const hauntsReducer = (state = {}, action) => {
     let newState;
@@ -67,6 +80,10 @@ const hauntsReducer = (state = {}, action) => {
             newState = { ...state };
             newState[action.newHaunt.id] = action.newHaunt;
             newState.list = [ action.newHaunt, ...newState.list ];
+            return newState;
+        case UPDATE_HAUNT:
+            newState = { ...state };
+            newState[action.updatedHaunt.id] = action.updatedHaunt;
             return newState;
         default:
             return state;
