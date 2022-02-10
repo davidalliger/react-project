@@ -9,6 +9,7 @@ import Navigation from './components/Navigation';
 import SplashPage from './components/SplashPage';
 import HauntsPage from './components/HauntsPage';
 import HauntDetail from './components/HauntDetail';
+import AddHauntForm from './components/AddHauntForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function App() {
             </Route>
             <Route path='/login'>
               <LoginFormPage />
+            </Route>
+            <Route exact path='/haunts/new'>
+              <AddHauntForm />
             </Route>
             <Route path='/haunts/:hauntId'>
               <HauntDetail />
