@@ -88,7 +88,7 @@ const ProfileButton = ({ sessionUser }) => {
                     <img src='/images/user-icon-gray.png' id='nav-user-icon' />
                 )}
                 {sessionUser && (
-                    <div id='nav-user-icon' style={{backgroundImage: `url(${sessionUser.Images ? sessionUser.Images[0].url : defaultUserUrl})`}}>
+                    <div id='nav-user-icon' style={{backgroundImage: `url(${sessionUser.Images.length ? sessionUser.Images[0].url : defaultUserUrl})`}}>
                     </div>
                 )}
             </button>
