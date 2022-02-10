@@ -40,6 +40,13 @@ export const createHaunt = (haunt) => async(dispatch) => {
     return newHaunt;
 }
 
+export const editHaunt = (haunt) => async(dispatch) => {
+    const response = await csrfFetch('api/haunts', {
+        method: 'PUT'
+        body: JSON.stringify(haunt)
+    })
+}
+
 const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB - hauntA);
 
 const hauntsReducer = (state = {}, action) => {

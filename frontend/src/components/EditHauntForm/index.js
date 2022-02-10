@@ -1,51 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createHaunt } from '../../store/haunts';
-import { Redirect, useHistory } from 'react-router-dom';
-import './AddHauntForm.css';
+import { useHistory, useParams } from 'react-router-dom';
+import '../AddHauntForm/AddHauntForm.css'
 
-const AddHauntForm = () => {
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [country, setCountry] = useState('');
-    const [state, setState] = useState('');
-    const [other, setOther] = useState('');
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
-    const [rate, setRate] = useState('');
-    const [description, setDescription] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [showState, setShowState] = useState(false);
-    const [showOther, setShowOther] = useState(false);
-    const [errors, setErrors] = useState([]);
-    const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user);
-    const history = useHistory();
-
-
-    useEffect(() => {
-        if (country === 'United States') {
-            setShowState(true);
-        } else if (country === 'Other') {
-            setShowOther(true);
-        } else {
-            setShowState(false);
-            setShowOther(false);
-        }
-
-        return () => {
-            setShowState(false);
-            setShowOther(false);
-        }
-    }, [country]);
-
-    useEffect(() => {
-        if(!sessionUser) {
-            history.push('/login');
-        }
-    }, [sessionUser]);
-
+const EditHauntForm = () => {
     const states = [
         'Alabama',
         'Alaska',
@@ -121,6 +80,49 @@ const AddHauntForm = () => {
         'United Kingdom',
         'Other'
     ];
+    const { hauntId } = useParams();
+    const sessionUser = useSelector(state => state.session.user);
+    const haunts = useSelector(state => state.haunts);
+    const haunt = haunts[hauntId];
+    const [name, setName] = useState(haunt.name);
+    const [address, setAddress] = useState(haunt.address);
+    const [city, setCity] = useState(haunt.city);
+    const [country, setCountry] = useState(countries.includes(haunt.country) ? haunt.country : 'Other');
+    const [state, setState] = useState(haunt.state ? haunt.state : '');
+    const [other, setOther] = useState(countries.includes(haunt.country) ? '' : haunt.country);
+    const [latitude, setLatitude] = useState(haunt.latitude);
+    const [longitude, setLongitude] = useState(haunt.longitude);
+    const [rate, setRate] = useState(haunt.rate);
+    const [description, setDescription] = useState(haunt.description);
+    const [imageUrl, setImageUrl] = useState(haunt.Images.length ? haunt.Images[0].url : '');
+    const [showState, setShowState] = useState(haunt.country === 'United States');
+    const [showOther, setShowOther] = useState(!(countries.includes(haunt.country)));
+    const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+        if (country === 'United States') {
+            setShowState(true);
+        } else if (country === 'Other') {
+            setShowOther(true);
+        } else {
+            setShowState(false);
+            setShowOther(false);
+        }
+
+        return () => {
+            setShowState(false);
+            setShowOther(false);
+        }
+    }, [country]);
+
+    useEffect(() => {
+        if(!sessionUser) {
+            history.push('/login');
+        }
+    }, [sessionUser]);
+
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -140,12 +142,10 @@ const AddHauntForm = () => {
         };
         try {
             let newHaunt = await dispatch(createHaunt(haunt));
-            console.log('new haunt is ', newHaunt);
             if (newHaunt) {
                 history.push(`/haunts/${newHaunt.id}`);
             }
         } catch (err) {
-            console.log('err is ', err);
             let resBody = await err.json();
             setErrors(resBody.errors);
         }
@@ -338,4 +338,4 @@ const AddHauntForm = () => {
     )
 };
 
-export default AddHauntForm;
+export default EditHauntForm;

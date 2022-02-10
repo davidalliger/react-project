@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneHaunt } from '../../store/haunts';
 import './HauntDetail.css'
@@ -36,9 +36,11 @@ const HauntDetail = () => {
                 </div>
                 {isOwner && (
                 <div id='haunt-detail-owner-buttons'>
-                    <button>
-                        Edit
-                    </button>
+                    <Link to={`/haunts/${haunt.id}/edit`} >
+                        <button>
+                            Edit
+                        </button>
+                    </Link>
                     <button>
                         Delete
                     </button>
