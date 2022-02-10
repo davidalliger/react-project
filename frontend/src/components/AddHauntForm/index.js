@@ -324,6 +324,7 @@ const AddHauntForm = () => {
                     <div id='add-haunt-form-footer'>
                         <button
                         type='button'
+                        onClick={() => history.push(`/haunts`)}
                         >
                             Back
                         </button>
