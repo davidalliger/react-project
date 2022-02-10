@@ -41,9 +41,11 @@ const HauntDetail = () => {
                             Edit
                         </button>
                     </Link>
-                    <button>
-                        Delete
-                    </button>
+                    <Link to={`/haunts/${haunt.id}/delete`} >
+                        <button>
+                            Delete
+                        </button>
+                    </Link>
                 </div>
                 )}
             </div>
