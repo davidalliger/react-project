@@ -7,7 +7,6 @@
 }
 
 #add-haunt-form-image {
-    background-color: red;
     background-image: url('../../../public/images/hauntedhouse.jpg');
     background-position: center center;
     background-size: cover;

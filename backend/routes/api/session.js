@@ -3,16 +3,21 @@ const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
 
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Image } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
 router.get('/', restoreUser, (req, res) => {
     const { user } = req;
+    const userSafe = user.toSafeObject();
+    const restoredUser = {
+        ...userSafe,
+        Images: user.dataValues.Images
+    }
     if (user) {
         return res.json({
-            user: user.toSafeObject()
+            user: restoredUser
         });
     } else return res.json({});
 });
@@ -30,10 +35,30 @@ const validateLogin = [
 
 router.post('/', validateLogin, asyncHandler(async(req, res, next) => {
     const { credential, password } = req.body;
+    console.log('credential ', credential);
+    console.log('password ', password);
+    const { Op } = require('sequelize');
+    const user = await User.scope('loginUser').findOne({
+        where: {
+            [Op.or]: {
+                username: credential,
+                email: credential
+            }
+        }
+    });
+    console.log('user ', user);
+    let loggedInUser;
+    if (user && user.validatePassword(password)) {
+        loggedInUser = await User.scope('currentUser').findOne({
+            where: {
+                id: user.id
+            },
+            include: [Image]
+        });
+    }
+    console.log('loggedInUser ', loggedInUser);
 
-    const user = await User.login({ credential, password });
-
-    if (!user) {
+    if (!loggedInUser) {
         const err = new Error('Login failed');
         err.status = 401;
         err.title = 'Login failed';
@@ -41,10 +66,10 @@ router.post('/', validateLogin, asyncHandler(async(req, res, next) => {
         return next(err);
     }
 
-    await setTokenCookie(res, user);
+    await setTokenCookie(res, loggedInUser);
 
     return res.json({
-        user
+        loggedInUser
     });
 }));
 

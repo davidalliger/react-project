@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Image } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
@@ -43,12 +43,23 @@ const validateSignup = [
 
 router.post('/', validateSignup, asyncHandler(async (req, res) => {
     const { email, password, username } = req.body;
-    const user = await User.signup({ email, username, password });
+    const hashedPassword = bcrypt.hashSync(password);
+    const newUser = await User.create({
+        username,
+        email,
+        hashedPassword
+    });
+    const currentUser = await User.scope('currentUser').findOne({
+        where: {
+            id: newUser.id
+        },
+        include: [Image]
+    });
 
-    await setTokenCookie(res, user);
+    await setTokenCookie(res, currentUser);
 
     return res.json({
-        user
+        currentUser
     });
 }));
 

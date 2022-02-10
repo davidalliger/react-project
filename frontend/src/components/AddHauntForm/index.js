@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createHaunt } from '../../store/haunts';
+import { Redirect, useHistory } from 'react-router-dom';
 import './AddHauntForm.css';
 
 const AddHauntForm = () => {
@@ -20,10 +21,8 @@ const AddHauntForm = () => {
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const currentState = useSelector(state => state);
-    console.log('State is ', currentState)
-    const hauntsState = useSelector(state => state.haunts);
-    console.log('Haunts state is ', hauntsState);
+    const history = useHistory();
+
 
     useEffect(() => {
         if (country === 'United States') {
@@ -41,6 +40,9 @@ const AddHauntForm = () => {
         }
     }, [country]);
 
+    if (!sessionUser) return (
+        <Redirect to='/login' />
+    );
     const states = [
         'Alabama',
         'Alaska',
@@ -134,8 +136,13 @@ const AddHauntForm = () => {
             description
         };
         try {
-            await dispatch(createHaunt(haunt));
+            let newHaunt = await dispatch(createHaunt(haunt));
+            console.log('new haunt is ', newHaunt);
+            if (newHaunt) {
+                history.push(`/haunts/${newHaunt.id}`);
+            }
         } catch (err) {
+            console.log('err is ', err);
             let resBody = await err.json();
             setErrors(resBody.errors);
         }
