@@ -175,4 +175,13 @@ router.put('/:id', convertLatLong, validateHaunt, asyncHandler(async (req, res) 
     });
 }));
 
+router.delete('/:id', asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    await Haunt.destroy({
+        where: { id }
+    });
+
+    return res.json({ id });
+}));
+
 module.exports = router;

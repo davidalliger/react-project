@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const LOAD_HAUNTS = 'haunts/LOAD_HAUNTS';
 const ADD_HAUNT = 'haunts/ADD_HAUNT';
 const UPDATE_HAUNT = 'haunts/UPDATE_HAUNT';
+const DELETE_HAUNT = 'haunts/DELETE_HAUNT';
 
 const loadHaunts = hauntsList => {
     return {
@@ -22,6 +23,13 @@ const updateHaunt = updatedHaunt => {
     return {
         type: UPDATE_HAUNT,
         updatedHaunt
+    }
+}
+
+const deleteHaunt = deletedHauntId => {
+    return {
+        type: DELETE_HAUNT,
+        deletedHauntId
     }
 }
 
@@ -60,6 +68,18 @@ export const editHaunt = (haunt) => async(dispatch) => {
     }
 }
 
+export const destroyHaunt = (haunt) => async(dispatch) => {
+    const response = await csrfFetch(`/api/haunts/${haunt.id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        const deletedHauntId = data.id;
+        dispatch(deleteHaunt(deletedHauntId));
+    }
+}
+
 const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB.id - hauntA.id);
 
 const hauntsReducer = (state = {}, action) => {
@@ -84,6 +104,10 @@ const hauntsReducer = (state = {}, action) => {
         case UPDATE_HAUNT:
             newState = { ...state };
             newState[action.updatedHaunt.id] = action.updatedHaunt;
+            return newState;
+        case DELETE_HAUNT:
+            newState = { ...state };
+            delete newState[action.deletedHauntId];
             return newState;
         default:
             return state;
