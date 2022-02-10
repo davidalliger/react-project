@@ -1,7 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
-
+const bcrypt = require('bcryptjs')
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Image } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -49,17 +49,17 @@ router.post('/', validateSignup, asyncHandler(async (req, res) => {
         email,
         hashedPassword
     });
-    const currentUser = await User.scope('currentUser').findOne({
+    const user = await User.scope('currentUser').findOne({
         where: {
             id: newUser.id
         },
         include: [Image]
     });
 
-    await setTokenCookie(res, currentUser);
+    await setTokenCookie(res, user);
 
     return res.json({
-        currentUser
+        user
     });
 }));
 
