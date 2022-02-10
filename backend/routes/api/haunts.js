@@ -24,4 +24,107 @@ router.get('/', asyncHandler(async (req, res) => {
     return res.json(haunts);
 }));
 
+const convertLatLong = (req, res, next) => {
+    const lat = req.body.latitude;
+    const long = req.body.longitude;
+    req.body.latlong = lat + ', ' + long;
+    const latlong = req.body.latlong;
+    console.log(latlong)
+    next();
+}
+
+const validateHaunt = [
+    check('name')
+        .exists({ checkFalsy: true })
+        .withMessage('Please give your haunt a name.')
+        .if(check('name').exists({checkFalsy: true}))
+        .isLength({ max: 100 })
+        .withMessage('Name must be 100 characters or less.'),
+    check('address')
+        .exists({ checkFalsy: true })
+        .withMessage('Please enter the address.')
+        .if(check('address').exists({checkFalsy: true}))
+        .isLength({ max: 100 })
+        .withMessage('Address must be 100 characters or less.'),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage('Please enter the city.')
+        .if(check('city').exists({checkFalsy: true}))
+        .isLength({ max: 100 })
+        .withMessage('City must be 100 characters or less.'),
+    check('country')
+        .exists({ checkFalsy: true })
+        .withMessage('Please select the country.'),
+    check('state')
+        .if(check('country').exists({ checkFalsy: true }))
+        .if(check('country').matches('United States'))
+        .exists({ checkFalsy: true })
+        .withMessage('Please select the state'),
+    check('other')
+        .if(check('country').exists({ checkFalsy: true }))
+        .if(check('country').matches('Other'))
+        .exists({ checkFalsy: true })
+        .withMessage('Please enter the country.')
+        .if(check('other').exists({checkFalsy: true}))
+        .isLength({ max: 100 })
+        .withMessage('Country must be 100 characters or less.'),
+    check('latitude')
+        .exists({ checkFalsy: true })
+        .withMessage('Please enter the latitude.'),
+    check('longitude')
+        .exists({ checkFalsy: true })
+        .withMessage('Please enter the longitude.'),
+    check('latlong')
+        .if(check('latitude').exists({ checkFalsy: true }))
+        .if(check('longitude').exists({ checkFalsy: true }))
+        .isLatLong()
+        .withMessage('Please provide valid latitude and longitude.'),
+    check('rate')
+        .exists({ checkFalsy: true })
+        .withMessage('Please enter a nightly rate')
+        .if(check('rate').exists({ checkFalsy: true }))
+        .isDecimal({force_decimal: true, decimal_digits: '2'})
+        .withMessage('Please round rate to the nearest cent.')
+        .isLength({ max: 10 })
+        .withMessage('Rate must be less than $9,999,999,999.00!')
+        .not()
+        .matches('0.00')
+        .withMessage('Rate must be greater than $0.00!'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage('Please enter a description.'),
+    handleValidationErrors
+];
+
+router.post('/', convertLatLong, validateHaunt, asyncHandler(async (req, res) => {
+    const {
+        userId,
+        name,
+        address,
+        city,
+        state,
+        country,
+        latitude,
+        longitude,
+        rate,
+        description
+    } = req.body;
+    const haunt = await Haunt.create({
+        userId,
+        name,
+        address,
+        city,
+        state,
+        country,
+        latitude,
+        longitude,
+        rate,
+        description
+    });
+
+    return res.json({
+        haunt
+    });
+}));
+
 module.exports = router;

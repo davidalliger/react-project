@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createHaunt } from '../../store/haunts';
 import './AddHauntForm.css';
 
 const AddHauntForm = () => {
@@ -15,6 +17,13 @@ const AddHauntForm = () => {
     const [imageUrl, setImageUrl] = useState('');
     const [showState, setShowState] = useState(false);
     const [showOther, setShowOther] = useState(false);
+    const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);
+    const currentState = useSelector(state => state);
+    console.log('State is ', currentState)
+    const hauntsState = useSelector(state => state.haunts);
+    console.log('Haunts state is ', hauntsState);
 
     useEffect(() => {
         if (country === 'United States') {
@@ -108,6 +117,30 @@ const AddHauntForm = () => {
         'Other'
     ];
 
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        setErrors([]);
+        const haunt = {
+            userId: sessionUser.id,
+            name,
+            address,
+            city,
+            state,
+            other,
+            country,
+            latitude,
+            longitude,
+            rate,
+            description
+        };
+        try {
+            await dispatch(createHaunt(haunt));
+        } catch (err) {
+            let resBody = await err.json();
+            setErrors(resBody.errors);
+        }
+    }
+
     return (
         <div id='add-haunt-form-container'>
             <div>
@@ -116,9 +149,22 @@ const AddHauntForm = () => {
                 </div>
             </div>
             <div id='add-haunt-form-div'>
-                <form id='add-haunt-form'>
+                <div className={errors.length ? 'haunt-errors-normal' : 'errors-hidden'}>
+                    <ul id='haunt-errors-ul'>
+                        {errors.map((error, index) => (
+                                <li key={index}>
+                                    {error}
+                                </li>
+                            ))}
+                    </ul>
+                </div>
+                <form
+                    className='auth-form'
+                    id='add-haunt-form'
+                    onSubmit={handleSubmit}
+                >
                     <div id='add-haunt-form-fields'>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='name'>
                                 Give your haunt a name:
                                 <input
@@ -130,7 +176,7 @@ const AddHauntForm = () => {
                                     />
                             </label>
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='address'>
                                 Street Address:
                                 <input
@@ -142,7 +188,7 @@ const AddHauntForm = () => {
                                     />
                             </label>
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='city'>
                                 City:
                                 <input
@@ -154,7 +200,7 @@ const AddHauntForm = () => {
                                     />
                             </label>
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='country'>
                                 Country:
                                 <select
@@ -164,13 +210,13 @@ const AddHauntForm = () => {
                                     value={country}
                                 >
                                     <option value='' disabled>Please select your country...</option>
-                                    {countries.map(country=> (
-                                        <option value={country}>{country}</option>
+                                    {countries.map((country, index) => (
+                                        <option value={country} key={index}>{country}</option>
                                     ))}
                                 </select>
                             </label>
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             {showState && (
                                 <label htmlFor='state'>
                                 State:
@@ -179,17 +225,17 @@ const AddHauntForm = () => {
                                     name='state'
                                     onChange={e => setState(e.target.value)}
                                     value={state}
-                                    required={showState}
+                                    // required={showState}
                                 >
                                     <option value='' disabled>Please select your state...</option>
-                                    {states.map(state=> (
-                                        <option value={state}>{state}</option>
+                                    {states.map((state, index) => (
+                                        <option value={state} key={index}>{state}</option>
                                     ))}
                                 </select>
                             </label>
                             )}
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             {showOther && (
                                 <label htmlFor='other'>
                                 Other:
@@ -199,13 +245,13 @@ const AddHauntForm = () => {
                                     name='other'
                                     onChange={e => setOther(e.target.value)}
                                     value={other}
-                                    required={showOther}
+                                    // required={showOther}
                                     placeholder='Please enter the name of your country'
                                 />
                             </label>
                             )}
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='latitude'>
                                 Latitude:
                                 <input
@@ -217,7 +263,7 @@ const AddHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='longitude'>
                                 Longitude:
                                 <input
@@ -229,7 +275,7 @@ const AddHauntForm = () => {
                                     />
                             </label>
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='rate'>
                                 Nightly Rate:
                                 <input
@@ -241,7 +287,7 @@ const AddHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='description'>
                                 Description:
                                 <textarea
@@ -252,9 +298,9 @@ const AddHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        <div>
+                        <div className='auth-form-field'>
                             <label htmlFor='image-url'>
-                                Description:
+                                Image URL:
                                 <textarea
                                     id='image-url'
                                     name='imageUrl'
@@ -265,10 +311,14 @@ const AddHauntForm = () => {
                         </div>
                     </div>
                     <div id='add-haunt-form-footer'>
-                        <button>
+                        <button
+                        type='button'
+                        >
                             Back
                         </button>
-                        <button>
+                        <button
+                        type='submit'
+                        >
                             Submit
                         </button>
                     </div>

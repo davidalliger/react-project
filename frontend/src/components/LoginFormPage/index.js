@@ -43,7 +43,7 @@ const LoginFormPage = () => {
                 </ul>
             </div>
             <form
-            className='auth-form'
+                className='auth-form'
                 onSubmit={handleSubmit}
             >
                 <div className='auth-form-field'>
