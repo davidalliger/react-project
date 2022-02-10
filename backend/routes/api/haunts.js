@@ -33,6 +33,12 @@ const convertLatLong = (req, res, next) => {
     next();
 }
 
+const roundRate = (req, res, next) => {
+    const rate = req.body.rate;
+    req.body.rate = Number(rate).toFixed(2).toString();
+    next();
+}
+
 const handleStateAndCountry = (req, res, next) => {
     const country = req.body.country;
     const other = req.body.other;
@@ -98,10 +104,9 @@ const validateHaunt = [
         .if(check('rate').exists({ checkFalsy: true }))
         .isDecimal({force_decimal: true, decimal_digits: '2'})
         .withMessage('Please round rate to the nearest cent.')
-        .isLength({ max: 10 })
+        .isLength({ max: 12 })
         .withMessage('Rate must be less than $9,999,999,999.00!')
-        .not()
-        .matches('0.00')
+        .custom(value => value !== '0.00')
         .withMessage('Rate must be greater than $0.00!'),
     check('description')
         .exists({ checkFalsy: true })
@@ -109,7 +114,7 @@ const validateHaunt = [
     handleValidationErrors
 ];
 
-router.post('/', convertLatLong, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
+router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const {
         userId,
         name,
@@ -157,7 +162,7 @@ router.post('/', convertLatLong, validateHaunt, handleStateAndCountry, asyncHand
     });
 }));
 
-router.put('/:id', convertLatLong, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
+router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const { id } = req.params;
     const hauntInfo = req.body;
     delete hauntInfo.id;
