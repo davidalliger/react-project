@@ -24,7 +24,7 @@ const HauntsPage = () => {
                             <img src={haunt.Images.length ? haunt.Images[0].url : defaultUrl} className='haunt-image' />
                         </div>
                         <div className='haunt-label-div'>
-                            <p className='haunt-name'>{haunt.city}, {haunt.state}</p>
+                            <p className='haunt-name'>{haunt.city}, {haunt.state ? haunt.state : haunt.country}</p>
                             <p className='haunt-rate'>${Math.round(haunt.rate)} / night</p>
                         </div>
                     </div>

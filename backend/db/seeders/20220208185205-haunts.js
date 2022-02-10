@@ -38,7 +38,7 @@ module.exports = {
         userId: 7,
         address: 'Somewhere Hidden',
         city: 'Scottish Highlands',
-        state: 'Scotland',
+        state: null,
         country: 'United Kingdom',
         latitude: 57.051068,
         longitude: -3.227648,

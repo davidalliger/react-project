@@ -31,7 +31,9 @@ const HauntDetail = () => {
                 <div id='haunt-detail-heading'>
                     <h1>{haunt.name}</h1>
                     <h2 id='haunt-detail-location'>
-                        {haunt.city}, {haunt.state}, {haunt.country}
+                        {haunt.city}, {haunt.state && (
+                            <span>{haunt.state}, </span>
+                        )}{haunt.country}
                     </h2>
                 </div>
                 {isOwner && (

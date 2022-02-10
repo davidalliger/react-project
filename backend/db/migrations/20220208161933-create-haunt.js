@@ -26,7 +26,6 @@ module.exports = {
         type: Sequelize.STRING(100)
       },
       state: {
-        allowNull: false,
         type: Sequelize.STRING(100)
       },
       country: {

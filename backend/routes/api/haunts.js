@@ -33,6 +33,15 @@ const convertLatLong = (req, res, next) => {
     next();
 }
 
+const convertCountry = (req, res, next) => {
+    const country = req.body.country;
+    const other = req.body.other;
+    if (country === 'Other') {
+        req.body.country = other;
+    }
+    next();
+}
+
 const validateHaunt = [
     check('name')
         .exists({ checkFalsy: true })
@@ -96,7 +105,7 @@ const validateHaunt = [
     handleValidationErrors
 ];
 
-router.post('/', convertLatLong, validateHaunt, asyncHandler(async (req, res) => {
+router.post('/', convertLatLong, validateHaunt, convertCountry, asyncHandler(async (req, res) => {
     const {
         userId,
         name,
@@ -144,7 +153,7 @@ router.post('/', convertLatLong, validateHaunt, asyncHandler(async (req, res) =>
     });
 }));
 
-router.put('/:id', convertLatLong, validateHaunt, asyncHandler(async (req, res) => {
+router.put('/:id', convertLatLong, validateHaunt, convertCountry, asyncHandler(async (req, res) => {
     const { id } = req.params;
     const hauntInfo = req.body;
     delete hauntInfo.id;
