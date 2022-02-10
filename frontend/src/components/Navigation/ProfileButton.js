@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/session';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ProfileButton = ({ sessionUser }) => {
     const dispatch = useDispatch();
@@ -54,19 +54,21 @@ const ProfileButton = ({ sessionUser }) => {
     } else {
         menu = (
             <div id='menu'>
-                <NavLink to='/login' className='menu-link'>
+                <Link to='/login' className='menu-link'>
                         <div className='menu-div'>
                             Log In
                         </div>
-                </NavLink>
-                <NavLink to='/signup' className='menu-link'>
+                </Link>
+                <Link to='/signup' className='menu-link'>
                         <div className='menu-div'>
                             Sign Up
                         </div>
-                </NavLink>
-                <div className='menu-div'>
-                    Host a ghost
-                </div>
+                </Link>
+                <Link to='/haunts/new' className='menu-link'>
+                    <div className='menu-div'>
+                        Host a ghost
+                    </div>
+                </Link>
             </div>
         )
     }

@@ -38,9 +38,11 @@ const Navigation = ({isLoaded}) => {
                             </NavLink>
                         </div>
                         <div id='nav-user-div'>
-                            <button id='nav-share-haunt'>
-                                Host a ghost
-                            </button>
+                            <NavLink exact to='/haunts/new' id='nav-title-link'>
+                                <button id='nav-share-haunt'>
+                                    Host a ghost
+                                </button>
+                            </NavLink>
                             <ProfileButton sessionUser={sessionUser}/>
                         </div>
                     </div>
