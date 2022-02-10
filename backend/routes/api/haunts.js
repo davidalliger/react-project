@@ -33,11 +33,15 @@ const convertLatLong = (req, res, next) => {
     next();
 }
 
-const convertCountry = (req, res, next) => {
+const handleStateAndCountry = (req, res, next) => {
     const country = req.body.country;
     const other = req.body.other;
+    const state = req.body.state;
     if (country === 'Other') {
         req.body.country = other;
+    }
+    if (country !== 'United States') {
+        req.body.state = null;
     }
     next();
 }
@@ -105,7 +109,7 @@ const validateHaunt = [
     handleValidationErrors
 ];
 
-router.post('/', convertLatLong, validateHaunt, convertCountry, asyncHandler(async (req, res) => {
+router.post('/', convertLatLong, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const {
         userId,
         name,
@@ -153,7 +157,7 @@ router.post('/', convertLatLong, validateHaunt, convertCountry, asyncHandler(asy
     });
 }));
 
-router.put('/:id', convertLatLong, validateHaunt, convertCountry, asyncHandler(async (req, res) => {
+router.put('/:id', convertLatLong, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const { id } = req.params;
     const hauntInfo = req.body;
     delete hauntInfo.id;
