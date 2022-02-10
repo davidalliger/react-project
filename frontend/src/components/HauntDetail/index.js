@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneHaunt } from '../../store/haunts';
@@ -7,21 +7,43 @@ import './HauntDetail.css'
 const HauntDetail = () => {
 
     const { hauntId } = useParams();
+    const sessionUser = useSelector(state => state.session.user);
     const haunts = useSelector(state => state.haunts);
     const haunt = haunts[hauntId];
+    const [ isOwner, setIsOwner ] = useState(false);
+
+    useEffect(() => {
+        if (sessionUser) {
+            if(sessionUser.id === haunt.userId) {
+                setIsOwner(true);
+            } else {
+                setIsOwner(false);
+            }
+        }
+    }, [sessionUser]);
 
     const defaultHauntUrl = '/images/hauntedhouse.jpg';
     const defaultUserUrl = '/images/user-icon-lavender.png';
 
-    console.log(haunt.User);
-
     return (
         <div id='haunt-detail-container'>
-            <h1>{haunt.name}</h1>
             <div id='haunt-detail-info-bar'>
-                <span>
-                    {haunt.city}, {haunt.state}, {haunt.country}
-                </span>
+                <div id='haunt-detail-heading'>
+                    <h1>{haunt.name}</h1>
+                    <h2 id='haunt-detail-location'>
+                        {haunt.city}, {haunt.state}, {haunt.country}
+                    </h2>
+                </div>
+                {isOwner && (
+                <div id='haunt-detail-owner-buttons'>
+                    <button>
+                        Edit
+                    </button>
+                    <button>
+                        Delete
+                    </button>
+                </div>
+                )}
             </div>
             <div id='haunt-detail-image-grid'>
                 <div id='haunt-detail-image-one' style={{backgroundImage: `url(${haunt.Images.length ? haunt.Images[0].url : defaultHauntUrl})`}}></div>
