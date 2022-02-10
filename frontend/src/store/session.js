@@ -43,9 +43,12 @@ export const login = (user) => async (dispatch) => {
             password
         })
     });
+    console.log('response ', response);
 
     const data = await response.json();
-    const currentUser = data.user;
+    console.log('data ', data);
+    const currentUser = data.loggedInUser;
+    console.log('currentUser ', currentUser);
     dispatch(setUser(currentUser));
     return currentUser;
 };

@@ -41,9 +41,11 @@ const ProfileButton = ({ sessionUser }) => {
                 <div className='menu-div'>
                     Spookings
                 </div>
-                <div className='menu-div'>
-                    Host a ghost
-                </div>
+                <Link to='/haunts/new' className='menu-link'>
+                    <div className='menu-div'>
+                        Host a ghost
+                    </div>
+                </Link>
                 <div className='menu-div'
                     onClick={logoutUser}
                 >
@@ -73,6 +75,8 @@ const ProfileButton = ({ sessionUser }) => {
         )
     }
 
+    const defaultUserUrl = '/images/user-icon-lavender.png';
+
     return (
         <>
             <button
@@ -84,7 +88,8 @@ const ProfileButton = ({ sessionUser }) => {
                     <img src='/images/user-icon-gray.png' id='nav-user-icon' />
                 )}
                 {sessionUser && (
-                    <img src='/images/user-icon-lavender.png' id='nav-user-icon' />
+                    <div id='nav-user-icon' style={{backgroundImage: `url(${sessionUser.Images ? sessionUser.Images[0].url : defaultUserUrl})`}}>
+                    </div>
                 )}
             </button>
             {showMenu && menu}

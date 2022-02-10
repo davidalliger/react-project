@@ -149,7 +149,13 @@
 
 #nav-user-icon {
     height: 30px;
+    width: 30px;
+    border-radius: 50%;
     margin: 0;
+    overflow: hidden;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .menu-button {

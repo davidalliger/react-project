@@ -1,6 +1,7 @@
 'use strict';
 const { Validator } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const Image = require('./image');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -70,8 +71,23 @@ module.exports = (sequelize, DataTypes) => {
     return bcrypt.compareSync(password, this.hashedPassword.toString());
   };
 
+
+  User.associate = function(models) {
+    // associations can be defined here
+    User.hasMany(models.Image, {
+      foreignKey: 'userId'
+    });
+    User.hasMany(models.Haunt, {
+      foreignKey: 'userId'
+    });
+  };
+
   User.getCurrentUserById = async function (id) {
-    return await User.scope('currentUser').findByPk(id);
+    return await User.scope('currentUser').findOne({
+      where: {
+        id: user.id
+        }
+      });
   };
 
   User.login = async function ({ credential, password }) {
@@ -84,8 +100,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     });
+
     if (user && user.validatePassword(password)) {
-      return await User.scope('currentUser').findByPk(user.id);
+      return await User.scope('currentUser').findOne({
+        where: {
+          id: user.id
+          },
+          include: [Image]
+        });
     }
   };
 
@@ -96,17 +118,13 @@ module.exports = (sequelize, DataTypes) => {
       email,
       hashedPassword
     });
-    return await User.scope('currentUser').findByPk(user.id);
+    return await User.scope('currentUser').findOne({
+      where: {
+        id: user.id
+        },
+        include: [Image]
+      });
   };
 
-  User.associate = function(models) {
-    // associations can be defined here
-    User.hasMany(models.Image, {
-      foreignKey: 'userId'
-    });
-    User.hasMany(models.Haunt, {
-      foreignKey: 'userId'
-    });
-  };
   return User;
 };

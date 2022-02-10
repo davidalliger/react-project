@@ -31,8 +31,11 @@ export const createHaunt = (haunt) => async(dispatch) => {
         body: JSON.stringify(haunt)
     });
 
+    console.log(response);
     const data = await response.json();
+    console.log(data);
     const newHaunt = data.haunt;
+    console.log(newHaunt);
     dispatch(addHaunt(newHaunt));
     return newHaunt;
 }
@@ -55,8 +58,8 @@ const hauntsReducer = (state = {}, action) => {
             return newState;
         case ADD_HAUNT:
             newState = { ...state };
-            newState.haunts[action.newHaunt.id] = action.newHaunt;
-            newState.haunts.list = [ action.newHaunt, ...newState.haunts.list ];
+            newState[action.newHaunt.id] = action.newHaunt;
+            newState.list = [ action.newHaunt, ...newState.list ];
             return newState;
         default:
             return state;
