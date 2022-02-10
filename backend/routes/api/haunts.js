@@ -140,7 +140,37 @@ router.post('/', convertLatLong, validateHaunt, asyncHandler(async (req, res) =>
     console.log('newHaunt is ', haunt);
 
     return res.json({
-        // newHaunt
+        haunt
+    });
+}));
+
+router.put('/:id', convertLatLong, validateHaunt, asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const hauntInfo = req.body;
+    delete hauntInfo.id;
+    await Haunt.update(
+        hauntInfo,
+        {
+            where: {
+                id
+        }
+    });
+    const haunt = await Haunt.findOne({
+        where: {
+            id
+        },
+        include: [
+            {
+                model: Image
+            },
+            {
+                model: User,
+                include: [Image]
+            }
+        ]
+    });
+
+    return res.json({
         haunt
     });
 }));
