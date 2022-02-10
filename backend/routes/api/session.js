@@ -10,12 +10,12 @@ const router = express.Router();
 
 router.get('/', restoreUser, (req, res) => {
     const { user } = req;
-    const userSafe = user.toSafeObject();
-    const restoredUser = {
-        ...userSafe,
-        Images: user.dataValues.Images
-    }
     if (user) {
+        const userSafe = user.toSafeObject();
+        const restoredUser = {
+            ...userSafe,
+            Images: user.dataValues.Images
+        }
         return res.json({
             user: restoredUser
         });
