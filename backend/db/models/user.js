@@ -80,6 +80,9 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Haunt, {
       foreignKey: 'userId'
     });
+    User.hasMany(models.Spooking, {
+      foreignKey: 'userId'
+    });
   };
 
   User.getCurrentUserById = async function (id) {

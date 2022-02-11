@@ -58,14 +58,17 @@ const HauntDetail = () => {
                 <div id='haunt-detail-image-four' style={{backgroundImage: `url(${haunt.Images.length > 3 ? haunt.Images[3].url : defaultHauntUrl})`}}></div>
                 <div id='haunt-detail-image-five' style={{backgroundImage: `url(${haunt.Images.length > 4 ? haunt.Images[4].url : defaultHauntUrl})`}}></div>
             </div>
-            <div id='haunt-host-info'>
-                <div>
-                    <h2>Hosted by {haunt.User.username}</h2>
+            <div id='haunt-detail-info-area'>
+                {/* <div id='' */}
+                <div id='haunt-host-info'>
+                    <div>
+                        <h2>Hosted by {haunt.User.username}</h2>
+                    </div>
+                    <div id='haunt-host-image' style={{backgroundImage: `url(${haunt.User.Images.length ? haunt.User.Images[0].url : defaultUserUrl})`}}></div>
                 </div>
-                <div id='haunt-host-image' style={{backgroundImage: `url(${haunt.User.Images.length ? haunt.User.Images[0].url : defaultUserUrl})`}}></div>
-            </div>
-            <div id='haunt-description'>
-                <p>{haunt.description}</p>
+                <div id='haunt-description'>
+                    <p>{haunt.description}</p>
+                </div>
             </div>
         </div>
     )

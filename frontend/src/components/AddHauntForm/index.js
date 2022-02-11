@@ -15,14 +15,13 @@ const AddHauntForm = () => {
     const [longitude, setLongitude] = useState('');
     const [rate, setRate] = useState('');
     const [description, setDescription] = useState('');
-    // const [imageUrl, setImageUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
     const [showState, setShowState] = useState(false);
     const [showOther, setShowOther] = useState(false);
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
-
 
     useEffect(() => {
         if (country === 'United States') {
@@ -137,7 +136,7 @@ const AddHauntForm = () => {
             longitude,
             rate,
             description,
-            // imageUrl
+            imageUrl
         };
         try {
             let newHaunt = await dispatch(createHaunt(haunt));
@@ -309,17 +308,18 @@ const AddHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        {/* <div className='auth-form-field'>
+                        <div className='auth-form-field'>
                             <label htmlFor='image-url'>
                                 Image URL:
-                                <textarea
+                                <input
+                                    type='text'
                                     id='image-url'
                                     name='imageUrl'
                                     onChange={e => setImageUrl(e.target.value)}
                                     value={imageUrl}
                                 />
                             </label>
-                        </div> */}
+                        </div>
                     </div>
                     <div id='add-haunt-form-footer'>
                         <button
