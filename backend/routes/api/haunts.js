@@ -176,7 +176,7 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
         include: [
             {
                 model: Image,
-                order: [['id', 'ASC']]
+                order: [['id', 'DESC']]
             },
             {
                 model: User,
