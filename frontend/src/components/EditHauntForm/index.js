@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editHaunt, getHaunts } from '../../store/haunts';
 import { useHistory, useParams } from 'react-router-dom';
-import '../AddHauntForm/AddHauntForm.css'
+import '../AddHauntForm/AddHauntForm.css';
 
-const EditHauntForm = () => {
+export default function EditHauntForm() {
     const states = [
         'Alabama',
         'Alaska',
@@ -94,12 +94,43 @@ const EditHauntForm = () => {
     const [longitude, setLongitude] = useState(haunt.longitude);
     const [rate, setRate] = useState(haunt.rate);
     const [description, setDescription] = useState(haunt.description);
-    const [imageUrl, setImageUrl] = useState(haunt.Images.length ? haunt.Images[0].url : '');
     const [showState, setShowState] = useState(haunt.country === 'United States');
     const [showOther, setShowOther] = useState(!(countries.includes(haunt.country)));
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const history = useHistory();
+    const [imageFieldCount, setImageFieldCount] = useState(haunt.Images.length);
+    // const [oldImages, setOldImages] = useState(haunt.Images.length ? haunt.Images : []);
+    const getInitialUrls = (images) => {
+        let urls = {}
+        if (images.length) {
+            for (let i = 0; i < images.length; i++) {
+                let key = i;
+                let image = images[i];
+                urls[key] = image.url
+            }
+        }
+        return urls;
+    }
+    const getInitialUrlsWithId = (images) => {
+        let oldImages = {};
+        if (images.length) {
+            for (let i = 0; i < images.length; i++) {
+                let key = i;
+                let image = images[i];
+                oldImages[key] = {
+                    url: image.url,
+                    id: image.id
+                }
+            }
+        }
+        return oldImages;
+    }
+    const initialUrlsWithId = getInitialUrlsWithId(haunt.Images);
+    const initialUrls = getInitialUrls(haunt.Images);
+    const [imageUrls, setImageUrls] = useState(initialUrls);
+    console.log('Before click, ImageFieldCount is ', imageFieldCount);
+    console.log('Before click, ImageUrls is ', imageUrls);
 
     useEffect(() => {
         if (country === 'United States') {
@@ -123,10 +154,54 @@ const EditHauntForm = () => {
         }
     }, [sessionUser]);
 
+    const generateImageFields = (count) => {
+        const imageFields = []
+        for (let i = 0; i < count; i++) {
+            imageFields.push(
+                <div className='auth-form-field' key={i}>
+                    <label htmlFor={`image-url-${i}`}>
+                        Image URL:
+                        <input
+                            type='text'
+                            id={`image-url-${i}`}
+                            name='imageUrl1'
+                            onChange={handleImageField}
+                            value={imageUrls[i]}
+                        />
+                    </label>
+                </div>
+            );
+        }
+        return imageFields;
+    }
+
+    const handleImageField = e => {
+        const key= e.target.id.split('-')[2];
+        setImageUrls({...imageUrls, [key]: e.target.value });
+        console.log('imageUrls is ', imageUrls);
+    }
+
+    const handleAddImageClick = e => {
+        setImageFieldCount(imageFieldCount + 1);
+        imageUrls[imageFieldCount] = '';
+        console.log('After adding one, imageFieldCount is ', imageFieldCount);
+        console.log('After adding one, imageUrls is ', imageUrls);
+    }
+
+    const handleRemoveImageClick = e => {
+        setImageFieldCount(imageFieldCount - 1);
+        delete imageUrls[imageFieldCount - 1];
+        console.log('After removing one, imageUrls is ', imageUrls);
+        console.log('After removing one, imageFieldCount is ', imageFieldCount);
+    }
 
     const handleSubmit = async(e) => {
         e.preventDefault();
         setErrors([]);
+        const images = [];
+        // for (let key in imageUrls) {
+        //     images[key] = imageUrls[key];
+        // }
         const haunt = {
             id: hauntId,
             name,
@@ -139,7 +214,8 @@ const EditHauntForm = () => {
             longitude,
             rate,
             description,
-            imageUrl
+            imageUrls,
+            initialUrlsWithId
         };
         // console.log('Haunt in handleSubmit is ', haunt);
         try {
@@ -312,18 +388,27 @@ const EditHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='image-url'>
-                                Image URL:
-                                <input
-                                    type='text'
-                                    id='image-url'
-                                    name='imageUrl'
-                                    onChange={e => setImageUrl(e.target.value)}
-                                    value={imageUrl}
-                                />
-                            </label>
-                        </div>
+                        {generateImageFields(imageFieldCount)}
+                            {imageFieldCount < 5 && (
+                                <div className='auth-form-field'>
+                                    <button
+                                        type='button'
+                                        onClick={handleAddImageClick}
+                                    >
+                                        Add Image
+                                    </button>
+                                </div>
+                            )}
+                            {imageFieldCount > 0 && (
+                                <div className='auth-form-field'>
+                                    <button
+                                        type='button'
+                                        onClick={handleRemoveImageClick}
+                                    >
+                                        Remove Image
+                                    </button>
+                                </div>
+                            )}
                     </div>
                     <div id='add-haunt-form-footer'>
                         <button
@@ -342,6 +427,4 @@ const EditHauntForm = () => {
             </div>
         </div>
     )
-};
-
-export default EditHauntForm;
+}

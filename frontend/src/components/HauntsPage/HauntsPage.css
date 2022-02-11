@@ -3,7 +3,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-column-gap: 24px;
     grid-row-gap: 35px;
 }
