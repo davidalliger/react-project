@@ -9,7 +9,7 @@ const HauntDetail = () => {
     const { hauntId } = useParams();
     const sessionUser = useSelector(state => state.session.user);
     const haunts = useSelector(state => state.haunts);
-    const haunt = haunts[hauntId];
+    let haunt = haunts[hauntId];
     const [ isOwner, setIsOwner ] = useState(false);
 
     useEffect(() => {
@@ -52,11 +52,11 @@ const HauntDetail = () => {
                 )}
             </div>
             <div id='haunt-detail-image-grid'>
-                <div id='haunt-detail-image-one' style={{backgroundImage: `url(${haunt.Images.length ? haunt.Images[haunt.Images.length - 1].url : defaultHauntUrl})`}}></div>
-                <div id='haunt-detail-image-two' style={{backgroundImage: `url(${haunt.Images.length > 1 ? haunt.Images[haunt.Images.length - 2].url : defaultHauntUrl})`}}></div>
-                <div id='haunt-detail-image-three' style={{backgroundImage: `url(${haunt.Images.length > 2 ? haunt.Images[haunt.Images.length - 3].url : defaultHauntUrl})`}}></div>
-                <div id='haunt-detail-image-four' style={{backgroundImage: `url(${haunt.Images.length > 3 ? haunt.Images[haunt.Images.length - 4].url : defaultHauntUrl})`}}></div>
-                <div id='haunt-detail-image-five' style={{backgroundImage: `url(${haunt.Images.length > 4 ? haunt.Images[haunt.Images.length - 5].url : defaultHauntUrl})`}}></div>
+                <div id='haunt-detail-image-one' style={{backgroundImage: `url(${haunt.Images.length ? haunt.Images[0].url : defaultHauntUrl})`}}></div>
+                <div id='haunt-detail-image-two' style={{backgroundImage: `url(${haunt.Images.length > 1 ? haunt.Images[1].url : defaultHauntUrl})`}}></div>
+                <div id='haunt-detail-image-three' style={{backgroundImage: `url(${haunt.Images.length > 2 ? haunt.Images[2].url : defaultHauntUrl})`}}></div>
+                <div id='haunt-detail-image-four' style={{backgroundImage: `url(${haunt.Images.length > 3 ? haunt.Images[3].url : defaultHauntUrl})`}}></div>
+                <div id='haunt-detail-image-five' style={{backgroundImage: `url(${haunt.Images.length > 4 ? haunt.Images[4].url : defaultHauntUrl})`}}></div>
             </div>
             <div id='haunt-detail-info-area'>
                 {/* <div id='' */}

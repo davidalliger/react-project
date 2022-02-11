@@ -54,6 +54,12 @@ const handleStateAndCountry = (req, res, next) => {
     next();
 }
 
+const convertImageUrls = (req, res, next) => {
+    const imageUrls = req.body.imageUrls;
+    req.body.images = Object.values(imageUrls);
+    next();
+}
+
 const validateHaunt = [
     check('name')
         .exists({ checkFalsy: true })
@@ -190,10 +196,10 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
     });
 }));
 
-router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
+router.put('/:id', convertLatLong, roundRate, convertImageUrls, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const { id } = req.params;
     const hauntInfo = req.body;
-    const { images } = hauntInfo;
+    const { imageUrls, initialUrlsWithId } = hauntInfo;
     delete hauntInfo.id;
     delete hauntInfo.images;
     await Haunt.update(
@@ -220,36 +226,79 @@ router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCount
         ]
     });
 
-    if (haunt.Images.length) {
-        haunt.Images.forEach(async(image, index) => {
-            if (images[index + 1] && images[index + 1] !== image.url) {
-                await Image.destroy({
-                    where: { hauntId: id }
-                });
+
+    const updateImages= async() => {
+        let oldsArr = Object.values(initialUrlsWithId);
+        let newsArr = Object.values(imageUrls);
+        if (newsArr.length &&
+            oldsArr.length &&
+            newsArr.length >= oldsArr.length) {
+                for (let key in imageUrls) {
+                    if (initialUrlsWithId[key]) {
+                        if (imageUrls[key] !== initialUrlsWithId[key].url) {
+                            await Image.destroy({
+                                where: {
+                                    id: initialUrlsWithId[key].id
+                                }
+                            });
+                            await Image.create({
+                                url: imageUrls[key],
+                                hauntId: haunt.id
+                            });
+                        }
+                    } else {
+                        await Image.create({
+                            url: imageUrls[key],
+                            hauntId: haunt.id
+                        });
+                    }
+                }
+        } else if (oldsArr.length &&
+            newsArr.length &&
+            newsArr.length < oldsArr.length) {
+                for (let key in initialUrlsWithId) {
+                    let oldImage = initialUrlsWithId[key];
+                    if (imageUrls[key]) {
+                        let newImage = imageUrls[key];
+                        if (newImage !== oldImage.url) {
+                            await Image.destroy({
+                                where: {
+                                    id: oldImage.id
+                                }
+                            });
+                            await Image.create({
+                                url: newImage,
+                                hauntId: haunt.id
+                            });
+                        }
+                    } else {
+                        await Image.destroy({
+                            where: {
+                                id: oldImage.id
+                            }
+                        });
+                    }
+                }
+            } else if (newsArr.length) {
+                for (let key in imageUrls) {
+                    await Image.create({
+                        url: imageUrls[key],
+                        hauntId: haunt.id
+                    });
+                }
+            } else if (oldsArr.length) {
+                for (let key in initialUrlsWithId) {
+                    let oldImage = initialUrlsWithId[key];
+                    await Image.destroy({
+                        where: {
+                            id: oldImage.id
+                        }
+                    });
+                }
             }
-        })
-    }
+    };
 
-
-    // if (imageUrl) {
-
-    //     if (haunt.Images.length && haunt.Images[0].url !== imageUrl) {
-    //         await Image.destroy({
-    //             where: { hauntId: id }
-    //         });
-    //     }
-    //     await Image.create({
-    //         url: imageUrl,
-    //         hauntId: id
-    //     });
-    // } else {
-    //     if (haunt.Images.length) {
-    //         await Image.destroy({
-    //             where: { hauntId: id }
-    //         });
-    //     }
-    // }
-
+    await updateImages();
 
 
     haunt = await Haunt.findOne({
