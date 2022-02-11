@@ -3,7 +3,7 @@
     margin: auto;
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
-    max-width: 1120px;
+    max-width: 1300px;
 }
 
 #haunt-detail-info-bar {
@@ -101,17 +101,18 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 24px 0 24px;
-    border-bottom: 1px solid gray;
+    padding: 0 0 24px;
+    border-bottom: 1px solid lightgray;
 }
 
 #haunt-host-info h2 {
     margin: 0;
+    font-size: 22px;
 }
 
 #haunt-host-image {
     height: 56px;
-    width: 56px;
+    min-width: 56px;
     border-radius: 50%;
     overflow: hidden;
     background-position: center center;
@@ -121,4 +122,10 @@
 
 #haunt-description {
     margin-top: 24px;
+}
+
+#haunt-detail-info-area {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-top: 48px;
 }
