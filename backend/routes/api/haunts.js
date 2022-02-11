@@ -14,14 +14,14 @@ router.get('/', asyncHandler(async (req, res) => {
         include: [
             {
                 model: Image,
-                order: [['id', 'ASC']]
             },
             {
                 model: User,
                 include: [Image]
 
-            }
-        ]
+            },
+        ],
+        order: [[Image,'id', 'ASC']]
     });
     return res.json(haunts);
 }));
@@ -164,7 +164,7 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
     });
 
     const addImages= async(images) => {
-        for (let i=0; i < images.length; i++) {
+        for (let i = 0; i < images.length ; i++) {
             let image = images[i];
             await Image.create({
                 url: image,
@@ -182,7 +182,7 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
         include: [
             {
                 model: Image,
-                order: [['id', 'DESC']]
+                order: [['id', 'ASC']]
             },
             {
                 model: User,
@@ -217,7 +217,8 @@ router.put('/:id', convertLatLong, roundRate, convertImageUrls, validateHaunt, h
         },
         include: [
             {
-                model: Image
+                model: Image,
+                order: [['id', 'ASC']]
             },
             {
                 model: User,

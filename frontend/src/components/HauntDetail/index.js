@@ -10,6 +10,7 @@ const HauntDetail = () => {
     const sessionUser = useSelector(state => state.session.user);
     const haunts = useSelector(state => state.haunts);
     let haunt = haunts[hauntId];
+    console.log('Haunt image array: ', haunt.Images);
     const [ isOwner, setIsOwner ] = useState(false);
 
     useEffect(() => {
