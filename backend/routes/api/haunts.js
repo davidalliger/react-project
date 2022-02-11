@@ -106,11 +106,15 @@ const validateHaunt = [
         .withMessage('Please round rate to the nearest cent.')
         .isLength({ max: 12 })
         .withMessage('Rate must be less than $9,999,999,999.00!')
-        .custom(value => value !== '0.00')
+        .custom(value => Number(value) > 0)
         .withMessage('Rate must be greater than $0.00!'),
     check('description')
         .exists({ checkFalsy: true })
         .withMessage('Please enter a description.'),
+    check('imageUrl')
+        .if(check('imageUrl').exists({ checkFalsy: true }))
+        .isURL()
+        .withMessage('Image URL must be a valid URL.'),
     handleValidationErrors
 ];
 
@@ -125,7 +129,8 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
         latitude,
         longitude,
         rate,
-        description
+        description,
+        imageUrl
     } = req.body;
     const newHaunt = await Haunt.create({
         userId,
@@ -139,7 +144,14 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
         rate,
         description
     });
-    console.log('Haunt is ', newHaunt);
+
+    if (imageUrl) {
+        await Image.create({
+            url: imageUrl,
+            hauntId: newHaunt.id
+        });
+    }
+
     const haunt = await Haunt.findOne({
         where: {
             id: newHaunt.id
@@ -155,8 +167,6 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
         ]
     });
 
-    console.log('newHaunt is ', haunt);
-
     return res.json({
         haunt
     });
@@ -165,7 +175,9 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
 router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const { id } = req.params;
     const hauntInfo = req.body;
+    const { imageUrl } = hauntInfo;
     delete hauntInfo.id;
+    delete hauntInfo.imageUrl;
     await Haunt.update(
         hauntInfo,
         {
@@ -173,7 +185,47 @@ router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCount
                 id
         }
     });
-    const haunt = await Haunt.findOne({
+
+
+    let haunt = await Haunt.findOne({
+        where: {
+            id
+        },
+        include: [
+            {
+                model: Image
+            },
+            {
+                model: User,
+                include: [Image]
+            }
+        ]
+    });
+
+    if (imageUrl) {
+
+        let hauntImageUrls = [];
+
+        if(haunt.Images.length) {
+            hauntImageUrls = haunt.Images.map(image => image.url);
+        }
+
+        if(!hauntImageUrls.includes(imageUrl)) {
+            await Image.create({
+                url: imageUrl,
+                hauntId: id
+            });
+
+        }
+
+    } else {
+        if (haunt.Images.length) {
+            await Image.destroy({
+                where: { hauntId: id }
+            });
+        }
+    }
+        haunt = await Haunt.findOne({
         where: {
             id
         },
@@ -197,6 +249,10 @@ router.delete('/:id', asyncHandler(async (req, res) => {
     const { id } = req.params;
     await Haunt.destroy({
         where: { id }
+    });
+
+    await Image.destroy({
+        where: { hauntId: id }
     });
 
     return res.json({ id });

@@ -94,7 +94,7 @@ const EditHauntForm = () => {
     const [longitude, setLongitude] = useState(haunt.longitude);
     const [rate, setRate] = useState(haunt.rate);
     const [description, setDescription] = useState(haunt.description);
-    // const [imageUrl, setImageUrl] = useState(haunt.Images.length ? haunt.Images[0].url : '');
+    const [imageUrl, setImageUrl] = useState(haunt.Images.length ? haunt.Images[0].url : '');
     const [showState, setShowState] = useState(haunt.country === 'United States');
     const [showOther, setShowOther] = useState(!(countries.includes(haunt.country)));
     const [errors, setErrors] = useState([]);
@@ -138,7 +138,8 @@ const EditHauntForm = () => {
             latitude,
             longitude,
             rate,
-            description
+            description,
+            imageUrl
         };
         // console.log('Haunt in handleSubmit is ', haunt);
         try {
@@ -311,17 +312,18 @@ const EditHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        {/* <div className='auth-form-field'>
+                        <div className='auth-form-field'>
                             <label htmlFor='image-url'>
                                 Image URL:
-                                <textarea
+                                <input
+                                    type='text'
                                     id='image-url'
                                     name='imageUrl'
                                     onChange={e => setImageUrl(e.target.value)}
                                     value={imageUrl}
                                 />
                             </label>
-                        </div> */}
+                        </div>
                     </div>
                     <div id='add-haunt-form-footer'>
                         <button
