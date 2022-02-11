@@ -221,7 +221,7 @@ export default function EditHauntForm() {
         try {
             let updatedHaunt = await dispatch(editHaunt(haunt));
             console.log('updatedHaunt in handleSubmit is ', updatedHaunt)
-            await dispatch(getHaunts());
+            // await dispatch(getHaunts());
             if (updatedHaunt) {
                 history.push(`/haunts/${updatedHaunt.id}`);
             }

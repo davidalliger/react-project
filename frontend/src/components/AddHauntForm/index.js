@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createHaunt } from '../../store/haunts';
+import { createHaunt, getHaunts } from '../../store/haunts';
 import { Redirect, useHistory } from 'react-router-dom';
 import './AddHauntForm.css';
 
@@ -196,6 +196,7 @@ const AddHauntForm = () => {
         // setImageFieldCount(0);
         try {
             let newHaunt = await dispatch(createHaunt(haunt));
+            // await dispatch(getHaunts());
             console.log('new haunt is ', newHaunt);
             if (newHaunt) {
                 history.push(`/haunts/${newHaunt.id}`);
