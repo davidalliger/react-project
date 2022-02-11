@@ -21,7 +21,7 @@ const HauntsPage = () => {
                 <Link to={`/haunts/${haunt.id}`} className='haunt-link' key={haunt.id}>
                     <div className='haunt-div'>
                         <div className='haunt-image-container'>
-                            <img src={haunt.Images.length ? haunt.Images[0].url : defaultUrl} className='haunt-image' />
+                            <img src={haunt.Images.length ? haunt.Images[haunt.Images.length - 1].url : defaultUrl} className='haunt-image' />
                         </div>
                         <div className='haunt-label-div'>
                             <p className='haunt-name'>{haunt.city}, {haunt.state ? haunt.state : haunt.country}</p>

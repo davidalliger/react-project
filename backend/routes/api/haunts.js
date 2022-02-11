@@ -1,6 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const { check } = require('express-validator');
+const { check, body } = require('express-validator');
 
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { Haunt, Image, User } = require('../../db/models');
@@ -13,11 +13,13 @@ router.get('/', asyncHandler(async (req, res) => {
     const haunts = await Haunt.findAll({
         include: [
             {
-                model: Image
+                model: Image,
+                order: [['id', 'ASC']]
             },
             {
                 model: User,
                 include: [Image]
+
             }
         ]
     });
@@ -111,10 +113,20 @@ const validateHaunt = [
     check('description')
         .exists({ checkFalsy: true })
         .withMessage('Please enter a description.'),
-    check('imageUrl')
-        .if(check('imageUrl').exists({ checkFalsy: true }))
-        .isURL()
-        .withMessage('Image URL must be a valid URL.'),
+    body('images').custom((values) => {
+        let pass = true;
+        for (let i = 0; i < values.length; i++){
+            let value = values[i];
+            if (!/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(value)) {
+                pass = false;
+            }
+        }
+        if (pass === false) {
+            throw new Error('Please provide a valid url for each image.');
+        } else {
+            return true;
+        }
+    }),
     handleValidationErrors
 ];
 
@@ -130,7 +142,7 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
         longitude,
         rate,
         description,
-        imageUrl
+        images
     } = req.body;
     const newHaunt = await Haunt.create({
         userId,
@@ -145,12 +157,17 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
         description
     });
 
-    if (imageUrl) {
-        await Image.create({
-            url: imageUrl,
-            hauntId: newHaunt.id
-        });
+    const addImages= async(images) => {
+        for (let i=0; i < images.length; i++) {
+            let image = images[i];
+            await Image.create({
+                url: image,
+                hauntId: newHaunt.id
+            });
+        }
     }
+
+    await addImages(images);
 
     const haunt = await Haunt.findOne({
         where: {
@@ -158,7 +175,8 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
         },
         include: [
             {
-                model: Image
+                model: Image,
+                order: [['id', 'ASC']]
             },
             {
                 model: User,
@@ -175,9 +193,9 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
 router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const { id } = req.params;
     const hauntInfo = req.body;
-    const { imageUrl } = hauntInfo;
+    const { images } = hauntInfo;
     delete hauntInfo.id;
-    delete hauntInfo.imageUrl;
+    delete hauntInfo.images;
     await Haunt.update(
         hauntInfo,
         {
@@ -202,24 +220,37 @@ router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCount
         ]
     });
 
-    if (imageUrl) {
-
-        if (haunt.Images.length && haunt.Images[0].url !== imageUrl) {
-            await Image.destroy({
-                where: { hauntId: id }
-            });
-        }
-        await Image.create({
-            url: imageUrl,
-            hauntId: id
-        });
-    } else {
-        if (haunt.Images.length) {
-            await Image.destroy({
-                where: { hauntId: id }
-            });
-        }
+    if (haunt.Images.length) {
+        haunt.Images.forEach(async(image, index) => {
+            if (images[index + 1] && images[index + 1] !== image.url) {
+                await Image.destroy({
+                    where: { hauntId: id }
+                });
+            }
+        })
     }
+
+
+    // if (imageUrl) {
+
+    //     if (haunt.Images.length && haunt.Images[0].url !== imageUrl) {
+    //         await Image.destroy({
+    //             where: { hauntId: id }
+    //         });
+    //     }
+    //     await Image.create({
+    //         url: imageUrl,
+    //         hauntId: id
+    //     });
+    // } else {
+    //     if (haunt.Images.length) {
+    //         await Image.destroy({
+    //             where: { hauntId: id }
+    //         });
+    //     }
+    // }
+
+
 
     haunt = await Haunt.findOne({
         where: {
