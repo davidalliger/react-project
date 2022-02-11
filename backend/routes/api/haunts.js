@@ -204,20 +204,15 @@ router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCount
 
     if (imageUrl) {
 
-        let hauntImageUrls = [];
-
-        if(haunt.Images.length) {
-            hauntImageUrls = haunt.Images.map(image => image.url);
-        }
-
-        if(!hauntImageUrls.includes(imageUrl)) {
-            await Image.create({
-                url: imageUrl,
-                hauntId: id
+        if (haunt.Images.length && haunt.Images[0].url !== imageUrl) {
+            await Image.destroy({
+                where: { hauntId: id }
             });
-
         }
-
+        await Image.create({
+            url: imageUrl,
+            hauntId: id
+        });
     } else {
         if (haunt.Images.length) {
             await Image.destroy({
@@ -225,7 +220,8 @@ router.put('/:id', convertLatLong, roundRate, validateHaunt, handleStateAndCount
             });
         }
     }
-        haunt = await Haunt.findOne({
+
+    haunt = await Haunt.findOne({
         where: {
             id
         },
