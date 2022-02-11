@@ -15,7 +15,11 @@ const AddHauntForm = () => {
     const [longitude, setLongitude] = useState('');
     const [rate, setRate] = useState('');
     const [description, setDescription] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
+    const [imageFieldCount, setImageFieldCount] = useState(0);
+    console.log('Before click, ImageFieldCount is ', imageFieldCount);
+    const [imageUrls, setImageUrls] = useState({});
+    console.log('Before click, ImageUrls is ', imageUrls);
+    const [currentValue, setCurrentValue] = useState('');
     const [showState, setShowState] = useState(false);
     const [showOther, setShowOther] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -44,6 +48,33 @@ const AddHauntForm = () => {
             history.push('/login');
         }
     }, [sessionUser]);
+
+    // useEffect(() => {
+    //     for (let i = 0; i < imageFieldCount; i++) {
+    //         showImageField[i] = true;
+    //     }
+    // }, [imageFieldCount])
+
+    const generateImageFields = (count) => {
+        const imageFields = []
+        for (let i = 0; i < count; i++) {
+            imageFields.push(
+                <div className='auth-form-field' key={i}>
+                    <label htmlFor={`image-url-${i}`}>
+                        Image URL:
+                        <input
+                            type='text'
+                            id={`image-url-${i}`}
+                            name='imageUrl1'
+                            onChange={handleImageField}
+                            value={imageUrls[i]}
+                        />
+                    </label>
+                </div>
+            );
+        }
+        return imageFields;
+    }
 
     const states = [
         'Alabama',
@@ -121,9 +152,33 @@ const AddHauntForm = () => {
         'Other'
     ];
 
+    const handleImageField = e => {
+        const key= e.target.id.split('-')[2];
+        setImageUrls({...imageUrls, [key]: e.target.value });
+        console.log('imageUrls is ', imageUrls);
+    }
+
+    const handleAddImageClick = e => {
+        setImageFieldCount(imageFieldCount + 1);
+        imageUrls[imageFieldCount] = '';
+        console.log('After adding one, imageFieldCount is ', imageFieldCount);
+        console.log('After adding one, imageUrls is ', imageUrls);
+    }
+
+    const handleRemoveImageClick = e => {
+        setImageFieldCount(imageFieldCount - 1);
+        delete imageUrls[imageFieldCount - 1];
+        console.log('After removing one, imageUrls is ', imageUrls);
+        console.log('After removing one, imageFieldCount is ', imageFieldCount);
+    }
+
     const handleSubmit = async(e) => {
         e.preventDefault();
         setErrors([]);
+        const images = [];
+        for (let key in imageUrls) {
+            images[key] = imageUrls[key];
+        }
         const haunt = {
             userId: sessionUser.id,
             name,
@@ -136,8 +191,9 @@ const AddHauntForm = () => {
             longitude,
             rate,
             description,
-            imageUrl
+            images
         };
+        // setImageFieldCount(0);
         try {
             let newHaunt = await dispatch(createHaunt(haunt));
             console.log('new haunt is ', newHaunt);
@@ -308,18 +364,39 @@ const AddHauntForm = () => {
                                 />
                             </label>
                         </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='image-url'>
-                                Image URL:
-                                <input
-                                    type='text'
-                                    id='image-url'
-                                    name='imageUrl'
-                                    onChange={e => setImageUrl(e.target.value)}
-                                    value={imageUrl}
-                                />
-                            </label>
-                        </div>
+                                        {/* <div className='auth-form-field'>
+                                            <label htmlFor={`image-url-${i}`}>
+                                                Image URL:
+                                                <input
+                                                    type='text'
+                                                    id={`image-url-${i}`}
+                                                    name='imageUrl1'
+                                                    onChange={handleImageField}
+                                                    value={imageUrls[i]}
+                                                />
+                                            </label>
+                                        </div> */}
+                            {generateImageFields(imageFieldCount)}
+                            {imageFieldCount < 5 && (
+                                <div className='auth-form-field'>
+                                    <button
+                                        type='button'
+                                        onClick={handleAddImageClick}
+                                    >
+                                        Add Image
+                                    </button>
+                                </div>
+                            )}
+                            {imageFieldCount > 0 && (
+                                <div className='auth-form-field'>
+                                    <button
+                                        type='button'
+                                        onClick={handleRemoveImageClick}
+                                    >
+                                        Remove Image
+                                    </button>
+                                </div>
+                            )}
                     </div>
                     <div id='add-haunt-form-footer'>
                         <button
