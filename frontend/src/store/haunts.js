@@ -37,7 +37,7 @@ export const getHaunts = () => async(dispatch) => {
     const response = await csrfFetch('/api/haunts');
     if (response.ok) {
         const hauntsList = await response.json();
-        const newState = dispatch(loadHaunts(hauntsList));
+        dispatch(loadHaunts(hauntsList));
     }
 }
 

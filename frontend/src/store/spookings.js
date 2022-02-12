@@ -1,16 +1,16 @@
 import { csrfFetch } from './csrf';
 
-// const GET_SPOOKINGS = 'spookings/GET_SPOOKINGS';
+const LOAD_SPOOKINGS = 'spookings/LOAD_SPOOKINGS';
 const ADD_SPOOKING = 'spookings/ADD_SPOOKING';
 // const UPDATE_SPOOKING = 'spookings/UPDATE_SPOOKING';
 // const DELETE_SPOOKING = 'spookings/DELETE_SPOOKING';
 
-// const loadHaunts = hauntsList => {
-//     return {
-//         type: LOAD_HAUNTS,
-//         hauntsList
-//     };
-// };
+const loadSpookings = spookingsList => {
+    return {
+        type: LOAD_SPOOKINGS,
+        spookingsList
+    };
+};
 
 const addSpooking = newSpooking => {
     return {
@@ -33,13 +33,13 @@ const addSpooking = newSpooking => {
 //     }
 // }
 
-// export const getHaunts = () => async(dispatch) => {
-//     const response = await csrfFetch('/api/haunts');
-//     if (response.ok) {
-//         const hauntsList = await response.json();
-//         const newState = dispatch(loadHaunts(hauntsList));
-//     }
-// }
+export const getSpookings = (user) => async(dispatch) => {
+    const response = await csrfFetch(`/api/spookings?userId=${user.id}`);
+    if (response.ok) {
+        const spookingsList = await response.json();
+        dispatch(loadSpookings(spookingsList));
+    }
+}
 
 export const createSpooking = (spooking) => async(dispatch) => {
     const response = await csrfFetch('/api/spookings', {
@@ -82,20 +82,22 @@ export const createSpooking = (spooking) => async(dispatch) => {
 
 // const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB.id - hauntA.id);
 
+const sortSpookings = spookings => spookings.sort((spookingA, spookingB) => (new Date(spookingA.startDate)) - (new Date(spookingB.startDate)));
+
 const spookingsReducer = (state = {}, action) => {
     let newState;
     switch (action.type) {
-        // case LOAD_HAUNTS:
-        //     const allHaunts = {};
-        //     action.hauntsList.forEach(haunt => {
-        //         allHaunts[haunt.id] = haunt;
-        //     });
-        //     newState = {
-        //         ...allHaunts,
-        //         ...state,
-        //         list: sortHaunts(action.hauntsList)
-        //     };
-        //     return newState;
+        case LOAD_SPOOKINGS:
+            const allSpookings = {};
+            action.spookingsList.forEach(spooking => {
+                allSpookings[spooking.id] = spooking;
+            });
+            newState = {
+                ...allSpookings,
+                ...state,
+                list: sortSpookings(action.spookingsList)
+            };
+            return newState;
         case ADD_SPOOKING:
             newState = { ...state };
             newState[action.newSpooking.id] = action.newSpooking;

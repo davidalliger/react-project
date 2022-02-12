@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { restoreUser } from './store/session';
 import { getHaunts } from './store/haunts';
+import { getSpookings } from './store/spookings';
 import Navigation from './components/Navigation';
 import SplashPage from './components/SplashPage';
 import HauntsPage from './components/HauntsPage';
@@ -17,16 +18,19 @@ function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
+  console.log('sessionUser is ', sessionUser);
+  const spookings = useSelector(state => state.spookings.list);
   useEffect(async() => {
     await dispatch(restoreUser());
     await dispatch(getHaunts());
-    // if (sessionUser) {
-    //   await dispatch(getSpookings(user));
-    // }
     setIsLoaded(true);
   }, []);
+  useEffect(async() => {
+    await dispatch(getSpookings(sessionUser));
+  }, [isLoaded, sessionUser]);
 
   console.log('isLoaded? ', isLoaded);
+  console.log('spookings is ', spookings);
 
   return (
     <>

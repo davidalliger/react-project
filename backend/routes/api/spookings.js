@@ -7,6 +7,14 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+router.get('/', requireAuth, asyncHandler(async (req, res) => {
+    const { userId } = req.query;
+    const spookings = await Spooking.findAll({
+        where: { userId }
+    });
+    return res.json(spookings);
+}));
+
 const checkValidDuration = (req, res, next) => {
     let isValidDuration = false;
     const { startDate, endDate } = req.body;
