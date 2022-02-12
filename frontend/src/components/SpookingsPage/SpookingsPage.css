@@ -1,0 +1,63 @@
+#spookings-page-container {
+    padding: 0 80px;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: .05ch;
+}
+#spookings-page-heading {
+    padding: 116px 0 24px;
+    border-bottom: 1px solid lightgray;
+}
+#spookings-page-heading h1 {
+    margin: 0;
+}
+
+#no-spookings {
+    padding: 32px 0 48px;
+    border-bottom: 1px solid lightgray;
+}
+
+#no-spookings h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+#no-spookings-message {
+    margin-top: 8px;
+}
+
+#no-spookings-button {
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: .1ch;
+    margin-top: 16px;
+    padding: 13px 23px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+#no-spookings-button:hover {
+    background-color: rgb(236, 236, 236);
+    cursor: pointer;
+}
+
+.spooking-container {
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    display: grid;
+    margin-top: 24px;
+    padding: 12px 24px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.spooking-haunt-image {
+    width: 90%;
+    height: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* margin-right: 24px; */
+}

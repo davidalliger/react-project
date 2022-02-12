@@ -82,7 +82,14 @@ export const createSpooking = (spooking) => async(dispatch) => {
 
 // const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB.id - hauntA.id);
 
-const sortSpookings = spookings => spookings.sort((spookingA, spookingB) => (new Date(spookingA.startDate)) - (new Date(spookingB.startDate)));
+const sortSpookings = spookings => {
+    const today = new Date();
+    spookings.sort((spookingA, spookingB) => (new Date(spookingA.startDate)) - (new Date(spookingB.startDate)));
+    const pastSpookings = spookings.filter(spooking => (new Date(spooking.startDate)) <= today);
+    const futureSpookings = spookings.filter(spooking => (new Date(spooking.startDate)) > today);
+    return [pastSpookings, futureSpookings];
+}
+
 
 const spookingsReducer = (state = {}, action) => {
     let newState;
@@ -92,10 +99,12 @@ const spookingsReducer = (state = {}, action) => {
             action.spookingsList.forEach(spooking => {
                 allSpookings[spooking.id] = spooking;
             });
+            const sortedSpookings = sortSpookings(action.spookingsList);
             newState = {
                 ...allSpookings,
                 ...state,
-                list: sortSpookings(action.spookingsList)
+                pastSpookings: sortedSpookings[0],
+                futureSpookings: sortedSpookings[1]
             };
             return newState;
         case ADD_SPOOKING:

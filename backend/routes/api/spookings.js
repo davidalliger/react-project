@@ -1,7 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check, body } = require('express-validator');
-const { Spooking } = require('../../db/models');
+const { Spooking, Haunt, Image, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth')
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -10,7 +10,21 @@ const router = express.Router();
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const { userId } = req.query;
     const spookings = await Spooking.findAll({
-        where: { userId }
+        where: { userId },
+        include: {
+            model: Haunt,
+            include: [
+                {
+                    model: Image,
+                },
+                {
+                    model: User,
+                    include: [Image]
+
+                },
+            ],
+            order: [[Image,'id', 'ASC']]
+        }
     });
     return res.json(spookings);
 }));
