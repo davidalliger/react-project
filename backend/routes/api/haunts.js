@@ -1,9 +1,9 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check, body } = require('express-validator');
-
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { Haunt, Image, User } = require('../../db/models');
+// const Sequelize = require('')
+// const Op = Sequelize.Op;
+const { Haunt, Image, User, Spooking, Sequelize } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 
@@ -24,6 +24,43 @@ router.get('/', asyncHandler(async (req, res) => {
         order: [[Image,'id', 'ASC']]
     });
     return res.json(haunts);
+}));
+
+router.get('/:id/spookings', asyncHandler(async (req, res) => {
+    const { hauntId } = req.params;
+    const { start, end } = req.query;
+    const newStartDate = new Date(start);
+    console.log(newStartDate);
+    const newEndDate = new Date(end);
+    console.log(newEndDate);
+    const conflicts = await Spooking.findAll({
+        where: {
+            hauntId,
+            [Op.or]: [
+                    {
+                        startDate: {
+                            [Op.gte]: newStartDate,
+                            [Op.lt]: newEndDate
+                        }
+                    },
+                    {
+                        endDate: {
+                            [Op.gt]: newStartDate,
+                            [Op.lte]: newEndDate
+                        }
+                    }
+                ]
+            }
+        });
+        if (conflicts.length) {
+            return res.json({
+                available: false
+            });
+        } else {
+            return res.json({
+                available: true
+            });
+        }
 }));
 
 const convertLatLong = (req, res, next) => {

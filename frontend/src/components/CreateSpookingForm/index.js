@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { createSpooking } from '../../store/spookings';
+import { csrfFetch } from '../../store/csrf';
 import './CreateSpookingForm.css'
 
 const CreateSpookingForm = ({haunt}) => {
@@ -10,7 +12,9 @@ const CreateSpookingForm = ({haunt}) => {
     const [available, setAvailable] = useState(false);
     const [duration, setDuration] = useState(0);
     const [minEnd, setMinEnd] = useState('');
+    const [showUnavailable, setShowUnavailable] = useState(false);
     const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
     const formatDate = date => {
         let year = date.getFullYear();
         let month = date.getMonth();
@@ -52,6 +56,7 @@ const CreateSpookingForm = ({haunt}) => {
     }
 
     useEffect(() => {
+        setShowUnavailable(false);
         if (available) {
             setAvailable(false);
         }
@@ -61,13 +66,36 @@ const CreateSpookingForm = ({haunt}) => {
             }
     }, [start, end])
 
-    const handleSubmit = () => {
+    const checkAvailability = () => async(dispatch) => {
+        const response = await csrfFetch(`/api/haunts/${haunt.id}/spookings?start=${start}&end=${end}`);
+        if (response.ok) {
+            const data = await response.json();
+            const available = data.available;
+            if (available) {
+                setAvailable(true);
+            } else {
+                setShowUnavailable(true);
+            }
+        }
+    }
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        setErrors([]);
         const spooking = {
             userId: sessionUser.id,
-            id: haunt.id,
+            hauntId: haunt.id,
             startDate: start,
             endDate: end,
             polterguests
+        }
+        try {
+            let newSpooking = await dispatchEvent(createSpooking(spooking));
+            console.log('New Spooking is ', newSpooking);
+        } catch (err) {
+            console.log('err is ', err);
+            let resBody = await err.json();
+            setErrors(resBody.errors);
         }
     }
 
@@ -133,10 +161,15 @@ const CreateSpookingForm = ({haunt}) => {
                         className='spooking-form-button'
                         type='button'
                         disabled={disabled}
-                        onClick={() => setAvailable(true)}
+                        onClick={() => checkAvailability()}
                     >
                         Check availability
                     </button>
+                    )}
+                    {showUnavailable && (
+                        <div id='spooking-form-bottom'>
+                            Sorry, no availability for the selected dates!
+                        </div>
                     )}
                     {available && (
                         <>

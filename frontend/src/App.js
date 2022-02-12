@@ -16,9 +16,13 @@ import DeleteHauntForm from './components/DeleteHauntForm';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const sessionUser = useSelector(state => state.session.user);
   useEffect(async() => {
     await dispatch(restoreUser());
     await dispatch(getHaunts());
+    // if (sessionUser) {
+    //   await dispatch(getSpookings(user));
+    // }
     setIsLoaded(true);
   }, []);
 
