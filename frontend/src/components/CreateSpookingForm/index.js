@@ -82,6 +82,10 @@ const CreateSpookingForm = ({haunt}) => {
                 setDisabled(false);
                 setDuration(getDuration(start, end));
             }
+        if (start && end && (new Date(start)) > (new Date(end))) {
+            setEnd('');
+            setDisabled(true);
+        }
     }, [start, end])
 
     const checkAvailability = async() => {
@@ -157,7 +161,7 @@ const CreateSpookingForm = ({haunt}) => {
                                     onChange={e => setStart(e.target.value)}
                                     value={start}
                                     min={today}
-                                    max={end ? maxStart : Infinity}
+                                    // max={end ? maxStart : Infinity}
                                 />
                             </div>
                             <div id='create-spooking-form-end'>
