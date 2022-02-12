@@ -26,7 +26,7 @@ function App() {
     setIsLoaded(true);
   }, []);
 
-
+  console.log('isLoaded? ', isLoaded);
 
   return (
     <>
