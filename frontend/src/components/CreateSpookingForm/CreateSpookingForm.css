@@ -1,14 +1,23 @@
 #create-spooking-form {
-    width: 370px;
+    width: 322px;
     border: 1px solid lightgray;
-    height: 500px;
+    /* height: 500px; */
     border-radius: 12px;
     margin-left: 95px;
-    padding: 24px;
+    /* padding: 24px; */
     box-shadow: 2px 2px 15px rgba(0, 0, 0, .10);;
-    box-sizing: border-box;
+    padding: 24px;
+    box-sizing: content-box;
 }
 
+#create-spooking-form-inside {
+    /* margin: 24px; */
+    /* width: max-content; */
+}
+
+#create-spooking-form-heading {
+    margin-bottom: 24px;
+}
 
 #create-spooking-form-heading h2 {
     margin: 0;
@@ -22,4 +31,161 @@
 
 #create-spooking-form-per-night {
     margin: 0 0 2px 5px;
+}
+
+#create-spooking-form-form {
+    box-sizing: border-box;
+    width: 322px;
+
+}
+
+#create-spooking-form-fields {
+    box-sizing: content-box;
+    display: grid;
+    grid-template-areas:
+        "one two"
+        "three three";
+    /* justify-content: space-between; */
+    padding: 0;
+    margin: 0 0 16px;
+    width: 322px;
+    border: 1px solid gray;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#create-spooking-form-fields-top {
+    display: flex;
+    justify-content: center;
+    width: 322px;
+    margin: 0;
+}
+
+#create-spooking-form-fields-bottom {
+    display: flex;
+    justify-self: center;
+    width: 322px;
+}
+
+#create-spooking-form-polterguests {
+    display: block;
+    border-top: 1px solid gray;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    /* grid-area: three; */
+    width: 322px;
+}
+
+.create-spooking-form-label {
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+#create-spooking-form-start {
+    box-sizing: border-box;
+    padding: 10px 12px;
+    /* margin-right: -1px; */
+    border-right: 1px solid gray;
+    display: block;
+    grid-area: one;
+    width: 161px;
+}
+
+#create-spooking-form-end {
+    grid-area: two;
+    display: block;
+    /* margin-left: -1px; */
+    box-sizing: border-box;
+    padding: 10px 12px;
+    width: 161px;
+    /* border: 1px solid gray; */
+}
+
+#create-spooking-form-start input {
+    box-sizing: border-box;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border: none;
+    font-family: sans-serif;
+}
+
+#create-spooking-form-start input:focus,
+#create-spooking-form-end input:focus,
+#create-spooking-form-polterguests input:focus {
+    outline: none;
+}
+
+
+#create-spooking-form-end input {
+    font-family: sans-serif;
+    border: none;
+    box-sizing: border-box;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+#create-spooking-form-polterguests input {
+    border: none;
+    box-sizing: border-box;
+    display: flex;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+}
+
+.spooking-form-button {
+    background-color: #6f50a0;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 14px 24px;
+    font-size: 16px;
+}
+
+.spooking-form-button:disabled {
+    background-color: rgb(172, 172, 172);
+    color: lightgray;
+}
+
+.spooking-form-button:hover:not([disabled]) {
+    background-color: #ad76c7;
+    cursor: pointer;
+}
+
+#spooking-form-bottom {
+    margin-top: 24px;
+    font-size: 16px;
+}
+
+#spooking-form-rate-breakdown {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#spooking-form-service-fee {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#spooking-form-total-div {
+    /* margin-bottom: 12px; */
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    border-top: 1px solid lightgray;
+    padding-top: 16px;
+    font-weight: bold;
 }
