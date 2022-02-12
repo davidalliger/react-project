@@ -73,7 +73,9 @@ const HauntDetail = () => {
                     </div>
                 </div>
                 <div>
-                    <CreateSpookingForm haunt={haunt} />
+                    {sessionUser.id !== haunt.User.id && (
+                        <CreateSpookingForm haunt={haunt} />
+                    )}
                 </div>
             </div>
         </div>
