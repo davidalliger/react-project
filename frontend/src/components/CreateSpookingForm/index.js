@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { csrfFetch } from '../../store/csrf';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSpooking } from '../../store/spookings';
+import { useHistory } from 'react-router-dom';
 import './CreateSpookingForm.css'
 // import CreateSpookingButton from './CreateSpookingButton';
 
@@ -17,6 +18,7 @@ const CreateSpookingForm = ({haunt}) => {
     const [minEnd, setMinEnd] = useState('');
     const [maxStart, setMaxStart] = useState('');
     const [showUnavailable, setShowUnavailable] = useState(false);
+    const history = useHistory();
     const formatDate = date => {
         let year = date.getFullYear();
         let month = date.getMonth();
@@ -104,22 +106,26 @@ const CreateSpookingForm = ({haunt}) => {
         console.log('Prevented default behavior.');
 
         // setErrors([]);
-        const spooking = {
-            userId: sessionUser.id,
-            hauntId: haunt.id,
-            startDate: start,
-            endDate: end,
-            polterguests
+        if (sessionUser) {
+            const spooking = {
+                userId: sessionUser.id,
+                hauntId: haunt.id,
+                startDate: start,
+                endDate: end,
+                polterguests
+            }
+            console.log('Spooking is ', spooking);
+            let newSpooking = await dispatch(createSpooking(spooking));
+            console.log('New Spooking is ', newSpooking);
+            // try {
+            // } catch (err) {
+            //     console.log('err is ', err);
+            //     let resBody = await err.json();
+            //     setErrors(resBody.errors);
+            // }
+        } else {
+            history.push('/login');
         }
-        console.log('Spooking is ', spooking);
-        let newSpooking = await dispatch(createSpooking(spooking));
-        console.log('New Spooking is ', newSpooking);
-        // try {
-        // } catch (err) {
-        //     console.log('err is ', err);
-        //     let resBody = await err.json();
-        //     setErrors(resBody.errors);
-        // }
     }
 
     return (
