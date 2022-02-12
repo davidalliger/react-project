@@ -3,10 +3,12 @@ import thunk from 'redux-thunk';
 
 import sessionReducer from './session';
 import hauntsReducer from './haunts';
+import spookingsReducer from './spookings';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
-    haunts: hauntsReducer
+    haunts: hauntsReducer,
+    spookings: spookingsReducer
     // images: imagesReducer
 });
 

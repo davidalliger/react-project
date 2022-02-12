@@ -2,7 +2,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check, body } = require('express-validator');
 
-const { Haunt, Image, User } = require('../../db/models');
+const { Spooking } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
@@ -15,7 +15,7 @@ router.post('/', asyncHandler(async (req, res) => {
         endDate,
         polterguests
     } = req.body;
-    const spooking = await Haunt.create({
+    const spooking = await Spooking.create({
         userId,
         hauntId,
         startDate,
@@ -26,3 +26,5 @@ router.post('/', asyncHandler(async (req, res) => {
         spooking
     });
 }));
+
+module.exports = router;

@@ -163,7 +163,7 @@
     cursor: pointer;
 }
 
-#spooking-form-bottom {
+.spooking-form-bottom {
     margin-top: 24px;
     font-size: 16px;
 }
@@ -188,4 +188,10 @@
     border-top: 1px solid lightgray;
     padding-top: 16px;
     font-weight: bold;
+}
+
+#no-availability {
+    display: flex;
+    justify-content: center;
+    color: red;
 }
