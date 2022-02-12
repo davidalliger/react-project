@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { createSpooking } from '../../store/spookings';
 import { csrfFetch } from '../../store/csrf';
+import { useDispatch, useSelector } from 'react-redux';
+import { createSpooking } from '../../store/spookings';
 import './CreateSpookingForm.css'
+// import CreateSpookingButton from './CreateSpookingButton';
 
 const CreateSpookingForm = ({haunt}) => {
+    const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
     const [polterguests, setPolterguests] = useState(1);
@@ -12,9 +15,8 @@ const CreateSpookingForm = ({haunt}) => {
     const [available, setAvailable] = useState(false);
     const [duration, setDuration] = useState(0);
     const [minEnd, setMinEnd] = useState('');
+    const [maxStart, setMaxStart] = useState('');
     const [showUnavailable, setShowUnavailable] = useState(false);
-    const sessionUser = useSelector(state => state.session.user);
-    const dispatch = useDispatch();
     const formatDate = date => {
         let year = date.getFullYear();
         let month = date.getMonth();
@@ -47,6 +49,19 @@ const CreateSpookingForm = ({haunt}) => {
         }
     }, [start]);
 
+    useEffect(() => {
+        if (end) {
+            const startDate = new Date(end);
+            console.log('startDate is initially ', startDate);
+            // const minusOne = startDate.getDate() + 1;
+            // startDate.setDate(minusOne);
+            // console.log('startDate is now ', startDate);
+            const newMaxStart = formatDate(startDate);
+            console.log('newMaxStart is ', newMaxStart);
+            setMaxStart(newMaxStart);
+        }
+    }, [end]);
+
     const getDuration = (startDate, endDate) => {
         const start = new Date(startDate).getTime();
         const end = new Date(endDate).getTime();
@@ -66,11 +81,15 @@ const CreateSpookingForm = ({haunt}) => {
             }
     }, [start, end])
 
-    const checkAvailability = () => async(dispatch) => {
+    const checkAvailability = async() => {
+        console.log('Inside checkAvailability!')
         const response = await csrfFetch(`/api/haunts/${haunt.id}/spookings?start=${start}&end=${end}`);
+        console.log(response);
         if (response.ok) {
             const data = await response.json();
+            console.log(data);
             const available = data.available;
+            console.log(available);
             if (available) {
                 setAvailable(true);
             } else {
@@ -80,8 +99,11 @@ const CreateSpookingForm = ({haunt}) => {
     }
 
     const handleSubmit = async(e) => {
+        console.log('Inside handleSubmit!!!');
         e.preventDefault();
-        setErrors([]);
+        console.log('Prevented default behavior.');
+
+        // setErrors([]);
         const spooking = {
             userId: sessionUser.id,
             hauntId: haunt.id,
@@ -89,14 +111,15 @@ const CreateSpookingForm = ({haunt}) => {
             endDate: end,
             polterguests
         }
-        try {
-            let newSpooking = await dispatchEvent(createSpooking(spooking));
-            console.log('New Spooking is ', newSpooking);
-        } catch (err) {
-            console.log('err is ', err);
-            let resBody = await err.json();
-            setErrors(resBody.errors);
-        }
+        console.log('Spooking is ', spooking);
+        let newSpooking = await dispatch(createSpooking(spooking));
+        console.log('New Spooking is ', newSpooking);
+        // try {
+        // } catch (err) {
+        //     console.log('err is ', err);
+        //     let resBody = await err.json();
+        //     setErrors(resBody.errors);
+        // }
     }
 
     return (
@@ -113,9 +136,8 @@ const CreateSpookingForm = ({haunt}) => {
                         </div>
                     </div>
                 </div>
-                <form
+                <div
                     id='create-spooking-form-form'
-                    onSubmit={handleSubmit}
                 >
                     <div id='create-spooking-form-fields'>
                         <div id='create-spooking-form-fields-top'>
@@ -128,6 +150,7 @@ const CreateSpookingForm = ({haunt}) => {
                                     onChange={e => setStart(e.target.value)}
                                     value={start}
                                     min={today}
+                                    max={end ? maxStart : Infinity}
                                 />
                             </div>
                             <div id='create-spooking-form-end'>
@@ -161,25 +184,43 @@ const CreateSpookingForm = ({haunt}) => {
                         className='spooking-form-button'
                         type='button'
                         disabled={disabled}
-                        onClick={() => checkAvailability()}
+                        onClick={checkAvailability}
                     >
                         Check availability
                     </button>
                     )}
                     {showUnavailable && (
-                        <div id='spooking-form-bottom'>
+                        <div className='spooking-form-bottom' id='no-availability'>
                             Sorry, no availability for the selected dates!
                         </div>
                     )}
                     {available && (
-                        <>
+                        // <CreateSpookingButton props={duration, haunt, start, end, polterguests}/>
+                        <form
+                            onSubmit={handleSubmit}
+                        >
+                            <input
+                                type='hidden'
+                                name='start'
+                                value={start}
+                            />
+                            <input
+                                type='hidden'
+                                name='end'
+                                value={end}
+                            />
+                            <input
+                                type='hidden'
+                                name='polterguests'
+                                value={polterguests}
+                            />
                             <button
                                 className='spooking-form-button'
                                 type='submit'
                             >
                                 Spook a trip!
                             </button>
-                            <div id='spooking-form-bottom'>
+                            <div className='spooking-form-bottom'>
                                 <div id='spooking-form-rate-breakdown'>
                                     <div id='spooking-form-rate-multiplication'>
                                         ${Math.round(haunt.rate)} x {duration} nights
@@ -206,9 +247,9 @@ const CreateSpookingForm = ({haunt}) => {
                                     ${Math.round((haunt.rate)*(getDuration(start, end))) + 5*getDuration(start, end)}
                                 </div>
                             </div>
-                        </>
+                        </form>
                     )}
-                </form>
+                </div>
             </div>
         </div>
     )

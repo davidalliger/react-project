@@ -1,9 +1,9 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check, body } = require('express-validator');
-// const Sequelize = require('')
-// const Op = Sequelize.Op;
-const { Haunt, Image, User, Spooking, Sequelize } = require('../../db/models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+const { Haunt, Image, User, Spooking } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 
@@ -27,7 +27,7 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 router.get('/:id/spookings', asyncHandler(async (req, res) => {
-    const { hauntId } = req.params;
+    const { id } = req.params;
     const { start, end } = req.query;
     const newStartDate = new Date(start);
     console.log(newStartDate);
@@ -35,7 +35,7 @@ router.get('/:id/spookings', asyncHandler(async (req, res) => {
     console.log(newEndDate);
     const conflicts = await Spooking.findAll({
         where: {
-            hauntId,
+            hauntId: id,
             [Op.or]: [
                     {
                         startDate: {

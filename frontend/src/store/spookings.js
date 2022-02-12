@@ -12,10 +12,10 @@ const ADD_SPOOKING = 'spookings/ADD_SPOOKING';
 //     };
 // };
 
-const addSpooking = newHaunt => {
+const addSpooking = newSpooking => {
     return {
         type: ADD_SPOOKING,
-        newHaunt
+        newSpooking
     }
 }
 
@@ -98,8 +98,12 @@ const spookingsReducer = (state = {}, action) => {
         //     return newState;
         case ADD_SPOOKING:
             newState = { ...state };
-            newState[action.newHaunt.id] = action.newHaunt;
-            newState.list = [ action.newHaunt, ...newState.list ];
+            newState[action.newSpooking.id] = action.newSpooking;
+            if (newState.list) {
+                newState.list = [ action.newSpooking, ...newState.list ];
+            } else {
+                newState.list = [ action.newSpooking ];
+            }
             return newState;
         // case UPDATE_HAUNT:
         //     newState = { ...state };
