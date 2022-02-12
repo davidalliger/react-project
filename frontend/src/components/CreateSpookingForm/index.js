@@ -5,9 +5,11 @@ import './CreateSpookingForm.css'
 const CreateSpookingForm = ({haunt}) => {
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
-    const [polterguests, setPolterguests] = useState('');
+    const [polterguests, setPolterguests] = useState(1);
     const [disabled, setDisabled] = useState(true);
     const [available, setAvailable] = useState(false);
+    const [duration, setDuration] = useState(0);
+    const [minEnd, setMinEnd] = useState('');
     const sessionUser = useSelector(state => state.session.user);
     const formatDate = date => {
         let year = date.getFullYear();
@@ -20,6 +22,26 @@ const CreateSpookingForm = ({haunt}) => {
         return formatted;
     }
     const today = formatDate(new Date());
+    const getTomorrow = () => {
+        const tomorrowsDate = new Date();
+        const tomorrowStart = tomorrowsDate.getDate() + 1;
+        tomorrowsDate.setDate(tomorrowStart);
+        return tomorrowsDate;
+    };
+    const tomorrow = formatDate(getTomorrow());
+
+    useEffect(() => {
+        if (start) {
+            const endDate = new Date(start);
+            console.log('endDate is initially ', endDate);
+            const plusOne = endDate.getDate() + 2
+            endDate.setDate(plusOne);
+            console.log('endDate is now ', endDate);
+            const newMinEnd = formatDate(endDate);
+            console.log('newMinEnd is ', newMinEnd);
+            setMinEnd(newMinEnd);
+        }
+    }, [start]);
 
     const getDuration = (startDate, endDate) => {
         const start = new Date(startDate).getTime();
@@ -30,18 +52,13 @@ const CreateSpookingForm = ({haunt}) => {
     }
 
     useEffect(() => {
-        if (start &&
-            end &&
-            polterguests > 0) {
-                setDisabled(false);
-                getDuration(start, end);
-            }
-    }, [start, end, polterguests])
-
-    useEffect(() => {
         if (available) {
             setAvailable(false);
         }
+        if (start && end) {
+                setDisabled(false);
+                setDuration(getDuration(start, end));
+            }
     }, [start, end])
 
     const handleSubmit = () => {
@@ -93,7 +110,7 @@ const CreateSpookingForm = ({haunt}) => {
                                     type='date'
                                     onChange={e => setEnd(e.target.value)}
                                     value={end}
-                                    min={start ? start : today}
+                                    min={start ? minEnd : tomorrow}
                                 />
                             </div>
                         </div>
@@ -104,6 +121,7 @@ const CreateSpookingForm = ({haunt}) => {
                                 </div>
                                 <input
                                     type='number'
+                                    min='1'
                                     onChange={e => setPolterguests(e.target.value)}
                                     value={polterguests}
                                 />
@@ -131,10 +149,10 @@ const CreateSpookingForm = ({haunt}) => {
                             <div id='spooking-form-bottom'>
                                 <div id='spooking-form-rate-breakdown'>
                                     <div id='spooking-form-rate-multiplication'>
-                                        ${Math.round(haunt.rate)} x {getDuration(start, end)} nights
+                                        ${Math.round(haunt.rate)} x {duration} nights
                                     </div>
                                     <div id='spooking-form-rate-total'>
-                                        ${Math.round((haunt.rate)*(getDuration(start, end)))}
+                                        ${Math.round((haunt.rate)*duration)}
                                     </div>
                                 </div>
                             </div>

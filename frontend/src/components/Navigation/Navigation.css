@@ -207,3 +207,11 @@
 .narrow {
     padding: 0 185px;
 }
+
+#menu-username {
+    font-weight: bold;
+}
+#menu-username:hover {
+    cursor: default;
+    background-color: white;
+}

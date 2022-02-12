@@ -35,7 +35,7 @@ const ProfileButton = ({ sessionUser }) => {
     if (sessionUser) {
         menu = (
             <div id='menu'>
-                <div className='menu-div'>
+                <div className='menu-div' id='menu-username'>
                     {sessionUser.username}
                 </div>
                 <div className='menu-div'>
