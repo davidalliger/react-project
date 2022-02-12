@@ -3,11 +3,13 @@ module.exports = (sequelize, DataTypes) => {
   const Spooking = sequelize.define('Spooking', {
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      references: {model: 'Users'}
     },
     hauntId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {model: 'Haunts'}
     },
     startDate: {
       type: DataTypes.DATE,

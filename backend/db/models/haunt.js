@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const Haunt = sequelize.define('Haunt', {
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {model: 'Users'}
     },
     name: {
       type: DataTypes.STRING(100),

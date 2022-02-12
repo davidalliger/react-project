@@ -195,3 +195,8 @@
     justify-content: center;
     color: red;
 }
+
+.spooking-errors-normal {
+    display: block;
+    font-size: 14px;
+}

@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const { Haunt, Image, User, Spooking } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
-
+const { requireAuth } = require('../../utils/auth')
 
 const router = express.Router();
 
@@ -173,7 +173,7 @@ const validateHaunt = [
     handleValidationErrors
 ];
 
-router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
+router.post('/', requireAuth, convertLatLong, roundRate, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const {
         userId,
         name,
@@ -233,7 +233,7 @@ router.post('/', convertLatLong, roundRate, validateHaunt, handleStateAndCountry
     });
 }));
 
-router.put('/:id', convertLatLong, roundRate, convertImageUrls, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
+router.put('/:id', requireAuth, convertLatLong, roundRate, convertImageUrls, validateHaunt, handleStateAndCountry, asyncHandler(async (req, res) => {
     const { id } = req.params;
     const hauntInfo = req.body;
     const { imageUrls, initialUrlsWithId } = hauntInfo;
@@ -359,7 +359,7 @@ router.put('/:id', convertLatLong, roundRate, convertImageUrls, validateHaunt, h
     });
 }));
 
-router.delete('/:id', asyncHandler(async (req, res) => {
+router.delete('/:id', requireAuth, asyncHandler(async (req, res) => {
     const { id } = req.params;
     await Haunt.destroy({
         where: { id }

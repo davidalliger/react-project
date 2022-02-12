@@ -2,10 +2,12 @@
 module.exports = (sequelize, DataTypes) => {
   const Image = sequelize.define('Image', {
     userId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      references: {model: 'Users'}
     },
     hauntId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      references: {model: 'Haunts'}
     },
     url: {
       allowNull: false,
