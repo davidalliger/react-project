@@ -2,7 +2,9 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check, body } = require('express-validator');
 const { Spooking, Haunt, Image, User } = require('../../db/models');
-const { requireAuth } = require('../../utils/auth')
+const { requireAuth } = require('../../utils/auth');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
@@ -41,6 +43,38 @@ const checkValidDuration = (req, res, next) => {
     next();
 }
 
+const checkConflicts = async(req, res, next) => {
+    let noConflicts = true;
+    const { startDate, endDate, hauntId } = req.body;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    let conflicts = [];
+    conflicts = await Spooking.findAll({
+        where: {
+            hauntId,
+            [Op.or]: [
+                    {
+                        startDate: {
+                            [Op.gte]: start,
+                            [Op.lt]: end
+                        }
+                    },
+                    {
+                        endDate: {
+                            [Op.gt]: start,
+                            [Op.lte]: end
+                        }
+                    }
+                ]
+            }
+        });
+    if (conflicts.length > 0) {
+        noConflicts = false;
+    }
+    req.body.noConflicts = noConflicts;
+    next();
+}
+
 const validateSpooking = [
     check('userId')
         .exists({ checkFalsy: true })
@@ -55,13 +89,20 @@ const validateSpooking = [
                 return true;
             }
         }),
+    check('noConflicts').custom((value) => {
+            if (value === false) {
+                throw new Error('Sorry, no availability for the selected dates.');
+            } else {
+                return true;
+            }
+        }),
     check('polterguests')
         .custom(value => Number(value) > 0)
         .withMessage('Number of polterguests must be greater than 0.'),
     handleValidationErrors
 ];
 
-router.post('/', requireAuth, checkValidDuration, validateSpooking, asyncHandler(async (req, res) => {
+router.post('/', requireAuth, checkValidDuration, checkConflicts, validateSpooking, asyncHandler(async (req, res) => {
     const {
         userId,
         hauntId,

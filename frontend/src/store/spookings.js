@@ -82,12 +82,17 @@ export const createSpooking = (spooking) => async(dispatch) => {
 
 // const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB.id - hauntA.id);
 
-const sortSpookings = spookings => {
+const sortAll = spookings => {
     const today = new Date();
     spookings.sort((spookingA, spookingB) => (new Date(spookingA.startDate)) - (new Date(spookingB.startDate)));
     const pastSpookings = spookings.filter(spooking => (new Date(spooking.startDate)) <= today);
     const futureSpookings = spookings.filter(spooking => (new Date(spooking.startDate)) > today);
     return [pastSpookings, futureSpookings];
+}
+
+const sortOneList = spookings => {
+    const sorted = spookings.sort((spookingA, spookingB) => (new Date(spookingA.startDate)) - (new Date(spookingB.startDate)));
+    return sorted;
 }
 
 
@@ -99,7 +104,7 @@ const spookingsReducer = (state = {}, action) => {
             action.spookingsList.forEach(spooking => {
                 allSpookings[spooking.id] = spooking;
             });
-            const sortedSpookings = sortSpookings(action.spookingsList);
+            const sortedSpookings = sortAll(action.spookingsList);
             newState = {
                 ...allSpookings,
                 ...state,
@@ -111,10 +116,8 @@ const spookingsReducer = (state = {}, action) => {
             newState = { ...state };
             newState[action.newSpooking.id] = action.newSpooking;
             if (newState.futureSpookings) {
-                const allSpookings = [ action.newSpooking, ...newState.pastSpookings, ...newState.futureSpookings ];
-                const sortedSpookings = sortSpookings(allSpookings);
-                newState.pastSpookings = sortedSpookings[0];
-                newState.futureSpookings = sortedSpookings[1];
+                const unsorted = [action.newSpooking, ...newState.futureSpookings];
+                newState.futureSpookings = sortOneList(unsorted);
             } else {
                 newState.futureSpookings = [ action.newSpooking ];
             }
