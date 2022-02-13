@@ -44,7 +44,6 @@ module.exports = (sequelize, DataTypes) => {
       attributes: {
         exclude: [
           'hashedPassword',
-          'email',
           'createdAt',
           'updatedAt'
         ]

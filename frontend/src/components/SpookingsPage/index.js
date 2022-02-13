@@ -1,10 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import FutureSpookings from './FutureSpookings';
-import PastSpookings from './PastSpookings';
 import './SpookingsPage.css';
-import { getSpookings } from '../../store/spookings';
 
 const SpookingsPage = () => {
     const dispatch = useDispatch();
@@ -66,6 +63,12 @@ const SpookingsPage = () => {
         return duration;
     }
 
+    const getTotal = (startDate, endDate, rate) => {
+        const duration = getDuration(startDate, endDate);
+        const total = duration * rate;
+        return total;
+    }
+
     const formatDate = (date) => {
         const justDate = date.split('T')[0];
         const parts = justDate.split('-');
@@ -120,9 +123,11 @@ const SpookingsPage = () => {
                                                 <div className='spooking-city-div'>
                                                     {(spooking.Haunt.city).toUpperCase()}
                                                 </div>
-                                                <div className='spooking-name-div'>
-                                                    {spooking.Haunt.name}
-                                                </div>
+                                                <Link to={`/haunts/${spooking.Haunt.id}`} className='spooking-name-link'>
+                                                    <div className='spooking-name-div'>
+                                                        {spooking.Haunt.name}
+                                                    </div>
+                                                </Link>
                                                 <div className='spooking-duration-div'>
                                                     <div>
                                                         {getDuration(spooking.startDate, spooking.endDate)} nights - {spooking.polterguests} polterguest{(spooking.polterguests > 1) && ( <span>s</span> )}
@@ -145,6 +150,24 @@ const SpookingsPage = () => {
                                             </div>
                                             <div className='spooking-host-div'>
                                                 <div className='spooking-host-image' style={{backgroundImage: `url(${spooking.Haunt.User.Images.length ? spooking.Haunt.User.Images[0].url : defaultUserUrl})`}}></div>
+                                                <div className='spooking-host-info'>
+                                                    <div className='spooking-host-name-div'>
+                                                        {spooking.Haunt.User.username}
+                                                    </div>
+                                                    <div className='spooking-host-email'>
+                                                        {spooking.Haunt.User.email}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='spooking-other-info-div'>
+                                                <div className='spooking-total-amount-div'>
+                                                    Total amount: <span className='spooking-dollar-amount'>
+                                                            ${getTotal(spooking.startDate, spooking.endDate, spooking.Haunt.rate)}
+                                                        </span>
+                                                </div>
+                                                <button className='spooking-cancel-button'>
+                                                    Cancel Trip
+                                                </button>
                                             </div>
                                         </div>
                                     ))}
