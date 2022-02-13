@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { destroyHaunt, getHaunts } from '../../store/haunts';
 import { useHistory, useParams, } from 'react-router-dom';
-// import './LoginForm.css';
+import './DeleteHauntForm.css';
 
 const DeleteHauntForm = () => {
     const dispatch = useDispatch();
@@ -21,10 +21,15 @@ const DeleteHauntForm = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        console.log('Inside handleSubmit!')
+        console.log('Destroying haunt...')
+
         try {
+            console.log('Destorying haunt...')
             await dispatch(destroyHaunt(haunt));
+            console.log('Getting haunts...')
             await dispatch(getHaunts());
-            history.push('/haunts');
+            // history.push('/haunts');
         } catch (err) {
             let resBody = await err.json();
             setErrors(resBody.errors);
@@ -33,6 +38,15 @@ const DeleteHauntForm = () => {
 
     return (
         <div className='form-page'>
+            <div className={errors.length ? 'errors-div' : 'errors-hidden'}>
+                <ul className='errors-ul'>
+                    {errors.map((error, index) => (
+                            <li key={index}>
+                                {error}
+                            </li>
+                        ))}
+                </ul>
+            </div>
             <form
                 className='auth-form'
                 onSubmit={handleSubmit}
@@ -44,12 +58,14 @@ const DeleteHauntForm = () => {
                     <button
                         type='button'
                         className='auth-button'
+                        id='delete-haunt-back'
                         onClick={() => history.push(`/haunts/${haunt.id}`)}
                     >
                         Cancel
                     </button>
                     <button
                         type='submit'
+                        id='delete-haunt-confirm'
                         className='auth-button'
                     >
                         Delete

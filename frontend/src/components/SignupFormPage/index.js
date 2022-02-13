@@ -113,9 +113,11 @@ const SignupFormPage = () => {
                     >
                     </input>
                 </div>
-                <button className='auth-button'>
-                    Sign Up
-                </button>
+                <div className='auth-button-div'>
+                    <button className='auth-button'>
+                        Sign Up
+                    </button>
+                </div>
             </form>
         </div>
     )

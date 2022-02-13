@@ -37,6 +37,21 @@ const LoginFormPage = () => {
         setPassword('');
     }
 
+    const loginDemoUser = async(e) => {
+        setErrors([]);
+        const user = {
+            credential: 'Demo',
+            password: 'password'
+        };
+        try {
+            await dispatch(login(user));
+        } catch (err) {
+            let resBody = await err.json();
+            setErrors(resBody.errors);
+        }
+        setPassword('');
+    }
+
     return (
         <div className='form-page'>
             <div className={errors.length ? 'errors-div' : 'errors-hidden'}>
@@ -80,9 +95,21 @@ const LoginFormPage = () => {
                     >
                     </input>
                 </div>
-                <button className='auth-button'>
-                    Log In
-                </button>
+                <div className='auth-button-div'>
+                    <button
+                        type='submit'
+                        className='auth-button'
+                    >
+                        Log In
+                    </button>
+                    <button
+                        type='button'
+                        className='auth-button'
+                        onClick={loginDemoUser}
+                    >
+                        Demo User
+                    </button>
+                </div>
             </form>
         </div>
     )

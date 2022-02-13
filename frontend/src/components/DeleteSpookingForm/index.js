@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { destroySpooking, getSpookings } from '../../store/spookings';
 import { useHistory, useParams, } from 'react-router-dom';
-// import './LoginForm.css';
+import './DeleteSpookingForm.css';
 
 const DeleteSpookingForm = () => {
     const dispatch = useDispatch();
@@ -12,8 +12,7 @@ const DeleteSpookingForm = () => {
     const { spookingId } = useParams();
     const spooking = spookings[spookingId];
     const history = useHistory();
-    console.log(history);
-    console.log(history[history.length - 2]);
+
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -47,13 +46,14 @@ const DeleteSpookingForm = () => {
                 className='auth-form'
                 onSubmit={handleSubmit}
             >
-                <div id='delete-haunt-confirmation-div'>
+                <div id='delete-spooking-confirmation-div'>
                     Are you sure you want to cancel your trip? Please confirm.
                 </div>
-                <div id='delete-haunt-button-div'>
+                <div id='delete-spooking-button-div'>
                     <button
                         type='button'
                         className='auth-button'
+                        id='delete-spooking-back'
                         onClick={history.goBack}
                     >
                         Back
@@ -61,6 +61,7 @@ const DeleteSpookingForm = () => {
                     <button
                         type='submit'
                         className='auth-button'
+                        id='delete-spooking-confirm'
                     >
                         Confirm
                     </button>
