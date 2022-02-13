@@ -1,6 +1,6 @@
 import { useParams, Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './SpookingDetailPage.css'
 
 const SpookingDetailPage = () => {
@@ -8,14 +8,21 @@ const SpookingDetailPage = () => {
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const spookings = useSelector(state => state.spookings);
+    const [futureSpooking, setFutureSpooking] = useState(false);
     console.log('spookings is ', spookings);
     let spooking = spookings[spookingId];
+    const today = new Date();
 
     useEffect(() => {
         if (!sessionUser) {
             history.push('/login');
         }
     }, [sessionUser]);
+
+    useEffect(()=> {
+        if ((new Date(spooking.startDate)) > today) setFutureSpooking(true);
+    }, [spooking])
+
 
     const convertToCardinals = (latitude, longitude) =>{
         let latNum = Number(latitude);
@@ -92,13 +99,15 @@ const SpookingDetailPage = () => {
                             </span>
                     </div>
                     <div id='spooking-detail-buttons-div'>
-                        <div>
-                            <Link to={`/spookings/${spooking.id}/delete`}>
-                                <button id='spooking-detail-cancel-button'>
-                                    Cancel Trip
-                                </button>
-                            </Link>
-                        </div>
+                        {futureSpooking && (
+                            <div>
+                                <Link to={`/spookings/${spooking.id}/delete`}>
+                                    <button id='spooking-detail-cancel-button'>
+                                        Cancel Trip
+                                    </button>
+                                </Link>
+                            </div>
+                        )}
                         <div>
                             <button
                                 id='spooking-detail-back-button'

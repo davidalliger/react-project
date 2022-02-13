@@ -1,0 +1,27 @@
+/* #delete-spooking-confirmation-div {
+    display: flex;
+    justify-content: center;
+} */
+
+#delete-spooking-button-div {
+    /* width: 100%; */
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    margin: 24px 0 0;
+}
+
+#delete-spooking-back {
+    width: 100px;
+    margin-right: 12px;
+}
+
+#delete-spooking-confirm {
+    width: 100px;
+    background-color: rgb(255, 7, 11);
+}
+
+#delete-spooking-confirm:hover {
+    background-color: rgb(255, 120, 86);
+}

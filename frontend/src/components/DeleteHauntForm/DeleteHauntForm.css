@@ -1,0 +1,22 @@
+#delete-haunt-button-div {
+    /* width: 100%; */
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    margin: 24px 0 0;
+}
+
+#delete-haunt-back {
+    width: 100px;
+    margin-right: 12px;
+}
+
+#delete-haunt-confirm {
+    width: 100px;
+    background-color: rgb(255, 7, 11);
+}
+
+#delete-haunt-confirm:hover {
+    background-color: rgb(255, 120, 86);
+}

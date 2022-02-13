@@ -38,20 +38,26 @@ function App() {
   }, []);
 
   useEffect(async() => {
-    if (isLoaded) {
-        await dispatch(getSpookings(sessionUser));
-        setGotSpookings(true);
+    console.log('Inside use effect!');
+    if (sessionUser) {
+      console.log('Trying to get spookings')
+      const spookings = await dispatch(getSpookings(sessionUser));
+      console.log('spookings is ', spookings);
     }
-    return () => setGotSpookings(false);
-}, [isLoaded, session]);
-
-useEffect(() => {
-  if (isLoaded && gotSpookings) {
     setReady(true);
-  }
-}, [gotSpookings, isLoaded, session])
+    return () => setReady(false);
+}, [isLoaded, sessionUser]);
+
+// useEffect(() => {
+//   if (isLoaded && gotSpookings) {
+//     setReady(true);
+//   }
+// }, [gotSpookings, isLoaded, session])
 
   console.log('isLoaded? ', isLoaded);
+  // console.log('gotSpookings? ', gotSpookings);
+  console.log('ready? ', ready);
+  console.log('sessionUser is ', sessionUser)
   return (
     <>
       {ready && (

@@ -360,7 +360,34 @@ router.put('/:id', requireAuth, convertLatLong, roundRate, convertImageUrls, val
     });
 }));
 
-router.delete('/:id', requireAuth, asyncHandler(async (req, res) => {
+const checkSpookings = async(req, res, next) => {
+    const { id } = req.params;
+    let noSpookings = true;
+    let spookings = [];
+    spookings = await Spooking.findAll({
+        where: {
+            hauntId: id
+        }
+    });
+    if (spookings.length > 0) {
+        noSpookings = false;
+    }
+    req.body.noSpookings = noSpookings;
+    next();
+}
+
+const validateDelete = [
+    check('noSpookings').custom((value) => {
+        if (value === false) {
+            throw new Error('Somebody has an upcoming trip! Please notify your polterguest before deleting.');
+        } else {
+            return true;
+        }
+    }),
+    handleValidationErrors
+]
+
+router.delete('/:id', requireAuth, checkSpookings, validateDelete, asyncHandler(async (req, res) => {
     const { id } = req.params;
     await Haunt.destroy({
         where: { id }
