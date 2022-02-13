@@ -53,11 +53,47 @@
 
 .spooking-haunt-image {
     width: 90%;
-    height: 200px;
+    height: 184px;
     border-radius: 15px;
     overflow: hidden;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     /* margin-right: 24px; */
+}
+
+.spooking-city-div {
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+
+.spooking-name-div {
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #6f50a0;
+}
+
+/* .spooking-name-div:hover {
+    color: #ad76c7;
+    cursor: pointer;
+} */
+
+.spooking-duration-div {
+    font-size: 14px;
+    margin: 0 0 10px;
+}
+
+.spooking-address-div {
+    font-size: 14px;
+}
+
+.spooking-host-image {
+    height: 56px;
+    min-width: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
