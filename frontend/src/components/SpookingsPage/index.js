@@ -6,11 +6,33 @@ import PastSpookings from './PastSpookings';
 import './SpookingsPage.css';
 import { getSpookings } from '../../store/spookings';
 
-const SpookingsPage = ({isLoaded}) => {
+const SpookingsPage = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+    const spookings = useSelector(state => state.spookings);
+    const pastSpookings = spookings.pastSpookings;
+    console.log('pastSpookings is ', pastSpookings)
+    const futureSpookings = spookings.futureSpookings;
+    const [showNavButtons, setShowNavButtons] = useState(false);
+    const [showNoTrips, setShowNoTrips] = useState(false);
+    const [showFuture, setShowFuture] = useState(false);
+    useEffect(() => {
+        if (pastSpookings && pastSpookings.length > 0) {
+            setShowNavButtons(true);
+        }
+    }, [pastSpookings]);
+    useEffect(() => {
+        if (!futureSpookings || futureSpookings.length === 0) {
+            setShowNoTrips(true);
+        }
+    }, [futureSpookings]);
+    useEffect(() => {
+        if (futureSpookings && futureSpookings.length > 0) {
+            setShowFuture(true);
+        }
+    }, [futureSpookings]);
     // const [finished, setFinished] = useState(false);
-    const [gotSpookings, setGotSpookings] = useState(false);
+    // const [gotSpookings, setGotSpookings] = useState(false);
     // useEffect(async() => {
     //     await dispatch(getSpookings(sessionUser));
     //     setFinished(true);
@@ -18,19 +40,16 @@ const SpookingsPage = ({isLoaded}) => {
     //     return () => setFinished(false);
     // }, [sessionUser]);
     console.log('sessionUser is ',sessionUser);
-    const pastSpookings = useSelector(state => state.spookings.pastSpookings);
-    console.log('pastSpookings is ', pastSpookings)
-    const futureSpookings = useSelector(state => state.spookings.futureSpookings);
     console.log('futureSpookings is ', futureSpookings)
     const [showPast, setShowPast] = useState(false);
     console.log('showPast is ', showPast);
-    useEffect(async() => {
-        if (isLoaded) {
-            await dispatch(getSpookings(sessionUser));
-            setGotSpookings(true);
-        }
-        return () => setGotSpookings(false);
-    }, []);
+    // useEffect(async() => {
+    //     if (isLoaded) {
+    //         await dispatch(getSpookings(sessionUser));
+    //         setGotSpookings(true);
+    //     }
+    //     return () => setGotSpookings(false);
+    // }, []);
 
     const debug = () => console.log('So far so good!');
 
@@ -55,10 +74,9 @@ const SpookingsPage = ({isLoaded}) => {
 
     return (
         <>
-        {gotSpookings && (
 
             <div id='spookings-page-container'>
-                {(pastSpookings && pastSpookings.length > 0) && (
+                {showNavButtons && (
                     <div>
                         <button
                             onClick={() => setShowPast(false)}
@@ -78,7 +96,7 @@ const SpookingsPage = ({isLoaded}) => {
                 </div>
                     {(!showPast) && (
                         <>
-                            {(!futureSpookings || !futureSpookings.length) && (
+                            {showNoTrips && (
                                 <div id='no-spookings'>
                                     <h2>
                                         You haven't spooked a trip... yet.
@@ -93,7 +111,7 @@ const SpookingsPage = ({isLoaded}) => {
                                     </Link>
                                 </div>
                             )}
-                            {(futureSpookings && futureSpookings.length) && (
+                            {showFuture && (
                                 <div className='spookings-list-container'>
                                     {futureSpookings.map(spooking => (
                                         <div className='spooking-container' key={spooking.id}>
@@ -134,11 +152,11 @@ const SpookingsPage = ({isLoaded}) => {
                             )}
                         </>
                     )}
-                {showPast && (
+                {/* {showPast && (
                     <>
                         <PastSpookings pastSpookings={pastSpookings} />
                     </>
-                )}
+                )} */}
 
                 {/* {!futureSpookings.length && (
                     <div id='no-spookings'>
@@ -158,7 +176,6 @@ const SpookingsPage = ({isLoaded}) => {
 
 
             </div>
-        )}
         </>
     )
 }

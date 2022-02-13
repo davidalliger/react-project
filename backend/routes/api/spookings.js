@@ -110,12 +110,29 @@ router.post('/', requireAuth, checkValidDuration, checkConflicts, validateSpooki
         endDate,
         polterguests
     } = req.body;
-    const spooking = await Spooking.create({
+    const newSpooking = await Spooking.create({
         userId,
         hauntId,
         startDate,
         endDate,
         polterguests
+    });
+    const spooking = await Spooking.findOne ({
+        where: { id: newSpooking.id },
+        include: {
+            model: Haunt,
+            include: [
+                {
+                    model: Image,
+                },
+                {
+                    model: User,
+                    include: [Image]
+
+                },
+            ],
+            order: [[Image,'id', 'ASC']]
+        }
     });
     return res.json({
         spooking
