@@ -43,6 +43,19 @@ const checkValidDuration = (req, res, next) => {
     next();
 }
 
+const checkNotInPast = (req, res, next) => {
+    let notInPast = true;
+    const { startDate, endDate } = req.body;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const today = new Date();
+    if (startDate < today || endDate < today) {
+        notInPast = false;
+    }
+    req.body.notInPast = notInPast;
+    next();
+}
+
 const checkConflicts = async(req, res, next) => {
     let noConflicts = true;
     const { startDate, endDate, hauntId } = req.body;
@@ -96,13 +109,20 @@ const validateSpooking = [
                 return true;
             }
         }),
+    check('notInPast').custom((value) => {
+        if (value === false) {
+            throw new Error('Check-in and check-out dates cannot be in the past.');
+        } else {
+            return true;
+        }
+    }),
     check('polterguests')
         .custom(value => Number(value) > 0)
         .withMessage('Number of polterguests must be greater than 0.'),
     handleValidationErrors
 ];
 
-router.post('/', requireAuth, checkValidDuration, checkConflicts, validateSpooking, asyncHandler(async (req, res) => {
+router.post('/', requireAuth, checkValidDuration, checkNotInPast, checkConflicts, validateSpooking, asyncHandler(async (req, res) => {
     const {
         userId,
         hauntId,
@@ -138,5 +158,15 @@ router.post('/', requireAuth, checkValidDuration, checkConflicts, validateSpooki
         spooking
     });
 }));
+
+router.delete('/:id', requireAuth, asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    await Spooking.destroy({
+        where: { id }
+    });
+
+    return res.json({ id });
+}));
+
 
 module.exports = router;

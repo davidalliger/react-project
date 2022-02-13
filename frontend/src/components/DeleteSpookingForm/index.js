@@ -1,35 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { destroyHaunt, getHaunts } from '../../store/haunts';
+import { destroySpooking, getSpookings } from '../../store/spookings';
 import { useHistory, useParams, } from 'react-router-dom';
 // import './LoginForm.css';
 
-const DeleteHauntForm = () => {
+const DeleteSpookingForm = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const [errors, setErrors] = useState([]);
-    const haunts = useSelector(state => state.haunts);
-    const { hauntId } = useParams();
-    const haunt = haunts[hauntId];
+    const spookings = useSelector(state => state.spookings);
+    const { spookingId } = useParams();
+    const spooking = spookings[spookingId];
     const history = useHistory();
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        try {
+            await dispatch(destroySpooking(spooking));
+            await dispatch(getSpookings(sessionUser));
+            history.push('/spookings');
+        } catch (err) {
+            let resBody = await err.json();
+            setErrors(resBody.errors);
+        }
+    }
 
     useEffect(() => {
         if (!sessionUser) {
             history.push('/login');
         }
     }, [sessionUser]);
-
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        try {
-            await dispatch(destroyHaunt(haunt));
-            await dispatch(getHaunts());
-            history.push('/haunts');
-        } catch (err) {
-            let resBody = await err.json();
-            setErrors(resBody.errors);
-        }
-    }
 
     return (
         <div className='form-page'>
@@ -38,21 +38,21 @@ const DeleteHauntForm = () => {
                 onSubmit={handleSubmit}
             >
                 <div id='delete-haunt-confirmation-div'>
-                    Are you sure you want to delete this haunt?
+                    Are you sure you want to cancel your trip? Please confirm.
                 </div>
                 <div id='delete-haunt-button-div'>
                     <button
                         type='button'
                         className='auth-button'
-                        onClick={() => history.push(`/haunts/${haunt.id}`)}
+                        onClick={() => history.push('/spookings')}
                     >
-                        Cancel
+                        Back
                     </button>
                     <button
                         type='submit'
                         className='auth-button'
                     >
-                        Delete
+                        Confirm
                     </button>
                 </div>
             </form>
@@ -60,4 +60,4 @@ const DeleteHauntForm = () => {
     )
 }
 
-export default DeleteHauntForm;
+export default DeleteSpookingForm;
