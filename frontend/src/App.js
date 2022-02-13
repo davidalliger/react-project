@@ -15,21 +15,25 @@ import AddHauntForm from './components/AddHauntForm';
 import EditHauntForm from './components/EditHauntForm';
 import DeleteHauntForm from './components/DeleteHauntForm';
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   // const [isFullyLoaded, setIsFullyLoaded] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
   useEffect(async() => {
-    let isLoading = true;
+
     await dispatch(restoreUser());
     await dispatch(getHaunts());
-    await dispatch(getSpookings(sessionUser));
-    if (isLoading) {
-      setIsLoaded(true);
-    }
-    return () => isLoading = false;
+    // await dispatch(getSpookings(sessionUser));
+    // if (isLoading) {
+    setIsLoaded(true);
+    // }
+    return () => setIsLoaded(false);
   }, []);
+  useEffect(async() => {
+    await dispatch(getSpookings(sessionUser));
+  }, [isLoaded]);
 
   console.log('isLoaded? ', isLoaded);
   return (
