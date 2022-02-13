@@ -1,10 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './SpookingsPage.css';
 
 const SpookingsPage = () => {
-    const dispatch = useDispatch();
+    const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const spookings = useSelector(state => state.spookings);
     const pastSpookings = spookings.pastSpookings;
@@ -14,6 +14,9 @@ const SpookingsPage = () => {
     const [showNoTrips, setShowNoTrips] = useState(false);
     const [showFuture, setShowFuture] = useState(false);
     useEffect(() => {
+        if (!sessionUser) {
+            history.push('/login');
+        }
         if (pastSpookings && pastSpookings.length > 0) {
             setShowNavButtons(true);
         }
@@ -23,7 +26,7 @@ const SpookingsPage = () => {
         if (futureSpookings && futureSpookings.length > 0) {
             setShowFuture(true);
         }
-    }, []);
+    }, [sessionUser]);
     // const [finished, setFinished] = useState(false);
     // const [gotSpookings, setGotSpookings] = useState(false);
     // useEffect(async() => {
@@ -72,107 +75,106 @@ const SpookingsPage = () => {
     }
 
     return (
-        <>
-
             <div id='spookings-page-container'>
-                {debug()}
                 <div id='spookings-page-heading'>
                     <h1>Spookings</h1>
                     {showNavButtons && (
-                    <div id='spookings-nav-buttons-div'>
-                        <button
-                            className='spooking-nav-button'
-                            onClick={() => setShowPast(false)}
-                        >
-                            Upcoming
-                        </button>
-                        <button
-                            className='spooking-nav-button'
-                            onClick={() => setShowPast(true)}
-                        >
-                            Past
-                        </button>
-                    </div>
-                )}
+                        <div id='spookings-nav-buttons-div'>
+                            <button
+                                className='spooking-nav-button'
+                                onClick={() => setShowPast(false)}
+                            >
+                                Upcoming
+                            </button>
+                            <button
+                                className='spooking-nav-button'
+                                onClick={() => setShowPast(true)}
+                            >
+                                Past
+                            </button>
+                        </div>
+                    )}
                 </div>
-                    {(!showPast) && (
-                        <>
-                            {showNoTrips && (
-                                <div id='no-spookings'>
-                                    <h2>
-                                        You haven't spooked a trip... yet.
-                                    </h2>
-                                    <div id='no-spookings-message'>
-                                        What are you waiting for? Have the time of your afterlife or just rest in peace at your new favorite haunt!
-                                    </div>
-                                    <Link to='/haunts'>
-                                        <button id='no-spookings-button'>
-                                            Start looking
-                                        </button>
-                                    </Link>
+                {(!showPast) && (
+                    <>
+                        {showNoTrips && (
+                            <div id='no-spookings'>
+                                <h2>
+                                    You haven't spooked a trip... yet.
+                                </h2>
+                                <div id='no-spookings-message'>
+                                    What are you waiting for? Have the time of your afterlife or just rest in peace at your new favorite haunt!
                                 </div>
-                            )}
-                            {showFuture && (
-                                <div className='spookings-list-container'>
-                                    {futureSpookings.map(spooking => (
-                                        <div className='spooking-container' key={spooking.id}>
-                                            <div className='spooking-haunt-image' style={{backgroundImage: `url(${(spooking.Haunt.Images.length > 0) ? spooking.Haunt.Images[0].url : defaultHauntUrl})`}}></div>
-                                            <div className='spooking-info'>
-                                                <div className='spooking-city-div'>
-                                                    {(spooking.Haunt.city).toUpperCase()}
+                                <Link to='/haunts'>
+                                    <button id='no-spookings-button'>
+                                        Start looking
+                                    </button>
+                                </Link>
+                            </div>
+                        )}
+                        {showFuture && (
+                            <div className='spookings-list-container'>
+                                {futureSpookings.map(spooking => (
+                                    <div className='spooking-container' key={spooking.id}>
+                                        <div className='spooking-haunt-image' style={{backgroundImage: `url(${(spooking.Haunt.Images.length > 0) ? spooking.Haunt.Images[0].url : defaultHauntUrl})`}}></div>
+                                        <div className='spooking-info'>
+                                            <div className='spooking-city-div'>
+                                                {(spooking.Haunt.city).toUpperCase()}
+                                            </div>
+                                            <Link to={`/haunts/${spooking.Haunt.id}`} className='spooking-name-link'>
+                                                <div className='spooking-name-div'>
+                                                    {spooking.Haunt.name}
                                                 </div>
-                                                <Link to={`/haunts/${spooking.Haunt.id}`} className='spooking-name-link'>
-                                                    <div className='spooking-name-div'>
-                                                        {spooking.Haunt.name}
-                                                    </div>
-                                                </Link>
-                                                <div className='spooking-duration-div'>
-                                                    <div>
-                                                        {getDuration(spooking.startDate, spooking.endDate)} nights - {spooking.polterguests} polterguest{(spooking.polterguests > 1) && ( <span>s</span> )}
-                                                    </div>
-                                                    <div>
-                                                        From {formatDate(spooking.startDate)} to {formatDate(spooking.endDate)}
-                                                    </div>
+                                            </Link>
+                                            <div className='spooking-duration-div'>
+                                                <div>
+                                                    {getDuration(spooking.startDate, spooking.endDate)} nights - {spooking.polterguests} polterguest{(spooking.polterguests > 1) && ( <span>s</span> )}
                                                 </div>
-                                                <div className='spooking-address-div'>
-                                                    <div>
-                                                        {spooking.Haunt.address}
-                                                    </div>
-                                                    <div>
-                                                        {spooking.Haunt.city}, {(spooking.Haunt.state) && (
-                                                            <span>{spooking.Haunt.state}, </span>
-                                                            )}{spooking.Haunt.country}
-                                                    </div>
+                                                <div>
+                                                    From {formatDate(spooking.startDate)} to {formatDate(spooking.endDate)}
                                                 </div>
+                                            </div>
+                                            <div className='spooking-address-div'>
+                                                <div>
+                                                    {spooking.Haunt.address}
+                                                </div>
+                                                <div>
+                                                    {spooking.Haunt.city}, {(spooking.Haunt.state) && (
+                                                        <span>{spooking.Haunt.state}, </span>
+                                                        )}{spooking.Haunt.country}
+                                                </div>
+                                            </div>
 
-                                            </div>
-                                            <div className='spooking-host-div'>
-                                                <div className='spooking-host-image' style={{backgroundImage: `url(${spooking.Haunt.User.Images.length ? spooking.Haunt.User.Images[0].url : defaultUserUrl})`}}></div>
-                                                <div className='spooking-host-info'>
-                                                    <div className='spooking-host-name-div'>
-                                                        {spooking.Haunt.User.username}
-                                                    </div>
-                                                    <div className='spooking-host-email'>
-                                                        {spooking.Haunt.User.email}
-                                                    </div>
+                                        </div>
+                                        <div className='spooking-host-div'>
+                                            <div className='spooking-host-image' style={{backgroundImage: `url(${spooking.Haunt.User.Images.length ? spooking.Haunt.User.Images[0].url : defaultUserUrl})`}}></div>
+                                            <div className='spooking-host-info'>
+                                                <div className='spooking-host-name-div'>
+                                                    {spooking.Haunt.User.username}
+                                                </div>
+                                                <div className='spooking-host-email'>
+                                                    {spooking.Haunt.User.email}
                                                 </div>
                                             </div>
-                                            <div className='spooking-other-info-div'>
-                                                <div className='spooking-total-amount-div'>
-                                                    Total amount: <span className='spooking-dollar-amount'>
-                                                            ${getTotal(spooking.startDate, spooking.endDate, spooking.Haunt.rate)}
-                                                        </span>
-                                                </div>
+                                        </div>
+                                        <div className='spooking-other-info-div'>
+                                            <div className='spooking-total-amount-div'>
+                                                Total amount: <span className='spooking-dollar-amount'>
+                                                        ${getTotal(spooking.startDate, spooking.endDate, spooking.Haunt.rate)}
+                                                    </span>
+                                            </div>
+                                            <Link to={`/spookings/${spooking.id}/delete`}>
                                                 <button className='spooking-cancel-button'>
                                                     Cancel Trip
                                                 </button>
-                                            </div>
+                                            </Link>
                                         </div>
-                                    ))}
-                                </div>
-                            )}
-                        </>
-                    )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </>
+                )}
                 {showPast && (
                     <div className='spookings-list-container'>
                         {pastSpookings.map(spooking => (
@@ -229,26 +231,7 @@ const SpookingsPage = () => {
                         ))}
                     </div>
                 )}
-
-                {/* {!futureSpookings.length && (
-                    <div id='no-spookings'>
-                        <h2>
-                            You haven't spooked a trip... yet.
-                        </h2>
-                        <div id='no-spookings-message'>
-                            What are you waiting for? Have the time of your afterlife or just rest in peace at your new favorite haunt!
-                        </div>
-                        <Link to='/haunts'>
-                            <button id='no-spookings-button'>
-                                Start looking
-                            </button>
-                        </Link>
-                    </div>
-                )} */}
-
-
             </div>
-        </>
     )
 }
 

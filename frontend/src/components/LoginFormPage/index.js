@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/session';
 import { Redirect, useHistory } from 'react-router-dom';
+import { getSpookings } from '../../store/spookings';
 // import './LoginForm.css';
 
 const LoginFormPage = () => {
@@ -12,8 +13,9 @@ const LoginFormPage = () => {
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
 
-    useEffect(() => {
+    useEffect(async() => {
         if(sessionUser) {
+            await dispatch(getSpookings(sessionUser));
             history.push('/');
         }
 

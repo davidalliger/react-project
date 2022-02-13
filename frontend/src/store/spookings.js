@@ -2,8 +2,7 @@ import { csrfFetch } from './csrf';
 
 const LOAD_SPOOKINGS = 'spookings/LOAD_SPOOKINGS';
 const ADD_SPOOKING = 'spookings/ADD_SPOOKING';
-// const UPDATE_SPOOKING = 'spookings/UPDATE_SPOOKING';
-// const DELETE_SPOOKING = 'spookings/DELETE_SPOOKING';
+const DELETE_SPOOKING = 'spookings/DELETE_SPOOKING';
 
 const loadSpookings = spookingsList => {
     return {
@@ -19,19 +18,12 @@ const addSpooking = newSpooking => {
     }
 }
 
-// const updateHaunt = updatedHaunt => {
-//     return {
-//         type: UPDATE_HAUNT,
-//         updatedHaunt
-//     }
-// }
-
-// const deleteHaunt = deletedHauntId => {
-//     return {
-//         type: DELETE_HAUNT,
-//         deletedHauntId
-//     }
-// }
+const deleteSpooking = deletedSpookingId => {
+    return {
+        type: DELETE_SPOOKING,
+        deletedSpookingId
+    }
+}
 
 export const getSpookings = (user) => async(dispatch) => {
     const response = await csrfFetch(`/api/spookings?userId=${user.id}`);
@@ -54,33 +46,17 @@ export const createSpooking = (spooking) => async(dispatch) => {
     }
 }
 
-// export const editHaunt = (haunt) => async(dispatch) => {
-//     const response = await csrfFetch(`/api/haunts/${haunt.id}`, {
-//         method: 'PUT',
-//         body: JSON.stringify(haunt)
-//     });
+export const destroySpooking = (spooking) => async(dispatch) => {
+    const response = await csrfFetch(`/api/spookings/${spooking.id}`, {
+        method: 'DELETE'
+    });
 
-//     if (response.ok) {
-//         const data = await response.json();
-//         const updatedHaunt = data.haunt;
-//         dispatch(updateHaunt(updatedHaunt));
-//         return updatedHaunt;
-//     }
-// }
-
-// export const destroyHaunt = (haunt) => async(dispatch) => {
-//     const response = await csrfFetch(`/api/haunts/${haunt.id}`, {
-//         method: 'DELETE'
-//     });
-
-//     if (response.ok) {
-//         const data = await response.json();
-//         const deletedHauntId = data.id;
-//         dispatch(deleteHaunt(deletedHauntId));
-//     }
-// }
-
-// const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB.id - hauntA.id);
+    if (response.ok) {
+        const data = await response.json();
+        const deletedSpookingId = data.id;
+        dispatch(deleteSpooking(deletedSpookingId));
+    }
+}
 
 const sortAll = spookings => {
     const today = new Date();
@@ -122,14 +98,10 @@ const spookingsReducer = (state = {}, action) => {
                 newState.futureSpookings = [ action.newSpooking ];
             }
             return newState;
-        // case UPDATE_HAUNT:
-        //     newState = { ...state };
-        //     newState[action.updatedHaunt.id] = action.updatedHaunt;
-        //     return newState;
-        // case DELETE_HAUNT:
-        //     newState = { ...state };
-        //     delete newState[action.deletedHauntId];
-        //     return newState;
+        case DELETE_SPOOKING:
+            newState = { ...state };
+            delete newState[action.deletedSpookingId];
+            return newState;
         default:
             return state;
     }

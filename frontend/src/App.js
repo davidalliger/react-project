@@ -14,12 +14,14 @@ import HauntDetail from './components/HauntDetail';
 import AddHauntForm from './components/AddHauntForm';
 import EditHauntForm from './components/EditHauntForm';
 import DeleteHauntForm from './components/DeleteHauntForm';
+import DeleteSpookingForm from './components/DeleteSpookingForm';
 
 
 function App() {
   const dispatch = useDispatch();
 
   const sessionUser = useSelector(state => state.session.user);
+  const session = useSelector(state => state.session);
   const [isLoaded, setIsLoaded] = useState(false);
   const [gotSpookings, setGotSpookings] = useState(false);
   const [ready, setReady] = useState(false);
@@ -46,7 +48,7 @@ useEffect(() => {
   if (isLoaded && gotSpookings) {
     setReady(true);
   }
-}, [gotSpookings, isLoaded])
+}, [gotSpookings, isLoaded, session])
 
   console.log('isLoaded? ', isLoaded);
   return (
@@ -78,6 +80,9 @@ useEffect(() => {
             </Route>
             <Route path='/haunts'>
               <HauntsPage />
+            </Route>
+            <Route path='/spookings/:spookingId/delete'>
+                <DeleteSpookingForm />
             </Route>
             <Route path='/spookings'>
                 <SpookingsPage />
