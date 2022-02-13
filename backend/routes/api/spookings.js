@@ -1,8 +1,10 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check, body } = require('express-validator');
-const { Spooking } = require('../../db/models');
-const { requireAuth } = require('../../utils/auth')
+const { Spooking, Haunt, Image, User } = require('../../db/models');
+const { requireAuth } = require('../../utils/auth');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
@@ -10,7 +12,21 @@ const router = express.Router();
 router.get('/', requireAuth, asyncHandler(async (req, res) => {
     const { userId } = req.query;
     const spookings = await Spooking.findAll({
-        where: { userId }
+        where: { userId },
+        include: {
+            model: Haunt,
+            include: [
+                {
+                    model: Image,
+                },
+                {
+                    model: User,
+                    include: [Image]
+
+                },
+            ],
+            order: [[Image,'id', 'ASC']]
+        }
     });
     return res.json(spookings);
 }));
@@ -24,6 +40,38 @@ const checkValidDuration = (req, res, next) => {
         isValidDuration = true;
     }
     req.body.isValidDuration = isValidDuration;
+    next();
+}
+
+const checkConflicts = async(req, res, next) => {
+    let noConflicts = true;
+    const { startDate, endDate, hauntId } = req.body;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    let conflicts = [];
+    conflicts = await Spooking.findAll({
+        where: {
+            hauntId,
+            [Op.or]: [
+                    {
+                        startDate: {
+                            [Op.gte]: start,
+                            [Op.lt]: end
+                        }
+                    },
+                    {
+                        endDate: {
+                            [Op.gt]: start,
+                            [Op.lte]: end
+                        }
+                    }
+                ]
+            }
+        });
+    if (conflicts.length > 0) {
+        noConflicts = false;
+    }
+    req.body.noConflicts = noConflicts;
     next();
 }
 
@@ -41,13 +89,20 @@ const validateSpooking = [
                 return true;
             }
         }),
+    check('noConflicts').custom((value) => {
+            if (value === false) {
+                throw new Error('Sorry, no availability for the selected dates.');
+            } else {
+                return true;
+            }
+        }),
     check('polterguests')
         .custom(value => Number(value) > 0)
         .withMessage('Number of polterguests must be greater than 0.'),
     handleValidationErrors
 ];
 
-router.post('/', requireAuth, checkValidDuration, validateSpooking, asyncHandler(async (req, res) => {
+router.post('/', requireAuth, checkValidDuration, checkConflicts, validateSpooking, asyncHandler(async (req, res) => {
     const {
         userId,
         hauntId,

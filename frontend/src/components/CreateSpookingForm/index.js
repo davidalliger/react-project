@@ -19,6 +19,7 @@ const CreateSpookingForm = ({haunt}) => {
     const [maxStart, setMaxStart] = useState('');
     const [showUnavailable, setShowUnavailable] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [showErrors, setShowErrors] = useState(false);
     const history = useHistory();
     const formatDate = date => {
         let year = date.getFullYear();
@@ -81,12 +82,22 @@ const CreateSpookingForm = ({haunt}) => {
         if (start && end) {
                 setDisabled(false);
                 setDuration(getDuration(start, end));
+                setErrors([]);
             }
         if (start && end && (new Date(start)) > (new Date(end))) {
             setEnd('');
             setDisabled(true);
         }
-    }, [start, end])
+    }, [start, end]);
+
+    useEffect(() => {
+        if (errors.length) {
+            setShowErrors(true);
+            setDisabled(true);
+        } else {
+            setShowErrors(false);
+        }
+    }, [errors]);
 
     const checkAvailability = async() => {
         console.log('Inside checkAvailability!')
@@ -101,6 +112,8 @@ const CreateSpookingForm = ({haunt}) => {
                 setAvailable(true);
             } else {
                 setShowUnavailable(true);
+                setDisabled(true);
+                // setAvailable(false);
             }
         }
     }
@@ -131,6 +144,10 @@ const CreateSpookingForm = ({haunt}) => {
         } else {
             history.push('/login');
         }
+        setAvailable(false);
+        setDisabled(true);
+        setStart('');
+        setEnd('');
     }
 
     return (
@@ -200,18 +217,24 @@ const CreateSpookingForm = ({haunt}) => {
                         Check availability
                     </button>
                     )}
-                    {showUnavailable && (
+                    {(showUnavailable && !errors.length) && (
                         <div className='spooking-form-bottom' id='no-availability'>
-                            Sorry, no availability for the selected dates!
-                            <div className={errors.length ? 'spooking-errors-normal' : 'errors-hidden'}>
-                                <ul id='haunt-errors-ul'>
-                                    {errors.map((error, index) => (
-                                        <li key={index}>
-                                            {error}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <ul>
+                                <li>
+                                    Sorry, no availability for the selected dates!
+                                </li>
+                            </ul>
+                        </div>
+                    )}
+                    {showErrors && (
+                        <div className='spooking-errors-normal'>
+                            <ul id='spooking-errors-ul'>
+                                {errors.map((error, index) => (
+                                    <li key={index}>
+                                        {error}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     )}
                     {available && (

@@ -38,9 +38,11 @@ const ProfileButton = ({ sessionUser }) => {
                 <div className='menu-div' id='menu-username'>
                     {sessionUser.username}
                 </div>
-                <div className='menu-div'>
-                    Spookings
-                </div>
+                <Link to='/spookings' className='menu-link'>
+                    <div className='menu-div'>
+                        Spookings
+                    </div>
+                </Link>
                 <Link to='/haunts/new' className='menu-link'>
                     <div className='menu-div'>
                         Host a ghost

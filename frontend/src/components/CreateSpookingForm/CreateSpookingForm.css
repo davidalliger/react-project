@@ -190,13 +190,22 @@
     font-weight: bold;
 }
 
-#no-availability {
-    display: flex;
-    justify-content: center;
+#no-availability ul {
+    margin: 24px 0 0;
+    font-size: 14px;
     color: red;
+    padding-left: 20px;
 }
 
-.spooking-errors-normal {
-    display: block;
+.spooking-errors-normal ul {
+    margin: 24px 0 0;
     font-size: 14px;
+    color: red;
+    padding-left: 20px;
+}
+
+.spooking-errors-normal li {
+    /* margin: 24px 0 0; */
+    /* font-size: 14px; */
+    /* color: red; */
 }

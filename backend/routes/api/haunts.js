@@ -33,7 +33,8 @@ router.get('/:id/spookings', asyncHandler(async (req, res) => {
     console.log(newStartDate);
     const newEndDate = new Date(end);
     console.log(newEndDate);
-    const conflicts = await Spooking.findAll({
+    let conflicts = [];
+    conflicts = await Spooking.findAll({
         where: {
             hauntId: id,
             [Op.or]: [
@@ -52,7 +53,7 @@ router.get('/:id/spookings', asyncHandler(async (req, res) => {
                 ]
             }
         });
-        if (conflicts.length) {
+        if (conflicts.length > 0) {
             return res.json({
                 available: false
             });

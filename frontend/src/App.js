@@ -9,29 +9,30 @@ import { getSpookings } from './store/spookings';
 import Navigation from './components/Navigation';
 import SplashPage from './components/SplashPage';
 import HauntsPage from './components/HauntsPage';
+import SpookingsPage from './components/SpookingsPage';
 import HauntDetail from './components/HauntDetail';
 import AddHauntForm from './components/AddHauntForm';
 import EditHauntForm from './components/EditHauntForm';
 import DeleteHauntForm from './components/DeleteHauntForm';
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   const sessionUser = useSelector(state => state.session.user);
-  console.log('sessionUser is ', sessionUser);
-  const spookings = useSelector(state => state.spookings.list);
   useEffect(async() => {
+
     await dispatch(restoreUser());
     await dispatch(getHaunts());
+    // await dispatch(getSpookings(sessionUser));
+    // if (isLoading) {
     setIsLoaded(true);
+    // }
+    return () => setIsLoaded(false);
   }, []);
-  useEffect(async() => {
-    await dispatch(getSpookings(sessionUser));
-  }, [isLoaded, sessionUser]);
 
   console.log('isLoaded? ', isLoaded);
-  console.log('spookings is ', spookings);
-
   return (
     <>
       {isLoaded && (
@@ -61,6 +62,9 @@ function App() {
             </Route>
             <Route path='/haunts'>
               <HauntsPage />
+            </Route>
+            <Route path='/spookings'>
+                <SpookingsPage isLoaded={isLoaded} />
             </Route>
           </Switch>
         </div>

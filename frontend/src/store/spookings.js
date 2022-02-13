@@ -82,7 +82,19 @@ export const createSpooking = (spooking) => async(dispatch) => {
 
 // const sortHaunts = haunts => haunts.sort((hauntA, hauntB) => hauntB.id - hauntA.id);
 
-const sortSpookings = spookings => spookings.sort((spookingA, spookingB) => (new Date(spookingA.startDate)) - (new Date(spookingB.startDate)));
+const sortAll = spookings => {
+    const today = new Date();
+    spookings.sort((spookingA, spookingB) => (new Date(spookingA.startDate)) - (new Date(spookingB.startDate)));
+    const pastSpookings = spookings.filter(spooking => (new Date(spooking.startDate)) <= today);
+    const futureSpookings = spookings.filter(spooking => (new Date(spooking.startDate)) > today);
+    return [pastSpookings, futureSpookings];
+}
+
+const sortOneList = spookings => {
+    const sorted = spookings.sort((spookingA, spookingB) => (new Date(spookingA.startDate)) - (new Date(spookingB.startDate)));
+    return sorted;
+}
+
 
 const spookingsReducer = (state = {}, action) => {
     let newState;
@@ -92,19 +104,22 @@ const spookingsReducer = (state = {}, action) => {
             action.spookingsList.forEach(spooking => {
                 allSpookings[spooking.id] = spooking;
             });
+            const sortedSpookings = sortAll(action.spookingsList);
             newState = {
                 ...allSpookings,
                 ...state,
-                list: sortSpookings(action.spookingsList)
+                pastSpookings: sortedSpookings[0],
+                futureSpookings: sortedSpookings[1]
             };
             return newState;
         case ADD_SPOOKING:
             newState = { ...state };
             newState[action.newSpooking.id] = action.newSpooking;
-            if (newState.list) {
-                newState.list = [ action.newSpooking, ...newState.list ];
+            if (newState.futureSpookings) {
+                const unsorted = [action.newSpooking, ...newState.futureSpookings];
+                newState.futureSpookings = sortOneList(unsorted);
             } else {
-                newState.list = [ action.newSpooking ];
+                newState.futureSpookings = [ action.newSpooking ];
             }
             return newState;
         // case UPDATE_HAUNT:
