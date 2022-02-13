@@ -55,12 +55,18 @@ const HauntDetail = () => {
                 {isOwner && (
                 <div id='haunt-detail-owner-buttons'>
                     <Link to={`/haunts/${haunt.id}/edit`} >
-                        <button>
+                        <button
+                            id='haunt-detail-edit-button'
+                            className='auth-button'
+                        >
                             Edit
                         </button>
                     </Link>
                     <Link to={`/haunts/${haunt.id}/delete`} >
-                        <button>
+                        <button
+                            id='haunt-detail-delete-button'
+                            className='auth-button'
+                        >
                             Delete
                         </button>
                     </Link>
