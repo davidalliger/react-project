@@ -17,17 +17,13 @@ const SpookingsPage = () => {
         if (pastSpookings && pastSpookings.length > 0) {
             setShowNavButtons(true);
         }
-    }, [pastSpookings]);
-    useEffect(() => {
         if (!futureSpookings || futureSpookings.length === 0) {
             setShowNoTrips(true);
         }
-    }, [futureSpookings]);
-    useEffect(() => {
         if (futureSpookings && futureSpookings.length > 0) {
             setShowFuture(true);
         }
-    }, [futureSpookings]);
+    }, []);
     // const [finished, setFinished] = useState(false);
     // const [gotSpookings, setGotSpookings] = useState(false);
     // useEffect(async() => {
@@ -79,23 +75,25 @@ const SpookingsPage = () => {
         <>
 
             <div id='spookings-page-container'>
-                {showNavButtons && (
-                    <div>
+                {debug()}
+                <div id='spookings-page-heading'>
+                    <h1>Spookings</h1>
+                    {showNavButtons && (
+                    <div id='spookings-nav-buttons-div'>
                         <button
+                            className='spooking-nav-button'
                             onClick={() => setShowPast(false)}
                         >
                             Upcoming
                         </button>
                         <button
+                            className='spooking-nav-button'
                             onClick={() => setShowPast(true)}
                         >
                             Past
                         </button>
                     </div>
                 )}
-                {debug()}
-                <div id='spookings-page-heading'>
-                    <h1>Spookings</h1>
                 </div>
                     {(!showPast) && (
                         <>
