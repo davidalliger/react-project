@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/session';
 import { Link } from 'react-router-dom';
+import { getSpookings } from '../../store/spookings';
 
 const ProfileButton = ({ sessionUser }) => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const ProfileButton = ({ sessionUser }) => {
 
     const logoutUser = async() => {
         const response = await dispatch(logout());
+        await dispatch(getSpookings(sessionUser));
         return response;
     }
 

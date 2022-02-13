@@ -43,7 +43,7 @@ function App() {
         setGotSpookings(true);
     }
     return () => setGotSpookings(false);
-}, [isLoaded]);
+}, [isLoaded, session]);
 
 useEffect(() => {
   if (isLoaded && gotSpookings) {
@@ -54,7 +54,7 @@ useEffect(() => {
   console.log('isLoaded? ', isLoaded);
   return (
     <>
-      {ready && (
+      {isLoaded && (
         <div id='content-wrapper'>
           <Navigation isLoaded={isLoaded} />
           <Switch>
