@@ -12,6 +12,8 @@ const DeleteSpookingForm = () => {
     const { spookingId } = useParams();
     const spooking = spookings[spookingId];
     const history = useHistory();
+    console.log(history);
+    console.log(history[history.length - 2]);
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -31,6 +33,14 @@ const DeleteSpookingForm = () => {
         }
     }, [sessionUser]);
 
+    // const goBack = () => {
+    //     if (history && history.length) {
+    //         history.push((history[history.length - 2]).location.pathname);
+    //     } else {
+    //         history.push('/haunts');
+    //     }
+    // }
+
     return (
         <div className='form-page'>
             <form
@@ -44,7 +54,7 @@ const DeleteSpookingForm = () => {
                     <button
                         type='button'
                         className='auth-button'
-                        onClick={() => history.push('/spookings')}
+                        onClick={history.goBack}
                     >
                         Back
                     </button>

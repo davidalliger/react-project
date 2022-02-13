@@ -54,7 +54,7 @@ useEffect(() => {
   console.log('isLoaded? ', isLoaded);
   return (
     <>
-      {isLoaded && (
+      {ready && (
         <div id='content-wrapper'>
           <Navigation isLoaded={isLoaded} />
           <Switch>
