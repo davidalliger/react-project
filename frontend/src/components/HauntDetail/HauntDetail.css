@@ -130,3 +130,24 @@
     grid-template-columns: 1fr auto;
     margin-top: 48px;
 }
+
+#haunt-detail-edit-button {
+    width: 80px;
+    /* font-size: 14px; */
+    margin-right: 12px;
+}
+
+#haunt-detail-delete-button {
+    width: 80px;
+    /* font-size: 14px; */
+    background-color: rgb(255, 7, 11);
+}
+
+#haunt-detail-delete-button:hover {
+    background-color: rgb(255, 120, 86);
+}
+
+#haunt-detail-owner-buttons {
+    display: flex;
+    flex-direction: row;
+}
