@@ -17,17 +17,13 @@ const SpookingsPage = () => {
         if (pastSpookings && pastSpookings.length > 0) {
             setShowNavButtons(true);
         }
-    }, [pastSpookings]);
-    useEffect(() => {
         if (!futureSpookings || futureSpookings.length === 0) {
             setShowNoTrips(true);
         }
-    }, [futureSpookings]);
-    useEffect(() => {
         if (futureSpookings && futureSpookings.length > 0) {
             setShowFuture(true);
         }
-    }, [futureSpookings]);
+    }, []);
     // const [finished, setFinished] = useState(false);
     // const [gotSpookings, setGotSpookings] = useState(false);
     // useEffect(async() => {
@@ -79,23 +75,25 @@ const SpookingsPage = () => {
         <>
 
             <div id='spookings-page-container'>
-                {showNavButtons && (
-                    <div>
+                {debug()}
+                <div id='spookings-page-heading'>
+                    <h1>Spookings</h1>
+                    {showNavButtons && (
+                    <div id='spookings-nav-buttons-div'>
                         <button
+                            className='spooking-nav-button'
                             onClick={() => setShowPast(false)}
                         >
                             Upcoming
                         </button>
                         <button
+                            className='spooking-nav-button'
                             onClick={() => setShowPast(true)}
                         >
                             Past
                         </button>
                     </div>
                 )}
-                {debug()}
-                <div id='spookings-page-heading'>
-                    <h1>Spookings</h1>
                 </div>
                     {(!showPast) && (
                         <>
@@ -175,11 +173,62 @@ const SpookingsPage = () => {
                             )}
                         </>
                     )}
-                {/* {showPast && (
-                    <>
-                        <PastSpookings pastSpookings={pastSpookings} />
-                    </>
-                )} */}
+                {showPast && (
+                    <div className='spookings-list-container'>
+                        {pastSpookings.map(spooking => (
+                            <div className='spooking-container' key={spooking.id}>
+                                <div className='spooking-haunt-image' style={{backgroundImage: `url(${(spooking.Haunt.Images.length > 0) ? spooking.Haunt.Images[0].url : defaultHauntUrl})`}}></div>
+                                <div className='spooking-info'>
+                                    <div className='spooking-city-div'>
+                                        {(spooking.Haunt.city).toUpperCase()}
+                                    </div>
+                                    <Link to={`/haunts/${spooking.Haunt.id}`} className='spooking-name-link'>
+                                        <div className='spooking-name-div'>
+                                            {spooking.Haunt.name}
+                                        </div>
+                                    </Link>
+                                    <div className='spooking-duration-div'>
+                                        <div>
+                                            {getDuration(spooking.startDate, spooking.endDate)} nights - {spooking.polterguests} polterguest{(spooking.polterguests > 1) && ( <span>s</span> )}
+                                        </div>
+                                        <div>
+                                            From {formatDate(spooking.startDate)} to {formatDate(spooking.endDate)}
+                                        </div>
+                                    </div>
+                                    <div className='spooking-address-div'>
+                                        <div>
+                                            {spooking.Haunt.address}
+                                        </div>
+                                        <div>
+                                            {spooking.Haunt.city}, {(spooking.Haunt.state) && (
+                                                <span>{spooking.Haunt.state}, </span>
+                                                )}{spooking.Haunt.country}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div className='spooking-host-div'>
+                                    <div className='spooking-host-image' style={{backgroundImage: `url(${spooking.Haunt.User.Images.length ? spooking.Haunt.User.Images[0].url : defaultUserUrl})`}}></div>
+                                    <div className='spooking-host-info'>
+                                        <div className='spooking-host-name-div'>
+                                            {spooking.Haunt.User.username}
+                                        </div>
+                                        <div className='spooking-host-email'>
+                                            {spooking.Haunt.User.email}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='spooking-other-info-div'>
+                                    <div className='spooking-total-amount-div'>
+                                        Total amount: <span className='spooking-dollar-amount'>
+                                                ${getTotal(spooking.startDate, spooking.endDate, spooking.Haunt.rate)}
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
 
                 {/* {!futureSpookings.length && (
                     <div id='no-spookings'>

@@ -177,7 +177,7 @@ const CreateSpookingForm = ({haunt}) => {
                                     type='date'
                                     onChange={e => setStart(e.target.value)}
                                     value={start}
-                                    min={today}
+                                    // min={today}
                                     // max={end ? maxStart : Infinity}
                                 />
                             </div>
