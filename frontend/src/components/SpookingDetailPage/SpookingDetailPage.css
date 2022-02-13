@@ -1,0 +1,116 @@
+#spooking-detail-container {
+    padding: 116px 80px 48px;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: .05ch;
+}
+#spooking-detail-info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#spooking-detail-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#spooking-detail-heading h1 {
+    margin: 0 0 12px;
+}
+
+#spooking-detail-heading h2 {
+    margin: 0 0 16px;
+}
+
+#spooking-detail-haunt-image {
+    width: 600px;
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 16px;
+}
+
+#spooking-detail-duration {
+    margin-bottom:5px;
+}
+
+#spooking-detail-polterguests {
+    margin-bottom: 16px;
+}
+
+#spooking-detail-location-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+#spooking-detail-address-one {
+    margin-bottom: 5px;
+}
+
+#spooking-detail-address-two {
+    margin-bottom: 5px;
+}
+
+#spooking-detail-latlong {
+    margin-bottom: 5px;
+}
+
+#spooking-detail-dollar-amount {
+    font-weight: bold;
+}
+
+#spooking-other-info-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#spooking-detail-total-amount-div {
+    margin-bottom: 30px;
+}
+
+#spooking-detail-buttons-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#spooking-detail-cancel-button {
+    background-color: rgb(255, 7, 11);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 14px;
+    font-size: 14px;
+    width: 120px;
+    margin-bottom: 8px;
+}
+
+#spooking-detail-cancel-button:hover {
+    background-color: rgb(255, 120, 86);
+    cursor: pointer;
+}
+
+#spooking-detail-back-button {
+    background-color:#6f50a0;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 14px;
+    font-size: 14px;
+    width: 120px;
+}
+
+#spooking-detail-back-button:hover {
+    background-color:#ad76c7;
+    cursor: pointer;
+}
