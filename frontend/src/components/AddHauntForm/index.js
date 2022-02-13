@@ -210,7 +210,7 @@ const AddHauntForm = () => {
     }
 
     return (
-        <div className='form-page'>
+        <div className='form-page' id='add-haunt-form-page'>
             {/* <div>
                 <div id='add-haunt-form-image'>
                     <div id='add-haunt-form-overlay'></div>
