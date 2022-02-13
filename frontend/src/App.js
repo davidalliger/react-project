@@ -18,9 +18,11 @@ import DeleteHauntForm from './components/DeleteHauntForm';
 
 function App() {
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const sessionUser = useSelector(state => state.session.user);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [gotSpookings, setGotSpookings] = useState(false);
+  const [ready, setReady] = useState(false);
   useEffect(async() => {
 
     await dispatch(restoreUser());
@@ -32,10 +34,24 @@ function App() {
     return () => setIsLoaded(false);
   }, []);
 
+  useEffect(async() => {
+    if (isLoaded) {
+        await dispatch(getSpookings(sessionUser));
+        setGotSpookings(true);
+    }
+    return () => setGotSpookings(false);
+}, [isLoaded]);
+
+useEffect(() => {
+  if (isLoaded && gotSpookings) {
+    setReady(true);
+  }
+}, [gotSpookings, isLoaded])
+
   console.log('isLoaded? ', isLoaded);
   return (
     <>
-      {isLoaded && (
+      {ready && (
         <div id='content-wrapper'>
           <Navigation isLoaded={isLoaded} />
           <Switch>
@@ -64,7 +80,7 @@ function App() {
               <HauntsPage />
             </Route>
             <Route path='/spookings'>
-                <SpookingsPage isLoaded={isLoaded} />
+                <SpookingsPage />
             </Route>
           </Switch>
         </div>
