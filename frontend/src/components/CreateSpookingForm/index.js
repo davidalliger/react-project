@@ -136,6 +136,7 @@ const CreateSpookingForm = ({haunt}) => {
                 console.log('Spooking is ', spooking);
                 let newSpooking = await dispatch(createSpooking(spooking));
                 console.log('New Spooking is ', newSpooking);
+                history.push(`/spookings/${newSpooking.id}`)
             } catch (err) {
                 console.log('err is ', err);
                 let resBody = await err.json();

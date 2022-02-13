@@ -163,6 +163,11 @@ const SpookingsPage = () => {
                                                         ${getTotal(spooking.startDate, spooking.endDate, spooking.Haunt.rate)}
                                                     </span>
                                             </div>
+                                            <Link to={`/spookings/${spooking.id}`}>
+                                                <button className='spooking-detail-page-button'>
+                                                    See Details
+                                                </button>
+                                            </Link>
                                             <Link to={`/spookings/${spooking.id}/delete`}>
                                                 <button className='spooking-cancel-button'>
                                                     Cancel Trip

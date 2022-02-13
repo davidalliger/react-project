@@ -15,6 +15,7 @@ import AddHauntForm from './components/AddHauntForm';
 import EditHauntForm from './components/EditHauntForm';
 import DeleteHauntForm from './components/DeleteHauntForm';
 import DeleteSpookingForm from './components/DeleteSpookingForm';
+import SpookingDetailPage from './components/SpookingDetailPage';
 
 
 function App() {
@@ -83,6 +84,9 @@ useEffect(() => {
             </Route>
             <Route path='/spookings/:spookingId/delete'>
                 <DeleteSpookingForm />
+            </Route>
+            <Route path='/spookings/:spookingId'>
+                <SpookingDetailPage />
             </Route>
             <Route path='/spookings'>
                 <SpookingsPage />

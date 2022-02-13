@@ -75,6 +75,10 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
+/* .spooking-container:hover {
+    background-color: rgb(245, 245, 245);
+} */
+
 .spooking-haunt-image {
     width: 90%;
     height: 184px;
@@ -150,6 +154,27 @@
     font-weight: bold;
 }
 
+/* .spooking-detail-page-link {
+    text-decoration: none;
+    color: black;
+} */
+
+.spooking-detail-page-button {
+        background-color:#6f50a0;
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        padding: 10px 14px;
+        font-size: 14px;
+        width: 100px;
+        margin-bottom: 8px;
+}
+
+.spooking-detail-page-button:hover {
+    background-color:#ad76c7;
+    cursor: pointer;
+}
 .spooking-cancel-button {
         background-color: rgb(255, 7, 11);
         border: none;
@@ -158,6 +183,7 @@
         font-family: 'Roboto', sans-serif;
         padding: 10px 14px;
         font-size: 14px;
+        width: 100px;
 }
 
 .spooking-cancel-button:hover {
