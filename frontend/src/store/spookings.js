@@ -110,10 +110,13 @@ const spookingsReducer = (state = {}, action) => {
         case ADD_SPOOKING:
             newState = { ...state };
             newState[action.newSpooking.id] = action.newSpooking;
-            if (newState.list) {
-                newState.list = [ action.newSpooking, ...newState.list ];
+            if (newState.futureSpookings) {
+                const allSpookings = [ action.newSpooking, ...newState.pastSpookings, ...newState.futureSpookings ];
+                const sortedSpookings = sortSpookings(allSpookings);
+                newState.pastSpookings = sortedSpookings[0];
+                newState.futureSpookings = sortedSpookings[1];
             } else {
-                newState.list = [ action.newSpooking ];
+                newState.futureSpookings = [ action.newSpooking ];
             }
             return newState;
         // case UPDATE_HAUNT:

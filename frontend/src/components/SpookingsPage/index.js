@@ -6,10 +6,11 @@ import PastSpookings from './PastSpookings';
 import './SpookingsPage.css';
 import { getSpookings } from '../../store/spookings';
 
-const SpookingsPage = () => {
+const SpookingsPage = ({isLoaded}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const [finished, setFinished] = useState(false);
+    // const [finished, setFinished] = useState(false);
+    const [gotSpookings, setGotSpookings] = useState(false);
     // useEffect(async() => {
     //     await dispatch(getSpookings(sessionUser));
     //     setFinished(true);
@@ -22,7 +23,14 @@ const SpookingsPage = () => {
     const futureSpookings = useSelector(state => state.spookings.futureSpookings);
     console.log('futureSpookings is ', futureSpookings)
     const [showPast, setShowPast] = useState(false);
-    console.log('showPast is ', showPast)
+    console.log('showPast is ', showPast);
+    useEffect(async() => {
+        if (isLoaded) {
+            await dispatch(getSpookings(sessionUser));
+            setGotSpookings(true);
+        }
+        return () => setGotSpookings(false);
+    }, []);
 
     const debug = () => console.log('So far so good!');
 
@@ -47,10 +55,10 @@ const SpookingsPage = () => {
 
     return (
         <>
-        {/* {finished && ( */}
+        {gotSpookings && (
 
             <div id='spookings-page-container'>
-                {(pastSpookings && pastSpookings.length) && (
+                {(pastSpookings && pastSpookings.length > 0) && (
                     <div>
                         <button
                             onClick={() => setShowPast(false)}
@@ -118,7 +126,7 @@ const SpookingsPage = () => {
 
                                             </div>
                                             <div className='spooking-host-div'>
-                                                <div id='spooking-host-image' style={{backgroundImage: `url(${spooking.Haunt.User.Images.length ? spooking.Haunt.User.Images[0].url : defaultUserUrl})`}}></div>
+                                                <div className='spooking-host-image' style={{backgroundImage: `url(${spooking.Haunt.User.Images.length ? spooking.Haunt.User.Images[0].url : defaultUserUrl})`}}></div>
                                             </div>
                                         </div>
                                     ))}
@@ -150,7 +158,7 @@ const SpookingsPage = () => {
 
 
             </div>
-        {/* )} */}
+        )}
         </>
     )
 }

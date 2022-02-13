@@ -19,7 +19,7 @@ import DeleteHauntForm from './components/DeleteHauntForm';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [isFullyLoaded, setIsFullyLoaded] = useState(false);
+
   const sessionUser = useSelector(state => state.session.user);
   useEffect(async() => {
 
@@ -31,9 +31,6 @@ function App() {
     // }
     return () => setIsLoaded(false);
   }, []);
-  useEffect(async() => {
-    await dispatch(getSpookings(sessionUser));
-  }, [isLoaded]);
 
   console.log('isLoaded? ', isLoaded);
   return (
@@ -67,7 +64,7 @@ function App() {
               <HauntsPage />
             </Route>
             <Route path='/spookings'>
-                <SpookingsPage />
+                <SpookingsPage isLoaded={isLoaded} />
             </Route>
           </Switch>
         </div>

@@ -112,6 +112,7 @@
 
 #haunt-host-image {
     height: 56px;
+    max-width: 56px;
     min-width: 56px;
     border-radius: 50%;
     overflow: hidden;
