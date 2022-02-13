@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/session';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { getSpookings } from '../../store/spookings';
-// import './LoginForm.css';
+import './LoginForm.css';
 
 const LoginFormPage = () => {
     const [credential, setCredential] = useState('');
@@ -67,6 +67,9 @@ const LoginFormPage = () => {
                 className='auth-form'
                 onSubmit={handleSubmit}
             >
+                <div className='auth-form-title'>
+                    Log In
+                </div>
                 <div className='auth-form-field'>
                     <label htmlFor='credential'>
                         Username or Email Address:
@@ -109,6 +112,9 @@ const LoginFormPage = () => {
                     >
                         Demo User
                     </button>
+                </div>
+                <div id='no-account-signup'>
+                    Don't have an account? <Link to='/signup' id='no-account-signup-link'>Sign up</Link>
                 </div>
             </form>
         </div>

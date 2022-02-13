@@ -66,6 +66,7 @@ const AddHauntForm = () => {
                             type='text'
                             id={`image-url-${i}`}
                             name='imageUrl1'
+                            className='auth-form-input'
                             onChange={handleImageField}
                             value={imageUrls[i]}
                         />
@@ -209,179 +210,214 @@ const AddHauntForm = () => {
     }
 
     return (
-        <div id='add-haunt-form-container'>
-            <div>
+        <div className='form-page'>
+            {/* <div>
                 <div id='add-haunt-form-image'>
                     <div id='add-haunt-form-overlay'></div>
                 </div>
+            </div> */}
+            <div className={errors.length ? 'haunt-errors-normal' : 'errors-hidden'}>
+                <ul id='haunt-errors-ul'>
+                    {errors.map((error, index) => (
+                            <li key={index}>
+                                {error}
+                            </li>
+                        ))}
+                </ul>
             </div>
-            <div id='add-haunt-form-div'>
-                <div className={errors.length ? 'haunt-errors-normal' : 'errors-hidden'}>
-                    <ul id='haunt-errors-ul'>
-                        {errors.map((error, index) => (
-                                <li key={index}>
-                                    {error}
-                                </li>
-                            ))}
-                    </ul>
+            <form
+                className='auth-form'
+                id='add-haunt-form'
+                onSubmit={handleSubmit}
+            >
+                <div className='auth-form-title'>
+                    Add a Haunt
                 </div>
-                <form
-                    className='auth-form'
-                    id='add-haunt-form'
-                    onSubmit={handleSubmit}
-                >
-                    <div id='add-haunt-form-fields'>
-                        <div className='auth-form-field'>
-                            <label htmlFor='name'>
-                                Give your haunt a name:
-                                <input
-                                    type='text'
-                                    id='name'
-                                    name='name'
-                                    onChange={e => setName(e.target.value)}
-                                    value={name}
-                                    />
-                            </label>
-                        </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='address'>
-                                Street Address:
-                                <input
-                                    type='text'
-                                    id='address'
-                                    name='address'
-                                    onChange={e => setAddress(e.target.value)}
-                                    value={address}
-                                    />
-                            </label>
-                        </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='city'>
-                                City:
-                                <input
-                                    type='text'
-                                    id='city'
-                                    name='city'
-                                    onChange={e => setCity(e.target.value)}
-                                    value={city}
-                                    />
-                            </label>
-                        </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='country'>
-                                Country:
-                                <select
-                                    id='country'
-                                    name='country'
-                                    onChange={e => setCountry(e.target.value)}
-                                    value={country}
-                                >
-                                    <option value='' disabled>Please select your country...</option>
-                                    {countries.map((country, index) => (
-                                        <option value={country} key={index}>{country}</option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-                        <div className='auth-form-field'>
+                <div id='add-haunt-form-fields'>
+                    <div id='add-haunt-form-inner-grid'>
+                        <div id='add-haunt-column-one'>
+                            <div className='auth-form-field'>
+                                <label htmlFor='name'>
+                                    Give your haunt a name:
+                                    <input
+                                        type='text'
+                                        id='name'
+                                        name='name'
+                                        className='auth-form-input'
+                                        onChange={e => setName(e.target.value)}
+                                        value={name}
+                                        />
+                                </label>
+                            </div>
+                            <div className='auth-form-field'>
+                                <label htmlFor='address'>
+                                    Street Address:
+                                    <input
+                                        type='text'
+                                        id='address'
+                                        name='address'
+                                        className='auth-form-input'
+                                        onChange={e => setAddress(e.target.value)}
+                                        value={address}
+                                        />
+                                </label>
+                            </div>
+                            <div className='auth-form-field'>
+                                <label htmlFor='city'>
+                                    City:
+                                    <input
+                                        type='text'
+                                        id='city'
+                                        name='city'
+                                        className='auth-form-input'
+                                        onChange={e => setCity(e.target.value)}
+                                        value={city}
+                                        />
+                                </label>
+                            </div>
+                            <div className='auth-form-field'>
+                                <label htmlFor='country'>
+                                        Country:
+                                        <div className='auth-form-input'>
+                                        <select
+                                            id='country'
+                                            name='country'
+                                            className='auth-select'
+                                            onChange={e => setCountry(e.target.value)}
+                                            value={country}
+                                        >
+                                            <option value='' disabled>Please select your country...</option>
+                                            {countries.map((country, index) => (
+                                                <option value={country} key={index}>{country}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </label>
+                            </div>
                             {showState && (
-                                <label htmlFor='state'>
-                                State:
-                                <select
-                                    id='state'
-                                    name='state'
-                                    onChange={e => setState(e.target.value)}
-                                    value={state}
-                                    // required={showState}
-                                >
-                                    <option value='' disabled>Please select your state...</option>
-                                    {states.map((state, index) => (
-                                        <option value={state} key={index}>{state}</option>
-                                    ))}
-                                </select>
-                            </label>
-                            )}
-                        </div>
-                        <div className='auth-form-field'>
-                            {showOther && (
-                                <label htmlFor='other'>
-                                Other:
-                                <input
-                                    type='text'
-                                    id='other'
-                                    name='other'
-                                    onChange={e => setOther(e.target.value)}
-                                    value={other}
-                                    // required={showOther}
-                                    placeholder='Please enter the name of your country'
-                                />
-                            </label>
-                            )}
-                        </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='latitude'>
-                                Latitude:
-                                <input
-                                    type='number'
-                                    id='latitude'
-                                    name='latitude'
-                                    onChange={e => setLatitude(e.target.value)}
-                                    value={latitude}
-                                />
-                            </label>
-                        </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='longitude'>
-                                Longitude:
-                                <input
-                                    type='number'
-                                    id='longitude'
-                                    name='longitude'
-                                    onChange={e => setLongitude(e.target.value)}
-                                    value={longitude}
-                                    />
-                            </label>
-                        </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='rate'>
-                                Nightly Rate:
-                                <input
-                                    type='number'
-                                    id='rate'
-                                    name='rate'
-                                    onChange={e => setRate(e.target.value)}
-                                    value={rate}
-                                />
-                            </label>
-                        </div>
-                        <div className='auth-form-field'>
-                            <label htmlFor='description'>
-                                Description:
-                                <textarea
-                                    id='description'
-                                    name='description'
-                                    onChange={e => setDescription(e.target.value)}
-                                    value={description}
-                                />
-                            </label>
-                        </div>
-                                        {/* <div className='auth-form-field'>
-                                            <label htmlFor={`image-url-${i}`}>
-                                                Image URL:
-                                                <input
-                                                    type='text'
-                                                    id={`image-url-${i}`}
-                                                    name='imageUrl1'
-                                                    onChange={handleImageField}
-                                                    value={imageUrls[i]}
-                                                />
-                                            </label>
-                                        </div> */}
-                            {generateImageFields(imageFieldCount)}
-                            {imageFieldCount < 5 && (
                                 <div className='auth-form-field'>
+                                    <label htmlFor='state'>
+                                    State:
+                                        <div className='auth-form-input'>
+                                            <select
+                                                id='state'
+                                                name='state'
+                                                className='auth-select'
+                                                onChange={e => setState(e.target.value)}
+                                                value={state}
+                                                // required={showState}
+                                            >
+                                                <option value='' disabled>Please select your state...</option>
+                                                {states.map((state, index) => (
+                                                    <option value={state} key={index}>{state}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </label>
+                                </div>
+                            )}
+                            {showOther && (
+                                <div className='auth-form-field'>
+                                    <label htmlFor='other'>
+                                    Other:
+                                        <input
+                                            type='text'
+                                            id='other'
+                                            className='auth-form-input'
+                                            name='other'
+                                            onChange={e => setOther(e.target.value)}
+                                            value={other}
+                                            // required={showOther}
+                                            placeholder='Please enter country'
+                                        />
+                                    </label>
+                                </div>
+                            )}
+                        </div>
+                        <div id='separator-one'></div>
+                        {/* <div id='separator-two'></div> */}
+                        <div id='add-haunt-column-two'>
+                            <div className='auth-form-field'>
+                                <label htmlFor='latitude'>
+                                    Latitude:
+                                    <input
+                                        type='number'
+                                        id='latitude'
+                                        name='latitude'
+                                        className='auth-form-input'
+                                        min='-90'
+                                        max='90'
+                                        onChange={e => setLatitude(e.target.value)}
+                                        value={latitude}
+                                    />
+                                </label>
+                            </div>
+                            <div className='auth-form-field'>
+                                <label htmlFor='longitude'>
+                                    Longitude:
+                                    <input
+                                        type='number'
+                                        id='longitude'
+                                        name='longitude'
+                                        className='auth-form-input'
+                                        min='-180'
+                                        max='180'
+                                        onChange={e => setLongitude(e.target.value)}
+                                        value={longitude}
+                                        />
+                                </label>
+                            </div>
+                            <div className='auth-form-field'>
+                                <label htmlFor='rate'>
+                                    Nightly Rate:
+                                    <input
+                                        type='number'
+                                        id='rate'
+                                        name='rate'
+                                        className='auth-form-input'
+                                        min='1'
+                                        onChange={e => setRate(e.target.value)}
+                                        value={rate}
+                                    />
+                                </label>
+                            </div>
+                            <div className='auth-form-field'>
+                                <label htmlFor='description'>
+                                    Description:
+                                    <textarea
+                                        id='description'
+                                        name='description'
+                                        className='auth-form-input'
+                                        onChange={e => setDescription(e.target.value)}
+                                        value={description}
+                                    />
+                                </label>
+                            </div>
+                                            {/* <div className='auth-form-field'>
+                                                <label htmlFor={`image-url-${i}`}>
+                                                    Image URL:
+                                                    <input
+                                                        type='text'
+                                                        id={`image-url-${i}`}
+                                                        name='imageUrl1'
+                                                        onChange={handleImageField}
+                                                        value={imageUrls[i]}
+                                                    />
+                                                </label>
+                                            </div> */}
+                        </div>
+                    </div>
+                    <div id='add-haunt-images-div'>
+                        {generateImageFields(imageFieldCount)}
+                        <div id='add-remove-buttons'>
+
+                            {imageFieldCount < 5 && (
+                                <div className='auth-form-field'
+                                id='add-haunt-image-button-area'>
                                     <button
                                         type='button'
+                                        className='auth-button'
+                                        id='add-haunt-button'
                                         onClick={handleAddImageClick}
                                     >
                                         Add Image
@@ -389,17 +425,38 @@ const AddHauntForm = () => {
                                 </div>
                             )}
                             {imageFieldCount > 0 && (
-                                <div className='auth-form-field'>
+                                <div className='auth-form-field'
+                                id='add-haunt-image-button-area'>
                                     <button
                                         type='button'
+                                        className='auth-button'
+                                        id='add-haunt-button'
                                         onClick={handleRemoveImageClick}
                                     >
                                         Remove Image
                                     </button>
                                 </div>
                             )}
+                        </div>
                     </div>
-                    <div id='add-haunt-form-footer'>
+                    <div id='add-haunt-button-div'>
+                    <button
+                        type='button'
+                        className='auth-button'
+                        id='add-haunt-back'
+                        onClick={history.goBack}
+                    >
+                        Back
+                    </button>
+                    <button
+                        type='submit'
+                        id='add-haunt-submit'
+                        className='auth-button'
+                    >
+                        Submit
+                    </button>
+                </div>
+                    {/* <div id='add-haunt-form-footer'>
                         <button
                         type='button'
                         onClick={history.goBack}
@@ -411,9 +468,9 @@ const AddHauntForm = () => {
                         >
                             Submit
                         </button>
-                    </div>
-                </form>
-            </div>
+                    </div> */}
+                </div>
+            </form>
         </div>
     )
 };

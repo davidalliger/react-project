@@ -29,7 +29,7 @@ const DeleteHauntForm = () => {
             await dispatch(destroyHaunt(haunt));
             console.log('Getting haunts...')
             await dispatch(getHaunts());
-            // history.push('/haunts');
+            history.push('/haunts');
         } catch (err) {
             let resBody = await err.json();
             setErrors(resBody.errors);

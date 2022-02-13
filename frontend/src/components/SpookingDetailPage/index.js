@@ -76,7 +76,7 @@ const SpookingDetailPage = () => {
                     From {formatDate(spooking.startDate)} to {formatDate(spooking.endDate)}
                 </div>
                 <div id='spooking-detail-polterguests'>
-                    {spooking.polterguests} polterguest{(spooking.polterguests > 1) && (<span>s</span>)}
+                    {getDuration(spooking.startDate, spooking.endDate)} nights, {spooking.polterguests} polterguest{(spooking.polterguests > 1) && (<span>s</span>)}
                 </div>
                 <div id='spooking-detail-haunt-image' style={{backgroundImage: `url(${(spooking.Haunt.Images.length > 0) ? spooking.Haunt.Images[0].url : defaultHauntUrl})`}}></div>
                 <div id='spooking-detail-location-info'>

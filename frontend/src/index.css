@@ -10,11 +10,11 @@ html, body, #root, #content-wrapper {
 }
 
 .form-page {
-    /* padding-top: 90px; */
+    padding-top: 120px;
     display: flex;
     flex-direction: column;
-    width: 100vw;
-    height: 100vh;
+    /* width: 100vw; */
+    /* height: 100vh; */
     justify-content: center;
     align-items: center;
     font-family: 'Roboto', sans-serif;
@@ -47,7 +47,7 @@ html, body, #root, #content-wrapper {
     align-items: center;
     justify-content: center;
     width: 300px;
-    margin: 0;
+    margin: 0 0 24px;
     padding: 20px 20px 10px;
     border-radius: 12px;
     border: 1px solid lightgray;
@@ -80,6 +80,10 @@ html, body, #root, #content-wrapper {
     border: 1px solid lightgray;
 }
 
+.auth-select {
+    border: none;
+}
+
 .auth-button-div {
     width: 100%;
     display: flex;
@@ -105,4 +109,10 @@ html, body, #root, #content-wrapper {
 .auth-button:hover {
     cursor: pointer;
     background-color: #ad76c7;
+}
+
+.auth-form-title {
+    font-size: 22px;
+    margin-bottom: 16px;
+    font-weight: bold;
 }

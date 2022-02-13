@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../store/session';
-import { useHistory } from 'react-router-dom';
-// import './SignupForm.css'
+import { useHistory, Link } from 'react-router-dom';
+import './SignupForm.css'
 
 const SignupFormPage = () => {
     const [username, setUsername] = useState('');
@@ -57,6 +57,9 @@ const SignupFormPage = () => {
             className='auth-form'
                 onSubmit={handleSubmit}
             >
+                <div className='auth-form-title'>
+                    Sign Up
+                </div>
                 <div className='auth-form-field'>
                     <label htmlFor='username'>
                         Username:
@@ -117,6 +120,9 @@ const SignupFormPage = () => {
                     <button className='auth-button'>
                         Sign Up
                     </button>
+                </div>
+                <div id='existing-account-login'>
+                    Already have an account? <Link to='/login' id='existing-account-login-link'>Log in</Link>
                 </div>
             </form>
         </div>

@@ -1,0 +1,16 @@
+#existing-account-login {
+    font-size: 14px;
+    margin: 10px 0 16px;
+}
+
+#existing-account-login-link {
+    text-decoration: none;
+    font-weight: bold;
+    color:#6f50a0;
+}
+
+#existing-account-login-link:hover {
+    text-decoration: none;
+    font-weight: bold;
+    color: #ad76c7;
+}
