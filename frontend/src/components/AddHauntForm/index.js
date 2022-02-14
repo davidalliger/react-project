@@ -231,7 +231,7 @@ const AddHauntForm = () => {
                 onSubmit={handleSubmit}
             >
                 <div className='auth-form-title'>
-                    Add a Haunt
+                    Add Haunt
                 </div>
                 <div id='add-haunt-form-fields'>
                     <div id='add-haunt-form-inner-grid'>
@@ -345,8 +345,6 @@ const AddHauntForm = () => {
                                         id='latitude'
                                         name='latitude'
                                         className='auth-form-input'
-                                        min='-90'
-                                        max='90'
                                         onChange={e => setLatitude(e.target.value)}
                                         value={latitude}
                                     />
@@ -360,8 +358,6 @@ const AddHauntForm = () => {
                                         id='longitude'
                                         name='longitude'
                                         className='auth-form-input'
-                                        min='-180'
-                                        max='180'
                                         onChange={e => setLongitude(e.target.value)}
                                         value={longitude}
                                         />
@@ -375,7 +371,6 @@ const AddHauntForm = () => {
                                         id='rate'
                                         name='rate'
                                         className='auth-form-input'
-                                        min='1'
                                         onChange={e => setRate(e.target.value)}
                                         value={rate}
                                     />
