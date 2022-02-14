@@ -1,0 +1,43 @@
+#footer {
+    position: fixed;
+    background-color: #6f50a0;
+    height: 48px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 0px 80px;
+    display: grid;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#footer-icon-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 100%;
+}
+
+#github,
+#linkedin {
+    text-decoration: none;
+}
+
+#github-icon,
+#linkedin-icon {
+    width: 32px;
+    height: 32px;
+    margin-left: 12px;
+    margin-top: 2px;
+}
+
+#github-icon:hover {
+    border-radius: 50%;
+    background-color: #ad76c7;
+}
+
+#linkedin-icon:hover {
+    background-color: #ad76c7;
+    border-radius: 3px;
+}

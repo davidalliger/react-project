@@ -17,6 +17,7 @@ import DeleteHauntForm from './components/DeleteHauntForm';
 import DeleteSpookingForm from './components/DeleteSpookingForm';
 import SpookingDetailPage from './components/SpookingDetailPage';
 import PageNotFound from './components/PageNotFound'
+import Footer from './components/Footer'
 
 function App() {
   const dispatch = useDispatch();
@@ -101,6 +102,7 @@ function App() {
                 <PageNotFound />
             </Route>
           </Switch>
+          <Footer />
         </div>
       )}
     </>
