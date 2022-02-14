@@ -17,7 +17,7 @@ git clone git@github.com:davidalliger/scarebnb.git
 ```
 npm install
 ```
-#### 3. In psql, create a POSTGRESQL user with PASSWORD and CREATEDB.
+#### 3. In psql, create a POSTGRESQL user with PASSWORD and CREATEDB privileges.
 ```
 CREATE USER <username> WITH PASSWORD '<password>'
 ```
