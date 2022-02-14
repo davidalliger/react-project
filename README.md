@@ -5,7 +5,7 @@ ScareBnB is a web application for ghosts in search of the perfect haunted holida
 Users can advertise their paranormal property to prospective polterguests, or book their ideal 
 haunted house for a ghostly getaway of their own.
 
-Here's how you launch ScareBnB on your local machine:
+Here's how you can launch ScareBnB on your local machine:
 
 ### Instructions
 
