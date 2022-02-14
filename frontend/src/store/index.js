@@ -9,7 +9,6 @@ const rootReducer = combineReducers({
     session: sessionReducer,
     haunts: hauntsReducer,
     spookings: spookingsReducer
-    // images: imagesReducer
 });
 
 let enhancer;

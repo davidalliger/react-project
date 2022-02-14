@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSpooking } from '../../store/spookings';
 import { useHistory } from 'react-router-dom';
 import './CreateSpookingForm.css'
-// import CreateSpookingButton from './CreateSpookingButton';
 
 const CreateSpookingForm = ({haunt}) => {
     const sessionUser = useSelector(state => state.session.user);
@@ -16,7 +15,6 @@ const CreateSpookingForm = ({haunt}) => {
     const [available, setAvailable] = useState(false);
     const [duration, setDuration] = useState(0);
     const [minEnd, setMinEnd] = useState('');
-    const [maxStart, setMaxStart] = useState('');
     const [showUnavailable, setShowUnavailable] = useState(false);
     const [errors, setErrors] = useState([]);
     const [showErrors, setShowErrors] = useState(false);
@@ -43,28 +41,12 @@ const CreateSpookingForm = ({haunt}) => {
     useEffect(() => {
         if (start) {
             const endDate = new Date(start);
-            console.log('endDate is initially ', endDate);
             const plusOne = endDate.getDate() + 2
             endDate.setDate(plusOne);
-            console.log('endDate is now ', endDate);
             const newMinEnd = formatDate(endDate);
-            console.log('newMinEnd is ', newMinEnd);
             setMinEnd(newMinEnd);
         }
     }, [start]);
-
-    useEffect(() => {
-        if (end) {
-            const startDate = new Date(end);
-            console.log('startDate is initially ', startDate);
-            // const minusOne = startDate.getDate() + 1;
-            // startDate.setDate(minusOne);
-            // console.log('startDate is now ', startDate);
-            const newMaxStart = formatDate(startDate);
-            console.log('newMaxStart is ', newMaxStart);
-            setMaxStart(newMaxStart);
-        }
-    }, [end]);
 
     const getDuration = (startDate, endDate) => {
         const start = new Date(startDate).getTime();
@@ -100,28 +82,21 @@ const CreateSpookingForm = ({haunt}) => {
     }, [errors]);
 
     const checkAvailability = async() => {
-        console.log('Inside checkAvailability!')
         const response = await csrfFetch(`/api/haunts/${haunt.id}/spookings?start=${start}&end=${end}`);
-        console.log(response);
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
             const available = data.available;
-            console.log(available);
             if (available) {
                 setAvailable(true);
             } else {
                 setShowUnavailable(true);
                 setDisabled(true);
-                // setAvailable(false);
             }
         }
     }
 
     const handleSubmit = async(e) => {
-        console.log('Inside handleSubmit!!!');
         e.preventDefault();
-        console.log('Prevented default behavior.');
 
         setErrors([]);
         if (sessionUser) {
@@ -133,12 +108,9 @@ const CreateSpookingForm = ({haunt}) => {
                     endDate: end,
                     polterguests
                 }
-                console.log('Spooking is ', spooking);
                 let newSpooking = await dispatch(createSpooking(spooking));
-                console.log('New Spooking is ', newSpooking);
                 history.push(`/spookings/${newSpooking.id}`)
             } catch (err) {
-                console.log('err is ', err);
                 let resBody = await err.json();
                 setErrors(resBody.errors);
             }
@@ -238,7 +210,6 @@ const CreateSpookingForm = ({haunt}) => {
                         </div>
                     )}
                     {available && (
-                        // <CreateSpookingButton props={duration, haunt, start, end, polterguests}/>
                         <form
                             onSubmit={handleSubmit}
                         >

@@ -32,14 +32,6 @@ const DeleteSpookingForm = () => {
         }
     }, [sessionUser]);
 
-    // const goBack = () => {
-    //     if (history && history.length) {
-    //         history.push((history[history.length - 2]).location.pathname);
-    //     } else {
-    //         history.push('/haunts');
-    //     }
-    // }
-
     return (
         <div className='form-page'>
             <form

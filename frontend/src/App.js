@@ -21,44 +21,31 @@ import Footer from './components/Footer'
 
 function App() {
   const dispatch = useDispatch();
-
   const sessionUser = useSelector(state => state.session.user);
-  const session = useSelector(state => state.session);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [gotSpookings, setGotSpookings] = useState(false);
   const [ready, setReady] = useState(false);
-  useEffect(async() => {
 
-    await dispatch(restoreUser());
-    await dispatch(getHaunts());
-    // await dispatch(getSpookings(sessionUser));
-    // if (isLoading) {
-    setIsLoaded(true);
-    // }
+  useEffect(() => {
+    async function loadUserAndHaunts() {
+      await dispatch(restoreUser());
+      await dispatch(getHaunts());
+      setIsLoaded(true);
+    };
+    loadUserAndHaunts();
     return () => setIsLoaded(false);
-  }, []);
+  }, [dispatch]);
 
-  useEffect(async() => {
-    console.log('Inside use effect!');
-    if (sessionUser) {
-      console.log('Trying to get spookings')
-      const spookings = await dispatch(getSpookings(sessionUser));
-      console.log('spookings is ', spookings);
+  useEffect(() => {
+    async function loadSpookings() {
+      if (sessionUser) {
+        await dispatch(getSpookings(sessionUser));
+      }
+      setReady(true);
     }
-    setReady(true);
+    loadSpookings();
     return () => setReady(false);
-}, [isLoaded, sessionUser]);
+}, [isLoaded, sessionUser, dispatch]);
 
-// useEffect(() => {
-//   if (isLoaded && gotSpookings) {
-//     setReady(true);
-//   }
-// }, [gotSpookings, isLoaded, session])
-
-  console.log('isLoaded? ', isLoaded);
-  // console.log('gotSpookings? ', gotSpookings);
-  console.log('ready? ', ready);
-  console.log('sessionUser is ', sessionUser)
   return (
     <>
       {ready && (

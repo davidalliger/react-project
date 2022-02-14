@@ -17,17 +17,13 @@ const DeleteHauntForm = () => {
         if (!sessionUser) {
             history.push('/login');
         }
-    }, [sessionUser]);
+    }, [sessionUser, history]);
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        console.log('Inside handleSubmit!')
-        console.log('Destroying haunt...')
 
         try {
-            console.log('Destorying haunt...')
             await dispatch(destroyHaunt(haunt));
-            console.log('Getting haunts...')
             await dispatch(getHaunts());
             history.push('/haunts');
         } catch (err) {

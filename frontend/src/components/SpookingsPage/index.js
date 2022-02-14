@@ -8,11 +8,11 @@ const SpookingsPage = () => {
     const sessionUser = useSelector(state => state.session.user);
     const spookings = useSelector(state => state.spookings);
     const pastSpookings = spookings.pastSpookings;
-    console.log('pastSpookings is ', pastSpookings)
     const futureSpookings = spookings.futureSpookings;
     const [showNavButtons, setShowNavButtons] = useState(false);
     const [showNoTrips, setShowNoTrips] = useState(false);
     const [showFuture, setShowFuture] = useState(false);
+    const [showPast, setShowPast] = useState(false);
     useEffect(() => {
         if (!sessionUser) {
             history.push('/login');
@@ -26,33 +26,10 @@ const SpookingsPage = () => {
         if (futureSpookings && futureSpookings.length > 0) {
             setShowFuture(true);
         }
-    }, [sessionUser]);
-    // const [finished, setFinished] = useState(false);
-    // const [gotSpookings, setGotSpookings] = useState(false);
-    // useEffect(async() => {
-    //     await dispatch(getSpookings(sessionUser));
-    //     setFinished(true);
-
-    //     return () => setFinished(false);
-    // }, [sessionUser]);
-    console.log('sessionUser is ',sessionUser);
-    console.log('futureSpookings is ', futureSpookings)
-    const [showPast, setShowPast] = useState(false);
-    console.log('showPast is ', showPast);
-    // useEffect(async() => {
-    //     if (isLoaded) {
-    //         await dispatch(getSpookings(sessionUser));
-    //         setGotSpookings(true);
-    //     }
-    //     return () => setGotSpookings(false);
-    // }, []);
-
-    const debug = () => console.log('So far so good!');
+    }, [sessionUser, history, pastSpookings, futureSpookings]);
 
     const defaultHauntUrl = '/images/hauntedhouse.jpg';
-    console.log('defaultHauntUrl is ', defaultHauntUrl)
     const defaultUserUrl = '/images/user-icon-lavender.png';
-    console.log('defaultUserUrl is ', defaultUserUrl)
 
     const getDuration = (startDate, endDate) => {
         const start = new Date(startDate).getTime();
@@ -231,6 +208,11 @@ const SpookingsPage = () => {
                                                 ${getTotal(spooking.startDate, spooking.endDate, spooking.Haunt.rate)}
                                             </span>
                                     </div>
+                                    <Link to={`/spookings/${spooking.id}`}>
+                                        <button className='spooking-detail-page-button'>
+                                            See Details
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         ))}

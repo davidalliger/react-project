@@ -9,7 +9,6 @@ const SpookingDetailPage = () => {
     const sessionUser = useSelector(state => state.session.user);
     const spookings = useSelector(state => state.spookings);
     const [futureSpooking, setFutureSpooking] = useState(false);
-    console.log('spookings is ', spookings);
     let spooking = spookings[spookingId];
     const today = new Date();
 
@@ -17,11 +16,11 @@ const SpookingDetailPage = () => {
         if (!sessionUser) {
             history.push('/login');
         }
-    }, [sessionUser]);
+    }, [sessionUser, history]);
 
     useEffect(()=> {
         if ((new Date(spooking.startDate)) > today) setFutureSpooking(true);
-    }, [spooking])
+    }, [spooking]);
 
 
     const convertToCardinals = (latitude, longitude) =>{
@@ -43,7 +42,6 @@ const SpookingDetailPage = () => {
     }
 
     const defaultHauntUrl = '/images/hauntedhouse.jpg';
-    const defaultUserUrl = '/images/user-icon-lavender.png';
 
     const formatDate = (date) => {
         const justDate = date.split('T')[0];

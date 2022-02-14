@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createHaunt, getHaunts } from '../../store/haunts';
-import { Redirect, useHistory } from 'react-router-dom';
+import { createHaunt } from '../../store/haunts';
+import { useHistory } from 'react-router-dom';
 import './AddHauntForm.css';
 
 const AddHauntForm = () => {
@@ -16,10 +16,7 @@ const AddHauntForm = () => {
     const [rate, setRate] = useState('');
     const [description, setDescription] = useState('');
     const [imageFieldCount, setImageFieldCount] = useState(0);
-    console.log('Before click, ImageFieldCount is ', imageFieldCount);
     const [imageUrls, setImageUrls] = useState({});
-    console.log('Before click, ImageUrls is ', imageUrls);
-    const [currentValue, setCurrentValue] = useState('');
     const [showState, setShowState] = useState(false);
     const [showOther, setShowOther] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -47,13 +44,7 @@ const AddHauntForm = () => {
         if(!sessionUser) {
             history.push('/login');
         }
-    }, [sessionUser]);
-
-    // useEffect(() => {
-    //     for (let i = 0; i < imageFieldCount; i++) {
-    //         showImageField[i] = true;
-    //     }
-    // }, [imageFieldCount])
+    }, [sessionUser, history]);
 
     const generateImageFields = (count) => {
         const imageFields = []
@@ -156,21 +147,16 @@ const AddHauntForm = () => {
     const handleImageField = e => {
         const key= e.target.id.split('-')[2];
         setImageUrls({...imageUrls, [key]: e.target.value });
-        console.log('imageUrls is ', imageUrls);
     }
 
     const handleAddImageClick = e => {
         setImageFieldCount(imageFieldCount + 1);
         imageUrls[imageFieldCount] = '';
-        console.log('After adding one, imageFieldCount is ', imageFieldCount);
-        console.log('After adding one, imageUrls is ', imageUrls);
     }
 
     const handleRemoveImageClick = e => {
         setImageFieldCount(imageFieldCount - 1);
         delete imageUrls[imageFieldCount - 1];
-        console.log('After removing one, imageUrls is ', imageUrls);
-        console.log('After removing one, imageFieldCount is ', imageFieldCount);
     }
 
     const handleSubmit = async(e) => {
@@ -194,16 +180,13 @@ const AddHauntForm = () => {
             description,
             images
         };
-        // setImageFieldCount(0);
+
         try {
             let newHaunt = await dispatch(createHaunt(haunt));
-            // await dispatch(getHaunts());
-            console.log('new haunt is ', newHaunt);
             if (newHaunt) {
                 history.push(`/haunts/${newHaunt.id}`);
             }
         } catch (err) {
-            console.log('err is ', err);
             let resBody = await err.json();
             setErrors(resBody.errors);
         }
@@ -211,11 +194,6 @@ const AddHauntForm = () => {
 
     return (
         <div className='form-page' id='add-haunt-form-page'>
-            {/* <div>
-                <div id='add-haunt-form-image'>
-                    <div id='add-haunt-form-overlay'></div>
-                </div>
-            </div> */}
             <div className={errors.length ? 'haunt-errors-normal' : 'errors-hidden'}>
                 <ul id='haunt-errors-ul'>
                     {errors.map((error, index) => (
@@ -305,7 +283,6 @@ const AddHauntForm = () => {
                                                 className='auth-select'
                                                 onChange={e => setState(e.target.value)}
                                                 value={state}
-                                                // required={showState}
                                             >
                                                 <option value='' disabled>Please select your state...</option>
                                                 {states.map((state, index) => (
@@ -327,7 +304,6 @@ const AddHauntForm = () => {
                                             name='other'
                                             onChange={e => setOther(e.target.value)}
                                             value={other}
-                                            // required={showOther}
                                             placeholder='Please enter country'
                                         />
                                     </label>
@@ -335,7 +311,6 @@ const AddHauntForm = () => {
                             )}
                         </div>
                         <div id='separator-one'></div>
-                        {/* <div id='separator-two'></div> */}
                         <div id='add-haunt-column-two'>
                             <div className='auth-form-field'>
                                 <label htmlFor='latitude'>
@@ -388,18 +363,6 @@ const AddHauntForm = () => {
                                     />
                                 </label>
                             </div>
-                                            {/* <div className='auth-form-field'>
-                                                <label htmlFor={`image-url-${i}`}>
-                                                    Image URL:
-                                                    <input
-                                                        type='text'
-                                                        id={`image-url-${i}`}
-                                                        name='imageUrl1'
-                                                        onChange={handleImageField}
-                                                        value={imageUrls[i]}
-                                                    />
-                                                </label>
-                                            </div> */}
                         </div>
                     </div>
                     <div id='add-haunt-images-div'>
@@ -451,19 +414,6 @@ const AddHauntForm = () => {
                         Submit
                     </button>
                 </div>
-                    {/* <div id='add-haunt-form-footer'>
-                        <button
-                        type='button'
-                        onClick={history.goBack}
-                        >
-                            Back
-                        </button>
-                        <button
-                        type='submit'
-                        >
-                            Submit
-                        </button>
-                    </div> */}
                 </div>
             </form>
         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editHaunt, getHaunts } from '../../store/haunts';
+import { editHaunt } from '../../store/haunts';
 import { useParams, useHistory } from 'react-router-dom';
 import './EditHauntForm.css';
 
@@ -129,8 +129,6 @@ const EditHauntForm = () => {
     const initialUrlsWithId = getInitialUrlsWithId(haunt.Images);
     const initialUrls = getInitialUrls(haunt.Images);
     const [imageUrls, setImageUrls] = useState(initialUrls);
-    console.log('Before click, ImageFieldCount is ', imageFieldCount);
-    console.log('Before click, ImageUrls is ', imageUrls);
 
     useEffect(() => {
         if (country === 'United States') {
@@ -152,7 +150,7 @@ const EditHauntForm = () => {
         if(!sessionUser) {
             history.push('/login');
         }
-    }, [sessionUser]);
+    }, [sessionUser, history]);
 
     const generateImageFields = (count) => {
         const imageFields = []
@@ -179,52 +177,21 @@ const EditHauntForm = () => {
     const handleImageField = e => {
         const key= e.target.id.split('-')[2];
         setImageUrls({...imageUrls, [key]: e.target.value });
-        console.log('imageUrls is ', imageUrls);
     }
 
     const handleAddImageClick = e => {
         setImageFieldCount(imageFieldCount + 1);
         imageUrls[imageFieldCount] = '';
-        console.log('After adding one, imageFieldCount is ', imageFieldCount);
-        console.log('After adding one, imageUrls is ', imageUrls);
     }
 
     const handleRemoveImageClick = e => {
         setImageFieldCount(imageFieldCount - 1);
         delete imageUrls[imageFieldCount - 1];
-        console.log('After removing one, imageUrls is ', imageUrls);
-        console.log('After removing one, imageFieldCount is ', imageFieldCount);
     }
-
-    // const [imageUrls, setImageUrls] = useState({});
-    // console.log('Before click, ImageUrls is ', imageUrls);
-    // const [currentValue, setCurrentValue] = useState('');
-    // const [showState, setShowState] = useState(false);
-    // const [showOther, setShowOther] = useState(false);
-    // // const sessionUser = useSelector(state => state.session.user);
-    // const history = useHistory();
-
-
-
-    // useEffect(() => {
-    //     for (let i = 0; i < imageFieldCount; i++) {
-    //         showImageField[i] = true;
-    //     }
-    // }, [imageFieldCount])
-
-
-
-
-
-
 
     const handleSubmit = async(e) => {
         e.preventDefault();
         setErrors([]);
-        const images = [];
-        // for (let key in imageUrls) {
-        //     images[key] = imageUrls[key];
-        // }
         const haunt = {
             id: hauntId,
             name,
@@ -240,11 +207,9 @@ const EditHauntForm = () => {
             imageUrls,
             initialUrlsWithId
         };
-        // console.log('Haunt in handleSubmit is ', haunt);
+
         try {
             let updatedHaunt = await dispatch(editHaunt(haunt));
-            console.log('updatedHaunt in handleSubmit is ', updatedHaunt)
-            // await dispatch(getHaunts());
             if (updatedHaunt) {
                 history.push(`/haunts/${updatedHaunt.id}`);
             }
@@ -256,11 +221,6 @@ const EditHauntForm = () => {
 
     return (
         <div className='form-page' id='add-haunt-form-page'>
-            {/* <div>
-                <div id='add-haunt-form-image'>
-                    <div id='add-haunt-form-overlay'></div>
-                </div>
-            </div> */}
             <div className={errors.length ? 'haunt-errors-normal' : 'errors-hidden'}>
                 <ul id='haunt-errors-ul'>
                     {errors.map((error, index) => (
@@ -350,7 +310,6 @@ const EditHauntForm = () => {
                                                 className='auth-select'
                                                 onChange={e => setState(e.target.value)}
                                                 value={state}
-                                                // required={showState}
                                             >
                                                 <option value='' disabled>Please select your state...</option>
                                                 {states.map((state, index) => (
@@ -372,7 +331,6 @@ const EditHauntForm = () => {
                                             name='other'
                                             onChange={e => setOther(e.target.value)}
                                             value={other}
-                                            // required={showOther}
                                             placeholder='Please enter country'
                                         />
                                     </label>
@@ -380,7 +338,6 @@ const EditHauntForm = () => {
                             )}
                         </div>
                         <div id='separator-one'></div>
-                        {/* <div id='separator-two'></div> */}
                         <div id='edit-haunt-column-two'>
                             <div className='auth-form-field'>
                                 <label htmlFor='latitude'>
@@ -433,18 +390,6 @@ const EditHauntForm = () => {
                                     />
                                 </label>
                             </div>
-                                            {/* <div className='auth-form-field'>
-                                                <label htmlFor={`image-url-${i}`}>
-                                                    Image URL:
-                                                    <input
-                                                        type='text'
-                                                        id={`image-url-${i}`}
-                                                        name='imageUrl1'
-                                                        onChange={handleImageField}
-                                                        value={imageUrls[i]}
-                                                    />
-                                                </label>
-                                            </div> */}
                         </div>
                     </div>
                     <div id='edit-haunt-images-div'>
@@ -496,19 +441,6 @@ const EditHauntForm = () => {
                         Submit
                     </button>
                 </div>
-                    {/* <div id='edit-haunt-form-footer'>
-                        <button
-                        type='button'
-                        onClick={history.goBack}
-                        >
-                            Back
-                        </button>
-                        <button
-                        type='submit'
-                        >
-                            Submit
-                        </button>
-                    </div> */}
                 </div>
             </form>
         </div>
