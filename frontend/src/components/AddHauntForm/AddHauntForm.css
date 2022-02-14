@@ -11,6 +11,26 @@ font-size: 14px;
 
 }
 
+.haunt-errors-normal {
+    background-color: pink;
+    color: red;
+    margin: 0 0 10px;
+    border-radius: 12px;
+    width: 300px;
+    padding: 5px 20px;
+    font-size: 14px;
+    /* border: 1px solid red; */
+    /* box-shadow: 2px 2px 15px rgba(0, 0, 0, .10); */
+}
+
+.haunt-errors-ul {
+    padding: 0 0 0 20px;
+}
+
+.errors-hidden {
+    display: none;
+}
+
 #add-haunt-form {
     width: 40%;
     flex-direction: column;
@@ -24,6 +44,11 @@ font-size: 14px;
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+#description {
+    resize: none;
+
 }
 
 
