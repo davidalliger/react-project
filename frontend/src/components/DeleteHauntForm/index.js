@@ -51,6 +51,9 @@ const DeleteHauntForm = () => {
                 className='auth-form'
                 onSubmit={handleSubmit}
             >
+                <div className='auth-form-title'>
+                    Delete Haunt?
+                </div>
                 <div id='delete-haunt-confirmation-div'>
                     Are you sure you want to delete this haunt?
                 </div>
