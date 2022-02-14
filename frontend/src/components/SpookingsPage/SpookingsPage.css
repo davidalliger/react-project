@@ -75,10 +75,6 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
-/* .spooking-container:hover {
-    background-color: rgb(245, 245, 245);
-} */
-
 .spooking-haunt-image {
     width: 90%;
     height: 184px;
@@ -87,7 +83,6 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    /* margin-right: 24px; */
 }
 
 .spooking-city-div {
@@ -153,11 +148,6 @@
 .spooking-dollar-amount {
     font-weight: bold;
 }
-
-/* .spooking-detail-page-link {
-    text-decoration: none;
-    color: black;
-} */
 
 .spooking-detail-page-button {
         background-color:#6f50a0;

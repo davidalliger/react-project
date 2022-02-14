@@ -30,9 +30,7 @@ router.get('/:id/spookings', asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { start, end } = req.query;
     const newStartDate = new Date(start);
-    console.log(newStartDate);
     const newEndDate = new Date(end);
-    console.log(newEndDate);
     let conflicts = [];
     conflicts = await Spooking.findAll({
         where: {
@@ -69,7 +67,6 @@ const convertLatLong = (req, res, next) => {
     const long = req.body.longitude;
     req.body.latlong = lat + ', ' + long;
     const latlong = req.body.latlong;
-    console.log(latlong)
     next();
 }
 

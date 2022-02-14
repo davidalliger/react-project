@@ -25,7 +25,6 @@ router.get('/', restoreUser, (req, res) => {
 const validateLogin = [
     check('credential')
         .exists({ checkFalsy: true })
-        // .notEmpty()
         .withMessage('Please provide a valid email or username.'),
     check('password')
         .exists({ checkFalsy: true })
@@ -35,8 +34,6 @@ const validateLogin = [
 
 router.post('/', validateLogin, asyncHandler(async(req, res, next) => {
     const { credential, password } = req.body;
-    console.log('credential ', credential);
-    console.log('password ', password);
     const { Op } = require('sequelize');
     const user = await User.scope('loginUser').findOne({
         where: {
@@ -46,7 +43,6 @@ router.post('/', validateLogin, asyncHandler(async(req, res, next) => {
             }
         }
     });
-    console.log('user ', user);
     let loggedInUser;
     if (user && user.validatePassword(password)) {
         loggedInUser = await User.scope('currentUser').findOne({
@@ -56,7 +52,6 @@ router.post('/', validateLogin, asyncHandler(async(req, res, next) => {
             include: [Image]
         });
     }
-    console.log('loggedInUser ', loggedInUser);
 
     if (!loggedInUser) {
         const err = new Error('Login failed');

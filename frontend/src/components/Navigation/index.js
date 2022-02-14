@@ -6,18 +6,6 @@ import './Navigation.css';
 
 const Navigation = ({isLoaded}) => {
     const sessionUser = useSelector(state => state.session.user)
-    // const [narrow, setNarrow] = useState(false);
-
-    // useEffect(() => {
-    //     const navBar = document.getElementById('nav-bar');
-    //     if (window.location.pathname === `/haunts`) {
-    //         navBar.classList.remove('normal');
-    //         navBar.classList.add('narrow');
-    //     } else {
-    //         navBar.classList.remove('narrow');
-    //         navBar.classList.add('normal');
-    //     }
-    // }, []);
 
     return (
         <>

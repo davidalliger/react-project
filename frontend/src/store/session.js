@@ -27,10 +27,8 @@ export const signup = (user) => async(dispatch) => {
             username
         })
     });
-    console.log('Response is ', response)
 
     const data = await response.json();
-    console.log('Data is ', data)
     const currentUser = data.user;
     dispatch(setUser(currentUser));
     return currentUser;
@@ -45,12 +43,9 @@ export const login = (user) => async (dispatch) => {
             password
         })
     });
-    console.log('response ', response);
 
     const data = await response.json();
-    console.log('data ', data);
     const currentUser = data.loggedInUser;
-    console.log('currentUser ', currentUser);
     dispatch(setUser(currentUser));
     return currentUser;
 };

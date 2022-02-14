@@ -1,10 +1,3 @@
-/* #add-haunt-form-container {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-} */
 #edit-haunt-form-page{
 
     font-size: 14px;
@@ -19,13 +12,7 @@
         width: 300px;
         padding: 15px 20px;
         font-size: 14px;
-        /* border: 1px solid red; */
-        /* box-shadow: 2px 2px 15px rgba(0, 0, 0, .10); */
     }
-
-    /* #haunt-errors-ul {
-        padding: 0 0 0 0;
-    } */
 
     .errors-hidden {
         display: none;
@@ -120,9 +107,7 @@
     }
 
     #edit-haunt-button-div {
-        /* width: 100%; */
         display: flex;
-        /* flex-direction: column; */
         justify-content: space-between;
         align-items: center;
         margin: 12px 0 0;
@@ -136,39 +121,6 @@
         width: 100px;
 
     }
-
-    /* #add-haunt-form-image {
-        background-image: url('../../../public/images/hauntedhouse.jpg');
-        background-position: center center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        overflow: hidden;
-        height: 100%;
-    }
-
-    #add-haunt-form-overlay {
-        background-color: rgba(0,0,0,.25);
-        background-image: url('../../../public/images/hauntedhouse.jpg');
-        background-position: center center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        overflow: hidden;
-        height: 100%;
-    }  */
-
-    /* #add-haunt-form-div {
-        padding-top: 85px;
-        position: relative;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    } */
-    /* #add-haunt-form {
-        position: absolute;
-    } */
-
     #edit-haunt-form-footer {
         display: flex;
         justify-content: space-between;
