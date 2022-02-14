@@ -1,0 +1,29 @@
+#page-not-found-container {
+    padding: 116px 80px 40px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#page-not-found-container h1 {
+    color: gray;
+    font-size: 56px;
+    font-style: italic;
+    margin: 16px 0;
+}
+
+#page-not-found-explanation {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+#page-not-found-extra {
+    font-size: 14px;
+    color: rgb(97, 97, 97);
+    font-style: italic;
+    margin-bottom: 48px;
+}
+
+#ghost-not-found {
+    width: 200px;
+    height: 200px;
+}
