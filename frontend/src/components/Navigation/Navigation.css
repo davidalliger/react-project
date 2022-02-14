@@ -82,6 +82,13 @@
     font-size: 14px;
 }
 
+@media screen and (max-width: 800px) {
+    #nav-find-haunt,
+    #nav-share-haunt {
+        display: none;
+    }
+}
+
 
 
 /* #menu p {
