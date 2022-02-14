@@ -386,12 +386,12 @@ const validateDelete = [
 
 router.delete('/:id', requireAuth, checkSpookings, validateDelete, asyncHandler(async (req, res) => {
     const { id } = req.params;
-    await Haunt.destroy({
-        where: { id }
-    });
-
     await Image.destroy({
         where: { hauntId: id }
+    });
+
+    await Haunt.destroy({
+        where: { id }
     });
 
     return res.json({ id });

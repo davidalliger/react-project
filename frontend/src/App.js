@@ -71,7 +71,7 @@ function App() {
               <EditHauntForm />
             </Route>
             <Route path='/haunts/:hauntId'>
-              <HauntDetail />
+              <HauntDetail isLoaded={isLoaded} />
             </Route>
             <Route path='/haunts'>
               <HauntsPage />
