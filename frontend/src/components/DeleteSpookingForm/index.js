@@ -46,6 +46,9 @@ const DeleteSpookingForm = () => {
                 className='auth-form'
                 onSubmit={handleSubmit}
             >
+                <div className='auth-form-title'>
+                    Cancel Trip?
+                </div>
                 <div id='delete-spooking-confirmation-div'>
                     Are you sure you want to cancel your trip? Please confirm.
                 </div>
