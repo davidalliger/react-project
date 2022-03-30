@@ -59,7 +59,7 @@ const SpookingDetailPage = () => {
 
     const getTotal = (startDate, endDate, rate) => {
         const duration = getDuration(startDate, endDate);
-        const total = duration * rate;
+        const total = duration * rate + duration * 5;
         return total;
     }
 
