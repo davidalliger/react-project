@@ -4,11 +4,13 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import hauntsReducer from './haunts';
 import spookingsReducer from './spookings';
+import reviewsReducer from './reviews';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     haunts: hauntsReducer,
-    spookings: spookingsReducer
+    spookings: spookingsReducer,
+    reviews: reviewsReducer
 });
 
 let enhancer;
