@@ -115,12 +115,12 @@ const CreateSpookingForm = ({haunt}) => {
                 setErrors(resBody.errors);
             }
         } else {
-            history.push('/login');
+            // history.push('/login');
+            setAvailable(false);
+            setDisabled(true);
+            setStart('');
+            setEnd('');
         }
-        setAvailable(false);
-        setDisabled(true);
-        setStart('');
-        setEnd('');
     }
 
     return (
