@@ -48,7 +48,7 @@ function App() {
 
   return (
     <>
-      {ready && (
+      {isLoaded && (
         <div id='content-wrapper'>
           <Navigation isLoaded={isLoaded} />
           <Switch>
