@@ -46,17 +46,18 @@ html, body, #root, #content-wrapper {
     justify-content: center;
     width: 300px;
     margin: 0;
-    padding: 20px 20px 10px;
+    padding: 10px 20px 10px;
     /* border-radius: 12px; */
     /* border: 1px solid lightgray; */
     background-color: white;
-    box-shadow: 2px 2px 15px rgba(0, 0, 0, .10);
+    /* box-shadow: 2px 2px 15px rgba(0, 0, 0, .10); */
+    font-size: 13px;
 }
 
 .auth-form-field {
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: 8px;
     width: 100%;
 }
 

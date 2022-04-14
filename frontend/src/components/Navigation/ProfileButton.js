@@ -4,11 +4,13 @@ import { logout } from '../../store/session';
 import { Link } from 'react-router-dom';
 import { getSpookings } from '../../store/spookings';
 import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormModal';
 
-const ProfileButton = ({ sessionUser }) => {
+const ProfileButton = ({ sessionUser, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal }) => {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
-    const [showLoginModal, setShowLoginModal] = useState(false);
+    // const [showLoginModal, setShowLoginModal] = useState(false);
+    // const [showSignupModal, setShowSignupModal] = useState(false);
 
 
     const openMenu = e => {
@@ -41,6 +43,11 @@ const ProfileButton = ({ sessionUser }) => {
         setShowLoginModal(true);
     }
 
+    const signupClick = () => {
+        setShowMenu(false);
+        setShowSignupModal(true);
+    }
+
     if (sessionUser) {
         menu = (
             <div id='menu'>
@@ -70,12 +77,9 @@ const ProfileButton = ({ sessionUser }) => {
                 <div className='menu-div' onClick={loginClick}>
                     Log In
                 </div>
-                <LoginFormModal setShowMenu={setShowMenu} />
-                <Link to='/signup' className='menu-link'>
-                        <div className='menu-div'>
-                            Sign Up
-                        </div>
-                </Link>
+                <div className='menu-div' onClick={signupClick}>
+                    Sign Up
+                </div>
                 <Link to='/haunts/new' className='menu-link'>
                     <div className='menu-div'>
                         Host a ghost
@@ -104,6 +108,7 @@ const ProfileButton = ({ sessionUser }) => {
             </button>
             {showMenu && menu}
             <LoginFormModal showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} />
+            <SignupFormModal showSignupModal={showSignupModal} setShowSignupModal={setShowSignupModal} />
         </>
     )
 }
