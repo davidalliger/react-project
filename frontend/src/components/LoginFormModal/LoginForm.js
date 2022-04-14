@@ -15,8 +15,8 @@ const LoginForm = ({setShowLoginModal, setShowSignupModal}) => {
 
     useEffect(async() => {
         if(sessionUser) {
-            await dispatch(getSpookings(sessionUser));
-            history.push('/');
+            // await dispatch(getSpookings(sessionUser));
+            setShowLoginModal(false);
         }
 
     }, [sessionUser])
@@ -30,6 +30,7 @@ const LoginForm = ({setShowLoginModal, setShowSignupModal}) => {
         };
         try {
             await dispatch(login(user));
+
         } catch (err) {
             let resBody = await err.json();
             setErrors(resBody.errors);
