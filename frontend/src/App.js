@@ -1,5 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
-import SignupFormPage from './components/SignupFormPage';
+import SignupFormPage from './components/SignupFormModal';
 import LoginFormModal from './components/LoginFormModal';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

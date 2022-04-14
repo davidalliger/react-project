@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { getSpookings } from '../../store/spookings';
 import './LoginForm.css';
 
-const LoginForm = () => {
+const LoginForm = ({setShowLoginModal, setShowSignupModal}) => {
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
@@ -50,6 +50,11 @@ const LoginForm = () => {
             setErrors(resBody.errors);
         }
         setPassword('');
+    }
+
+    const toggleAuth = () => {
+        setShowSignupModal(true);
+        setShowLoginModal(false);
     }
 
     return (
@@ -113,7 +118,7 @@ const LoginForm = () => {
                     </button>
                 </div>
                 <div id='no-account-signup'>
-                    Don't have an account? <Link to='/signup' id='no-account-signup-link'>Sign up</Link>
+                    Don't have an account? <span id='no-account-signup-link' onClick={toggleAuth}>Sign up</span>
                 </div>
             </form>
         // <div className='form-page'>

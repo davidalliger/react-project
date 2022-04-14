@@ -4,7 +4,7 @@ import { signup } from '../../store/session';
 import { useHistory, Link } from 'react-router-dom';
 import './SignupForm.css'
 
-const SignupFormPage = () => {
+const SignupForm = ({setShowSignupModal, setShowLoginModal}) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -42,21 +42,26 @@ const SignupFormPage = () => {
         setConfirmPassword('');
     };
 
+    const toggleAuth = () => {
+        setShowLoginModal(true);
+        setShowSignupModal(false);
+    }
+
     return (
-        <div className='form-page'>
-            <div className={errors.length ? 'errors-div' : 'errors-hidden'}>
-                <ul className='errors-ul'>
-                    {errors.map((error, index) => (
-                            <li key={index}>
-                                {error}
-                            </li>
-                        ))}
-                </ul>
-            </div>
+        // <div className='form-page'>
             <form
             className='auth-form'
                 onSubmit={handleSubmit}
             >
+                <div className={errors.length ? 'errors-div' : 'errors-hidden'}>
+                    <ul className='errors-ul'>
+                        {errors.map((error, index) => (
+                                <li key={index}>
+                                    {error}
+                                </li>
+                            ))}
+                    </ul>
+                </div>
                 <div className='auth-form-title'>
                     Sign Up
                 </div>
@@ -122,11 +127,11 @@ const SignupFormPage = () => {
                     </button>
                 </div>
                 <div id='existing-account-login'>
-                    Already have an account? <Link to='/login' id='existing-account-login-link'>Log in</Link>
+                    Already have an account? <span id='existing-account-login-link' onClick={toggleAuth}>Log in</span>
                 </div>
             </form>
-        </div>
+        // </div>
     )
 };
 
-export default SignupFormPage;
+export default SignupForm;

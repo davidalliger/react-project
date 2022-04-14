@@ -1,6 +1,7 @@
 #existing-account-login {
-    font-size: 14px;
+    font-size: 13px;
     margin: 10px 0 16px;
+    cursor: pointer;
 }
 
 #existing-account-login-link {

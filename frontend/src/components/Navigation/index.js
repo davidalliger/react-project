@@ -2,10 +2,14 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
 
 const Navigation = ({isLoaded}) => {
     const sessionUser = useSelector(state => state.session.user)
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showSignupModal, setShowSignupModal] = useState(false);
 
     return (
         <>
@@ -31,11 +35,13 @@ const Navigation = ({isLoaded}) => {
                                     Host a ghost
                                 </button>
                             </NavLink>
-                            <ProfileButton sessionUser={sessionUser}/>
+                            <ProfileButton sessionUser={sessionUser} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} showSignupModal={showSignupModal} setShowSignupModal={setShowSignupModal} />
                         </div>
                     </div>
                 </nav>
             )}
+            <LoginFormModal showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} setShowSignupModal={setShowSignupModal} />
+            <SignupFormModal showSignupModal={showSignupModal} setShowSignupModal={setShowSignupModal} setShowLoginModal={setShowLoginModal} />
         </>
     );
 }
