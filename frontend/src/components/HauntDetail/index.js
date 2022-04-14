@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import CreateSpookingForm from '../CreateSpookingForm';
+import EditHauntFormModal from '../EditHauntForm';
 import './HauntDetail.css'
 
 const HauntDetail = ({isLoaded}) => {
@@ -10,6 +11,7 @@ const HauntDetail = ({isLoaded}) => {
     const haunts = useSelector(state => state.haunts);
     let haunt = haunts[hauntId];
     const [ isOwner, setIsOwner ] = useState(false);
+    const [ showEditHauntModal, setShowEditHauntModal ] = useState(false);
 
     useEffect(() => {
         if (sessionUser && isLoaded) {
@@ -39,22 +41,27 @@ const HauntDetail = ({isLoaded}) => {
                         </div>
                         {isOwner && (
                         <div id='haunt-detail-owner-buttons'>
-                            <Link to={`/haunts/${haunt.id}/edit`} >
+                            {/* <Link to={`/haunts/${haunt.id}/edit`} > */}
+                            <div>
                                 <button
                                     id='haunt-detail-edit-button'
                                     className='auth-button'
+                                    onClick={()=>setShowEditHauntModal(true)}
                                 >
                                     Edit
                                 </button>
-                            </Link>
-                            <Link to={`/haunts/${haunt.id}/delete`} >
+                            </div>
+                            {/* </Link> */}
+                            {/* <Link to={`/haunts/${haunt.id}/delete`} > */}
+                            <div>
                                 <button
                                     id='haunt-detail-delete-button'
                                     className='auth-button'
                                 >
                                     Delete
                                 </button>
-                            </Link>
+                            </div>
+                            {/* </Link> */}
                         </div>
                         )}
                     </div>
@@ -85,6 +92,7 @@ const HauntDetail = ({isLoaded}) => {
                     </div>
                 </div>
             )}
+            <EditHauntFormModal showEditHauntModal={showEditHauntModal} setShowEditHauntModal={setShowEditHauntModal} />
         </>
     )
 }

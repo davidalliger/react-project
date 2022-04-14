@@ -13,6 +13,14 @@ const Navigation = ({isLoaded}) => {
     const [showSignupModal, setShowSignupModal] = useState(false);
     const [showAddHauntModal, setShowAddHauntModal] = useState(false);
 
+    const hostClick = () => {
+        if (sessionUser) {
+            setShowAddHauntModal(true);
+        } else {
+            setShowLoginModal(true);
+        }
+    }
+
     return (
         <>
             {isLoaded && (
@@ -33,7 +41,7 @@ const Navigation = ({isLoaded}) => {
                         </div>
                         <div id='nav-user-div'>
                             {/* <NavLink exact to='/haunts/new' id='nav-title-link'> */}
-                            <button id='nav-share-haunt' onClick={() => setShowAddHauntModal(true)}>
+                            <button id='nav-share-haunt' onClick={hostClick}>
                                 Host a ghost
                             </button>
                             {/* </NavLink> */}
