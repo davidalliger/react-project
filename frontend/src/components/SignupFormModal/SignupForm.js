@@ -16,7 +16,7 @@ const SignupForm = ({setShowSignupModal, setShowLoginModal}) => {
 
     useEffect(() => {
         if(sessionUser) {
-            history.push('/');
+            setShowSignupModal(false);
         }
 
     }, [sessionUser])
@@ -37,6 +37,7 @@ const SignupForm = ({setShowSignupModal, setShowLoginModal}) => {
         } catch (err) {
             let resBody = await err.json();
             setErrors(resBody.errors);
+            document.getElementById('modal-content').scrollTop = 0;
         }
         setPassword('');
         setConfirmPassword('');

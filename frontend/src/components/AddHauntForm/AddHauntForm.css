@@ -21,7 +21,9 @@
 }
 
 #add-haunt-form {
-    width: 40%;
+    width: 600px;
+    /* max-height: 650px; */
+    /* overflow-y: auto; */
     flex-direction: column;
     align-items: center;
     justify-content: center;

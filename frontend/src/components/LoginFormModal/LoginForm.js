@@ -34,6 +34,7 @@ const LoginForm = ({setShowLoginModal, setShowSignupModal}) => {
         } catch (err) {
             let resBody = await err.json();
             setErrors(resBody.errors);
+            document.getElementById('modal-content').scrollTop = 0;
         }
         setPassword('');
     }
