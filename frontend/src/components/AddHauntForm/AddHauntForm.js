@@ -404,9 +404,9 @@ const AddHauntForm = ({setShowAddHauntModal}) => {
                         type='button'
                         className='auth-button'
                         id='add-haunt-back'
-                        onClick={history.goBack}
+                        onClick={() => setShowAddHauntModal(false)}
                     >
-                        Back
+                        Cancel
                     </button>
                     <button
                         type='submit'
