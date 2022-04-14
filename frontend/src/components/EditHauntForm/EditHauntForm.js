@@ -431,9 +431,9 @@ const EditHauntForm = ({setShowEditHauntModal}) => {
                         type='button'
                         className='auth-button'
                         id='edit-haunt-back'
-                        onClick={history.goBack}
+                        onClick={() => setShowEditHauntModal(false)}
                     >
-                        Back
+                        Cancel
                     </button>
                     <button
                         type='submit'
