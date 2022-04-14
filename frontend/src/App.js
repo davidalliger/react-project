@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 import SignupFormPage from './components/SignupFormPage';
-import LoginFormPage from './components/LoginFormPage';
+import LoginFormModal from './components/LoginFormModal';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { restoreUser } from './store/session';
@@ -58,9 +58,9 @@ function App() {
             <Route path='/signup'>
               <SignupFormPage />
             </Route>
-            <Route path='/login'>
-              <LoginFormPage />
-            </Route>
+            {/* <Route path='/login'>
+              <LoginFormModal />
+            </Route> */}
             <Route exact path='/haunts/new'>
               <AddHauntForm />
             </Route>
