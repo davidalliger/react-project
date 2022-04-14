@@ -103,5 +103,6 @@ html, body, #root, #content-wrapper {
 .auth-form-title {
     font-size: 22px;
     margin-bottom: 16px;
+    margin-top: 5px;
     font-weight: bold;
 }

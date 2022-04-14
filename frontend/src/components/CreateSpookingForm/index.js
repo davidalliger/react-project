@@ -130,7 +130,7 @@ const CreateSpookingForm = ({haunt}) => {
                 <div id='create-spooking-form-heading'>
                     <div id='create-spooking-form-rate'>
                         <h2>
-                            ${Math.round(haunt.rate)}
+                            ${Math.round(haunt?.rate)}
                         </h2>
                         <div id='create-spooking-form-per-night'>
                             / night
@@ -237,10 +237,10 @@ const CreateSpookingForm = ({haunt}) => {
                             <div className='spooking-form-bottom'>
                                 <div id='spooking-form-rate-breakdown'>
                                     <div id='spooking-form-rate-multiplication'>
-                                        ${Math.round(haunt.rate)} x {duration} nights
+                                        ${Math.round(haunt?.rate)} x {duration} nights
                                     </div>
                                     <div id='spooking-form-rate-total'>
-                                        ${Math.round((haunt.rate)*duration)}
+                                        ${Math.round((haunt?.rate)*duration)}
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +258,7 @@ const CreateSpookingForm = ({haunt}) => {
                                     Total before taxes
                                 </div>
                                 <div id='spooking-form-total-amount'>
-                                    ${Math.round((haunt.rate)*(getDuration(start, end))) + 5*getDuration(start, end)}
+                                    ${Math.round((haunt?.rate)*(getDuration(start, end))) + 5*getDuration(start, end)}
                                 </div>
                             </div>
                         </form>
