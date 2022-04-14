@@ -6,7 +6,7 @@ import { getSpookings } from '../../store/spookings';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
-const ProfileButton = ({ sessionUser, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal }) => {
+const ProfileButton = ({ sessionUser, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal, setShowAddHauntModal }) => {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     // const [showLoginModal, setShowLoginModal] = useState(false);
@@ -48,6 +48,11 @@ const ProfileButton = ({ sessionUser, showLoginModal, setShowLoginModal, showSig
         setShowSignupModal(true);
     }
 
+    const hostClick = () => {
+        setShowMenu(false);
+        setShowAddHauntModal(true);
+    }
+
     if (sessionUser) {
         menu = (
             <div id='menu'>
@@ -59,11 +64,9 @@ const ProfileButton = ({ sessionUser, showLoginModal, setShowLoginModal, showSig
                         Spookings
                     </div>
                 </Link>
-                <Link to='/haunts/new' className='menu-link'>
-                    <div className='menu-div'>
-                        Host a ghost
-                    </div>
-                </Link>
+                <div className='menu-div' onClick={hostClick}>
+                    Host a ghost
+                </div>
                 <div className='menu-div'
                     onClick={logoutUser}
                 >

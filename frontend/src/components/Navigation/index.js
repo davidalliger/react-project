@@ -4,12 +4,14 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import AddHauntFormModal from '../AddHauntForm';
 import './Navigation.css';
 
 const Navigation = ({isLoaded}) => {
     const sessionUser = useSelector(state => state.session.user)
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);
+    const [showAddHauntModal, setShowAddHauntModal] = useState(false);
 
     return (
         <>
@@ -35,13 +37,14 @@ const Navigation = ({isLoaded}) => {
                                     Host a ghost
                                 </button>
                             </NavLink>
-                            <ProfileButton sessionUser={sessionUser} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} showSignupModal={showSignupModal} setShowSignupModal={setShowSignupModal} />
+                            <ProfileButton sessionUser={sessionUser} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} showSignupModal={showSignupModal} setShowSignupModal={setShowSignupModal} setShowAddHauntModal={setShowAddHauntModal}/>
                         </div>
                     </div>
                 </nav>
             )}
             <LoginFormModal showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} setShowSignupModal={setShowSignupModal} />
             <SignupFormModal showSignupModal={showSignupModal} setShowSignupModal={setShowSignupModal} setShowLoginModal={setShowLoginModal} />
+            <AddHauntFormModal showAddHauntModal={showAddHauntModal} setShowAddHauntModal={setShowAddHauntModal} />
         </>
     );
 }
