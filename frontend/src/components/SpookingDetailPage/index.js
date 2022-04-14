@@ -2,6 +2,7 @@ import { useParams, Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import './SpookingDetailPage.css'
+import DeleteSpookingFormModal from '../DeleteSpookingForm';
 
 const SpookingDetailPage = () => {
     const { spookingId } = useParams();
@@ -9,8 +10,15 @@ const SpookingDetailPage = () => {
     const sessionUser = useSelector(state => state.session.user);
     const spookings = useSelector(state => state.spookings);
     const [futureSpooking, setFutureSpooking] = useState(false);
+    const [showDeleteSpookingModal, setShowDeleteSpookingModal] = useState(false);
     let spooking = spookings[spookingId];
     const today = new Date();
+
+    useEffect(() => {
+        if (!spooking) {
+            history.push('/spookings');
+        }
+    }, [spookings, spooking]);
 
     useEffect(() => {
         if (!sessionUser) {
@@ -19,7 +27,7 @@ const SpookingDetailPage = () => {
     }, [sessionUser, history]);
 
     useEffect(()=> {
-        if ((new Date(spooking.startDate)) > today) setFutureSpooking(true);
+        if ((new Date(spooking?.startDate)) > today) setFutureSpooking(true);
     }, [spooking]);
 
 
@@ -63,61 +71,72 @@ const SpookingDetailPage = () => {
         return total;
     }
 
+    const handleDelete = () => {
+        history.push('/spookings');
+    }
+
     return (
-        <div id='spooking-detail-container'>
-            <div id='spooking-detail-info-box'>
-                <div id='spooking-detail-heading'>
-                    <h1>Your Trip</h1>
-                    <h2 id='spooking-detail-location'>{spooking.Haunt.name}</h2>
-                </div>
-                <div id='spooking-detail-duration'>
-                    From {formatDate(spooking.startDate)} to {formatDate(spooking.endDate)}
-                </div>
-                <div id='spooking-detail-polterguests'>
-                    {getDuration(spooking.startDate, spooking.endDate)} nights, {spooking.polterguests} polterguest{(spooking.polterguests > 1) && (<span>s</span>)}
-                </div>
-                <div id='spooking-detail-haunt-image' style={{backgroundImage: `url(${(spooking.Haunt.Images.length > 0) ? spooking.Haunt.Images[0].url : defaultHauntUrl})`}}></div>
-                <div id='spooking-detail-location-info'>
-                    <div id='spooking-detail-address-one'>
-                        {spooking.Haunt.address}
-                    </div>
-                    <div id='spooking-detail-address-two'>
-                        {spooking.Haunt.city}, {spooking.Haunt.state && (
-                                <span>{spooking.Haunt.state}, </span>
-                        )} {spooking.Haunt.country}
-                    </div>
-                    <div id='spooking-detail-latlong'>
-                        {convertToCardinals(spooking.Haunt.latitude, spooking.Haunt.longitude)}
-                    </div>
-                </div>
-                <div id='spooking-other-info-div'>
-                    <div id='spooking-detail-total-amount-div'>
-                        Total amount: <span id='spooking-detail-dollar-amount'>
-                                ${getTotal(spooking.startDate, spooking.endDate, spooking.Haunt.rate)}
-                            </span>
-                    </div>
-                    <div id='spooking-detail-buttons-div'>
-                        {futureSpooking && (
-                            <div>
-                                <Link to={`/spookings/${spooking.id}/delete`}>
-                                    <button id='spooking-detail-cancel-button'>
-                                        Cancel Trip
-                                    </button>
-                                </Link>
+        <>
+            {spooking && (
+                <div id='spooking-detail-container'>
+                    <div id='spooking-detail-info-box'>
+                        <div id='spooking-detail-heading'>
+                            <h1>Your Trip</h1>
+                            <h2 id='spooking-detail-location'>{spooking?.Haunt.name}</h2>
+                        </div>
+                        <div id='spooking-detail-duration'>
+                            From {formatDate(spooking?.startDate)} to {formatDate(spooking?.endDate)}
+                        </div>
+                        <div id='spooking-detail-polterguests'>
+                            {getDuration(spooking?.startDate, spooking?.endDate)} nights, {spooking?.polterguests} polterguest{(spooking?.polterguests > 1) && (<span>s</span>)}
+                        </div>
+                        <div id='spooking-detail-haunt-image' style={{backgroundImage: `url(${(spooking?.Haunt.Images.length > 0) ? spooking?.Haunt.Images[0].url : defaultHauntUrl})`}}></div>
+                        <div id='spooking-detail-location-info'>
+                            <div id='spooking-detail-address-one'>
+                                {spooking?.Haunt.address}
                             </div>
-                        )}
-                        <div>
-                            <button
-                                id='spooking-detail-back-button'
-                                onClick={history.goBack}
-                            >
-                                Back
-                            </button>
+                            <div id='spooking-detail-address-two'>
+                                {spooking?.Haunt.city}, {spooking?.Haunt.state && (
+                                        <span>{spooking?.Haunt.state}, </span>
+                                )} {spooking?.Haunt.country}
+                            </div>
+                            <div id='spooking-detail-latlong'>
+                                {convertToCardinals(spooking?.Haunt.latitude, spooking?.Haunt.longitude)}
+                            </div>
+                        </div>
+                        <div id='spooking-other-info-div'>
+                            <div id='spooking-detail-total-amount-div'>
+                                Total amount: <span id='spooking-detail-dollar-amount'>
+                                        ${getTotal(spooking?.startDate, spooking?.endDate, spooking?.Haunt.rate)}
+                                    </span>
+                            </div>
+                            <div id='spooking-detail-buttons-div'>
+                                {futureSpooking && (
+                                    <div>
+                                        {/* <Link to={`/spookings/${spooking?.id}/delete`}> */}
+                                        <button id='spooking-detail-cancel-button'
+                                            onClick={() => setShowDeleteSpookingModal(true)}
+                                        >
+                                            Cancel Trip
+                                        </button>
+                                        {/* </Link> */}
+                                    </div>
+                                )}
+                                <div>
+                                    <button
+                                        id='spooking-detail-back-button'
+                                        onClick={history.goBack}
+                                    >
+                                        Back
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            )}
+            <DeleteSpookingFormModal showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal} handleDelete={handleDelete} />
+        </>
     )
 }
 
