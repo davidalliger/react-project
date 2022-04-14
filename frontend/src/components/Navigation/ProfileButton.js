@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../store/session';
 import { Link } from 'react-router-dom';
 import { getSpookings } from '../../store/spookings';
+import LoginFormModal from '../LoginFormModal';
 
 const ProfileButton = ({ sessionUser }) => {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
 
     const openMenu = e => {
@@ -34,6 +36,11 @@ const ProfileButton = ({ sessionUser }) => {
 
     let menu;
 
+    const loginClick = () => {
+        setShowMenu(false);
+        setShowLoginModal(true);
+    }
+
     if (sessionUser) {
         menu = (
             <div id='menu'>
@@ -60,11 +67,10 @@ const ProfileButton = ({ sessionUser }) => {
     } else {
         menu = (
             <div id='menu'>
-                <Link to='/login' className='menu-link'>
-                        <div className='menu-div'>
-                            Log In
-                        </div>
-                </Link>
+                <div className='menu-div' onClick={loginClick}>
+                    Log In
+                </div>
+                <LoginFormModal setShowMenu={setShowMenu} />
                 <Link to='/signup' className='menu-link'>
                         <div className='menu-div'>
                             Sign Up
@@ -97,6 +103,7 @@ const ProfileButton = ({ sessionUser }) => {
                 )}
             </button>
             {showMenu && menu}
+            <LoginFormModal showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} />
         </>
     )
 }

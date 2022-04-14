@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { getSpookings } from '../../store/spookings';
 import './LoginForm.css';
 
-const LoginFormPage = () => {
+const LoginForm = () => {
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
@@ -53,20 +53,19 @@ const LoginFormPage = () => {
     }
 
     return (
-        <div className='form-page'>
-            <div className={errors.length ? 'errors-div' : 'errors-hidden'}>
-                <ul className='errors-ul'>
-                    {errors.map((error, index) => (
-                            <li key={index}>
-                                {error}
-                            </li>
-                        ))}
-                </ul>
-            </div>
             <form
                 className='auth-form'
                 onSubmit={handleSubmit}
             >
+                <div className={errors.length ? 'errors-div' : 'errors-hidden'}>
+                    <ul className='errors-ul'>
+                        {errors.map((error, index) => (
+                                <li key={index}>
+                                    {error}
+                                </li>
+                            ))}
+                    </ul>
+                </div>
                 <div className='auth-form-title'>
                     Log In
                 </div>
@@ -117,8 +116,9 @@ const LoginFormPage = () => {
                     Don't have an account? <Link to='/signup' id='no-account-signup-link'>Sign up</Link>
                 </div>
             </form>
-        </div>
+        // <div className='form-page'>
+        // </div>
     )
 }
 
-export default LoginFormPage;
+export default LoginForm;
