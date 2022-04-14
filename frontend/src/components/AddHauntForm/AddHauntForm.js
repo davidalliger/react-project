@@ -4,7 +4,7 @@ import { createHaunt } from '../../store/haunts';
 import { useHistory } from 'react-router-dom';
 import './AddHauntForm.css';
 
-const AddHauntForm = () => {
+const AddHauntForm = ({setShowAddHauntModal}) => {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -184,6 +184,7 @@ const AddHauntForm = () => {
         try {
             let newHaunt = await dispatch(createHaunt(haunt));
             if (newHaunt) {
+                setShowAddHauntModal(false);
                 history.push(`/haunts/${newHaunt.id}`);
             }
         } catch (err) {
