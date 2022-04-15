@@ -50,6 +50,9 @@ module.exports = (sequelize, DataTypes) => {
     Haunt.hasMany(models.Spooking, {
       foreignKey: 'hauntId'
     });
+    Haunt.hasMany(models.Review, {
+      foreignKey: 'hauntId'
+    });
     Haunt.belongsTo(models.User, {
       foreignKey: 'userId'
     });

@@ -9,13 +9,24 @@ const SpookingDetailPage = () => {
     const { spookingId } = useParams();
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
+    const reviews = useSelector(state => state.reviews.list);
     const spookings = useSelector(state => state.spookings);
     const [futureSpooking, setFutureSpooking] = useState(false);
     const [pastSpooking, setPastSpooking] = useState(false);
+    const [userReview, setUserReview] = useState(null);
     const [showDeleteSpookingModal, setShowDeleteSpookingModal] = useState(false);
     const [showAddReviewModal, setShowAddReviewModal] = useState(false);
     let spooking = spookings[spookingId];
     const today = new Date();
+
+    useEffect(() => {
+        const reviewed = reviews.filter(review => {
+            return review.userId === sessionUser.id && review.hauntId === spooking.hauntId;
+        });
+        if (reviewed.length) {
+            setUserReview(reviewed[0])
+        }
+    }, [spooking, reviews])
 
     useEffect(() => {
         if (!spooking) {
@@ -127,15 +138,24 @@ const SpookingDetailPage = () => {
                                     </div>
                                 )}
                                 {pastSpooking && (
-                                    <div>
-                                        {/* <Link to={`/spookings/${spooking?.id}/delete`}> */}
-                                        <button id='spooking-detail-review-button'
-                                            onClick={() => setShowAddReviewModal(true)}
-                                        >
-                                            Add Review
-                                        </button>
-                                        {/* </Link> */}
-                                    </div>
+                                    <>
+                                        {userReview && (
+                                            <>
+                                                {userReview.content}
+                                            </>
+                                        )}
+                                        {!userReview && (
+                                            <div>
+                                                {/* <Link to={`/spookings/${spooking?.id}/delete`}> */}
+                                                <button id='spooking-detail-review-button'
+                                                    onClick={() => setShowAddReviewModal(true)}
+                                                >
+                                                    Add Review
+                                                </button>
+                                                {/* </Link> */}
+                                            </div>
+                                        )}
+                                    </>
                                 )}
                                 <div>
                                     <button
@@ -151,7 +171,7 @@ const SpookingDetailPage = () => {
                 </div>
             )}
             <DeleteSpookingFormModal showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal} handleDelete={handleDelete} />
-            <AddReviewFormModal showAddReviewModal={showAddReviewModal} setShowAddReviewModal={setShowAddReviewModal} />
+            <AddReviewFormModal showAddReviewModal={showAddReviewModal} setShowAddReviewModal={setShowAddReviewModal} haunt={spooking.Haunt} />
         </>
     )
 }
