@@ -45,6 +45,16 @@ const SpookingDetailPage = () => {
         else setPastSpooking(true);
     }, [spooking]);
 
+    const generateRating = (rating) => {
+        const result = [];
+        for (let i = 1; i <= rating; i++) {
+            result.push(i);
+        }
+        return result;
+    }
+
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
 
     const convertToCardinals = (latitude, longitude) =>{
         let latNum = Number(latitude);
@@ -72,6 +82,18 @@ const SpookingDetailPage = () => {
         return `${parts[1]}/${parts[2]}/${parts[0]}`;
     }
 
+    const getStayMonth = (date) => {
+        const justDate = date.split('T')[0];
+        const parts = justDate.split('-');
+        return `${months[parts[1]-1]}`;
+    }
+
+    const getStayYear = (date) => {
+        const justDate = date.split('T')[0];
+        const parts = justDate.split('-');
+        return `${parts[0]}`;
+    }
+
     const getDuration = (startDate, endDate) => {
         const start = new Date(startDate).getTime();
         const end = new Date(endDate).getTime();
@@ -89,6 +111,8 @@ const SpookingDetailPage = () => {
     const handleDelete = () => {
         history.push('/spookings');
     }
+
+    console.log(userReview);
 
     return (
         <>
@@ -140,9 +164,33 @@ const SpookingDetailPage = () => {
                                 {pastSpooking && (
                                     <>
                                         {userReview && (
-                                            <>
-                                                {userReview.content}
-                                            </>
+                                            <div id='spooking-detail-review'>
+                                                <div id='spooking-detail-review-upper'>
+                                                    <div id='spooking-detail-review-user'>
+                                                        <div id='spooking-detail-review-image' style={{backgroundImage: `url(${userReview.User.Images[0].url})`}}></div>
+                                                        <div id='spooking-detail-review-user-info'>
+                                                            <div id='spooking-detail-review-user-username'>
+                                                                {userReview.User.username}
+                                                            </div>
+                                                            <div id='spooking-detail-review-user-date'>
+                                                                {getStayMonth(userReview.updatedAt)} {getStayYear(userReview.updatedAt)}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id='spooking-detail-review-rating'>
+                                                        <div>
+                                                            {generateRating(userReview.rating).map(point => {
+                                                                return (
+                                                                    <i id={point} class="fa-solid fa-spider"></i>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id='spooking-detail-review-lower'>
+                                                    {userReview.content}
+                                                </div>
+                                            </div>
                                         )}
                                         {!userReview && (
                                             <div>
