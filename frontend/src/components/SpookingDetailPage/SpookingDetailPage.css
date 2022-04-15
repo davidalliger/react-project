@@ -127,3 +127,44 @@
     background-color:#ad76c7;
     cursor: pointer;
 }
+
+#spooking-detail-review-image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 10px;
+}
+
+#spooking-detail-review {
+    width: 600px;
+    margin-bottom: 20px;
+}
+
+#spooking-detail-review-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#spooking-detail-review-user {
+    display: flex;
+    align-items: center;
+}
+
+#spooking-detail-review-user-username {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#spooking-detail-review-user-date {
+    font-size: 13px;
+    color: gray;
+}
+
+.fa-solid.fa-spider {
+    color:#6f50a0
+}
