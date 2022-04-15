@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import './SpookingDetailPage.css'
 import DeleteSpookingFormModal from '../DeleteSpookingForm';
+import AddReviewFormModal from '../AddReviewForm';
 
 const SpookingDetailPage = () => {
     const { spookingId } = useParams();
@@ -10,7 +11,9 @@ const SpookingDetailPage = () => {
     const sessionUser = useSelector(state => state.session.user);
     const spookings = useSelector(state => state.spookings);
     const [futureSpooking, setFutureSpooking] = useState(false);
+    const [pastSpooking, setPastSpooking] = useState(false);
     const [showDeleteSpookingModal, setShowDeleteSpookingModal] = useState(false);
+    const [showAddReviewModal, setShowAddReviewModal] = useState(false);
     let spooking = spookings[spookingId];
     const today = new Date();
 
@@ -22,12 +25,13 @@ const SpookingDetailPage = () => {
 
     useEffect(() => {
         if (!sessionUser) {
-            history.push('/login');
+            history.push('/');
         }
     }, [sessionUser, history]);
 
     useEffect(()=> {
         if ((new Date(spooking?.startDate)) > today) setFutureSpooking(true);
+        else setPastSpooking(true);
     }, [spooking]);
 
 
@@ -122,6 +126,17 @@ const SpookingDetailPage = () => {
                                         {/* </Link> */}
                                     </div>
                                 )}
+                                {pastSpooking && (
+                                    <div>
+                                        {/* <Link to={`/spookings/${spooking?.id}/delete`}> */}
+                                        <button id='spooking-detail-review-button'
+                                            onClick={() => setShowAddReviewModal(true)}
+                                        >
+                                            Add Review
+                                        </button>
+                                        {/* </Link> */}
+                                    </div>
+                                )}
                                 <div>
                                     <button
                                         id='spooking-detail-back-button'
@@ -136,6 +151,7 @@ const SpookingDetailPage = () => {
                 </div>
             )}
             <DeleteSpookingFormModal showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal} handleDelete={handleDelete} />
+            <AddReviewFormModal showAddReviewModal={showAddReviewModal} setShowAddReviewModal={setShowAddReviewModal} />
         </>
     )
 }
