@@ -6,7 +6,7 @@ import EditHauntFormModal from '../EditHauntForm';
 import DeleteHauntFormModal from '../DeleteHauntForm';
 import './HauntDetail.css'
 
-const HauntDetail = ({isLoaded}) => {
+const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
     const { hauntId } = useParams();
     const sessionUser = useSelector(state => state.session.user);
     const haunts = useSelector(state => state.haunts);
@@ -94,7 +94,7 @@ const HauntDetail = ({isLoaded}) => {
                         </div>
                         <div>
                             {(!sessionUser || sessionUser.id !== haunt?.userId) && (
-                                <CreateSpookingForm haunt={haunt} />
+                                <CreateSpookingForm haunt={haunt} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} />
                             )}
                         </div>
                     </div>

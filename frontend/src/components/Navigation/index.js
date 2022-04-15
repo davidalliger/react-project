@@ -7,10 +7,8 @@ import SignupFormModal from '../SignupFormModal';
 import AddHauntFormModal from '../AddHauntForm';
 import './Navigation.css';
 
-const Navigation = ({isLoaded}) => {
+const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal}) => {
     const sessionUser = useSelector(state => state.session.user)
-    const [showLoginModal, setShowLoginModal] = useState(false);
-    const [showSignupModal, setShowSignupModal] = useState(false);
     const [showAddHauntModal, setShowAddHauntModal] = useState(false);
 
     const hostClick = () => {

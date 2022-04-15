@@ -24,6 +24,8 @@ function App() {
   const sessionUser = useSelector(state => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   const [ready, setReady] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   useEffect(() => {
     async function loadUserAndHaunts() {
@@ -50,7 +52,7 @@ function App() {
     <>
       {isLoaded && (
         <div id='content-wrapper'>
-          <Navigation isLoaded={isLoaded} />
+          <Navigation isLoaded={isLoaded} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} showSignupModal={showSignupModal}  setShowSignupModal={setShowSignupModal} />
           <Switch>
             <Route exact path='/'>
               <SplashPage />
@@ -71,7 +73,7 @@ function App() {
               <EditHauntForm />
             </Route>
             <Route path='/haunts/:hauntId'>
-              <HauntDetail isLoaded={isLoaded} />
+              <HauntDetail isLoaded={isLoaded} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} />
             </Route>
             <Route path='/haunts'>
               <HauntsPage />

@@ -110,6 +110,19 @@
     width: 120px;
 }
 
+#spooking-detail-review-button {
+    background-color:#6f50a0;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 14px;
+    font-size: 14px;
+    width: 120px;
+    margin-bottom: 8px;
+}
+
+#spooking-detail-review-button:hover,
 #spooking-detail-back-button:hover {
     background-color:#ad76c7;
     cursor: pointer;

@@ -59,6 +59,8 @@ html, body, #root, #content-wrapper {
     flex-direction: column;
     margin: 8px;
     width: 100%;
+    /* justify-content: center; */
+    align-items: center;
 }
 
 .auth-form-input {
@@ -72,6 +74,7 @@ html, body, #root, #content-wrapper {
 
 .auth-select {
     border: none;
+    width: 100%;
 }
 
 .auth-button-div {
@@ -105,4 +108,8 @@ html, body, #root, #content-wrapper {
     margin-bottom: 16px;
     margin-top: 5px;
     font-weight: bold;
+}
+
+label {
+    width: 100%;
 }

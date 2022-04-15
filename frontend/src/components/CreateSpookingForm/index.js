@@ -5,7 +5,7 @@ import { createSpooking } from '../../store/spookings';
 import { useHistory } from 'react-router-dom';
 import './CreateSpookingForm.css'
 
-const CreateSpookingForm = ({haunt}) => {
+const CreateSpookingForm = ({haunt, showLoginModal, setShowLoginModal}) => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const [start, setStart] = useState('');
@@ -116,10 +116,11 @@ const CreateSpookingForm = ({haunt}) => {
             }
         } else {
             // history.push('/login');
-            setAvailable(false);
-            setDisabled(true);
-            setStart('');
-            setEnd('');
+            setShowLoginModal(true);
+            // setAvailable(false);
+            // setDisabled(true);
+            // setStart('');
+            // setEnd('');
         }
     }
 

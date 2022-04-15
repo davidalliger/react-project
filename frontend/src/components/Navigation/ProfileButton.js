@@ -83,11 +83,11 @@ const ProfileButton = ({ sessionUser, showLoginModal, setShowLoginModal, showSig
                 <div className='menu-div' onClick={signupClick}>
                     Sign Up
                 </div>
-                <Link to='/haunts/new' className='menu-link'>
-                    <div className='menu-div'>
-                        Host a ghost
-                    </div>
-                </Link>
+                {/* <Link to='/haunts/new' className='menu-link'> */}
+                <div className='menu-div' onClick={loginClick}>
+                    Host a ghost
+                </div>
+                {/* </Link> */}
             </div>
         )
     }

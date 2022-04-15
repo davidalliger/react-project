@@ -15,7 +15,7 @@ const SpookingsPage = () => {
     const [showPast, setShowPast] = useState(false);
     useEffect(() => {
         if (!sessionUser) {
-            history.push('/login');
+            history.push('/ ');
         }
         if (pastSpookings && pastSpookings.length > 0) {
             setShowNavButtons(true);
