@@ -18,6 +18,7 @@ import DeleteSpookingForm from './components/DeleteSpookingForm';
 import SpookingDetailPage from './components/SpookingDetailPage';
 import PageNotFound from './components/PageNotFound'
 import Footer from './components/Footer'
+import { getReviews } from './store/reviews';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
     async function loadUserAndHaunts() {
       await dispatch(restoreUser());
       await dispatch(getHaunts());
+      await dispatch(getReviews());
       setIsLoaded(true);
     };
     loadUserAndHaunts();

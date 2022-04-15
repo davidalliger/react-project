@@ -21,7 +21,7 @@ const ProfileButton = ({ sessionUser, showLoginModal, setShowLoginModal, showSig
 
     const logoutUser = async() => {
         const response = await dispatch(logout());
-        await dispatch(getSpookings(sessionUser));
+        // await dispatch(getSpookings(sessionUser));
         return response;
     }
 
