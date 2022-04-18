@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/session';
 import { Link } from 'react-router-dom';
-import { getSpookings } from '../../store/spookings';
+import { clearSpookings, getSpookings } from '../../store/spookings';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
@@ -21,6 +21,7 @@ const ProfileButton = ({ sessionUser, showLoginModal, setShowLoginModal, showSig
 
     const logoutUser = async() => {
         const response = await dispatch(logout());
+        await dispatch(clearSpookings());
         // await dispatch(getSpookings(sessionUser));
         return response;
     }
