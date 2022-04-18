@@ -111,6 +111,8 @@ const reviewsReducer = (state = {}, action) => {
         case DELETE_REVIEW:
             newState = { ...state };
             delete newState[action.deletedReviewId];
+            const filterOutDeletedReview = newState.list.filter(review => +review.id !== +action.deletedReviewId);
+            newState.list = sortReviews(filterOutDeletedReview);
             return newState;
         default:
             return state;

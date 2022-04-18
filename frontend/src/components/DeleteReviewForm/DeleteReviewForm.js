@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { destroySpooking, getSpookings } from '../../store/spookings';
+import { destroyReview } from '../../store/reviews';
 import { useHistory, useParams, } from 'react-router-dom';
-import './DeleteSpookingForm.css';
+import './DeleteReviewForm.css';
 
-const DeleteSpookingForm = ({setShowDeleteSpookingModal, handleDelete}) => {
+const DeleteReviewForm = ({setShowDeleteReviewModal, handleDelete, review}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const [errors, setErrors] = useState([]);
-    const spookings = useSelector(state => state.spookings);
-    const { spookingId } = useParams();
-    const spooking = spookings[spookingId];
+    // const reviews = useSelector(state => state.reviews)
+    // const { reviewId } = useParams();
+    // const review = reviews[reviewId];
     const history = useHistory();
 
 
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            await dispatch(destroySpooking(spooking));
-            await dispatch(getSpookings(sessionUser));
+            await dispatch(destroyReview(review));
+            setShowDeleteReviewModal(false);
+            // await dispatch(getSpookings(sessionUser));
             // handleDelete();
             // history.push('/spookings');
         } catch (err) {
@@ -30,7 +31,7 @@ const DeleteSpookingForm = ({setShowDeleteSpookingModal, handleDelete}) => {
 
     // useEffect(() => {
     //     if (!sessionUser) {
-    //         history.push('/');
+    //         history.push('/login');
     //     }
     // }, [sessionUser]);
 
@@ -41,17 +42,17 @@ const DeleteSpookingForm = ({setShowDeleteSpookingModal, handleDelete}) => {
                 onSubmit={handleSubmit}
             >
                 <div className='auth-form-title'>
-                    Cancel Trip?
+                    Delete Review?
                 </div>
-                <div id='delete-spooking-confirmation-div'>
-                    Are you sure you want to cancel your trip? Please confirm.
+                <div id='delete-review-confirmation-div'>
+                    Are you sure you want to delete your review? Please confirm.
                 </div>
-                <div id='delete-spooking-button-div'>
+                <div id='delete-review-button-div'>
                     <button
                         type='button'
                         className='auth-button'
-                        id='delete-spooking-back'
-                        onClick={() => setShowDeleteSpookingModal(false)}
+                        id='delete-review-back'
+                        onClick={() => setShowDeleteReviewModal(false)}
                     >
                         Back
                     </button>
@@ -68,4 +69,4 @@ const DeleteSpookingForm = ({setShowDeleteSpookingModal, handleDelete}) => {
     )
 }
 
-export default DeleteSpookingForm;
+export default DeleteReviewForm;

@@ -6,6 +6,7 @@ import EditHauntFormModal from '../EditHauntForm';
 import DeleteHauntFormModal from '../DeleteHauntForm';
 import AddReviewFormModal from '../AddReviewForm';
 import EditReviewFormModal from '../EditReviewForm';
+import DeleteReviewFormModal from '../DeleteReviewForm';
 import './HauntDetail.css'
 
 const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
@@ -30,6 +31,7 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
     const [reviewed, setReviewed] = useState(false);
     const [showAddReviewModal, setShowAddReviewModal] = useState(false);
     const [showEditReviewModal, setShowEditReviewModal] = useState(false);
+    const [showDeleteReviewModal, setShowDeleteReviewModal] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
@@ -41,8 +43,14 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
                 });
                 if (userReview.length) {
                     setReviewed(true);
+                } else {
+                    setReviewed(false);
                 }
+            } else {
+                setReviewed(false)
             }
+        } else {
+            setReviewed(false)
         }
     }, [reviews, visited, sessionUser])
 
@@ -207,11 +215,12 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
                                                     {(review.userId === sessionUser?.id) && (
                                                         <>
                                                             <i className="fa-solid fa-pen haunt-detail-review-edit" onClick={()=>setShowEditReviewModal(true)}></i>
-                                                            <i className="fa-solid fa-trash-can haunt-detail-review-delete"></i>
+                                                            <i className="fa-solid fa-trash-can haunt-detail-review-delete" onClick={()=>setShowDeleteReviewModal(true)}></i>
                                                         </>
                                                     )}
                                                 </div>
                                                 <EditReviewFormModal showEditReviewModal={showEditReviewModal} setShowEditReviewModal={setShowEditReviewModal} haunt={haunt} review={review} />
+                                                <DeleteReviewFormModal showDeleteReviewModal={showDeleteReviewModal} setShowDeleteReviewModal={setShowDeleteReviewModal} haunt={haunt} review={review} />
                                             </div>
                                         )
                                     })}
