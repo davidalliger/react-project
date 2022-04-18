@@ -140,7 +140,7 @@
 
 #spooking-detail-review {
     width: 600px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #spooking-detail-review-upper {
@@ -167,4 +167,26 @@
 
 .fa-solid.fa-spider {
     color:#6f50a0
+}
+
+#spooking-detail-review-edit-delete {
+    color: darkgray;
+    font-size: 13px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.spooking-detail-review-delete {
+    margin-left: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.spooking-detail-review-edit {
+    cursor: pointer;
+}
+
+.spooking-detail-review-edit:hover,
+.spooking-detail-review-delete:hover {
+    color: gray;
 }

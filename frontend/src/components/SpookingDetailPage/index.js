@@ -10,6 +10,7 @@ const SpookingDetailPage = () => {
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const reviews = useSelector(state => state.reviews.list);
+    console.log(reviews);
     const spookings = useSelector(state => state.spookings);
     const [futureSpooking, setFutureSpooking] = useState(false);
     const [pastSpooking, setPastSpooking] = useState(false);
@@ -82,13 +83,13 @@ const SpookingDetailPage = () => {
         return `${parts[1]}/${parts[2]}/${parts[0]}`;
     }
 
-    const getStayMonth = (date) => {
+    const getReviewMonth = (date) => {
         const justDate = date.split('T')[0];
         const parts = justDate.split('-');
         return `${months[parts[1]-1]}`;
     }
 
-    const getStayYear = (date) => {
+    const getReviewYear = (date) => {
         const justDate = date.split('T')[0];
         const parts = justDate.split('-');
         return `${parts[0]}`;
@@ -173,7 +174,7 @@ const SpookingDetailPage = () => {
                                                                 {userReview.User.username}
                                                             </div>
                                                             <div id='spooking-detail-review-user-date'>
-                                                                {getStayMonth(userReview.updatedAt)} {getStayYear(userReview.updatedAt)}
+                                                                {getReviewMonth(userReview.updatedAt)} {getReviewYear(userReview.updatedAt)}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -181,7 +182,7 @@ const SpookingDetailPage = () => {
                                                         <div>
                                                             {generateRating(userReview.rating).map(point => {
                                                                 return (
-                                                                    <i id={point} class="fa-solid fa-spider"></i>
+                                                                    <i id={point} className="fa-solid fa-spider"></i>
                                                                 )
                                                             })}
                                                         </div>
@@ -189,6 +190,10 @@ const SpookingDetailPage = () => {
                                                 </div>
                                                 <div id='spooking-detail-review-lower'>
                                                     {userReview.content}
+                                                </div>
+                                                <div id='spooking-detail-review-edit-delete'>
+                                                    <i className="fa-solid fa-pen spooking-detail-review-edit"></i>
+                                                    <i className="fa-solid fa-trash-can spooking-detail-review-delete"></i>
                                                 </div>
                                             </div>
                                         )}

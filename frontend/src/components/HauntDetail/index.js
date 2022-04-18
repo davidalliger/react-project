@@ -8,13 +8,27 @@ import './HauntDetail.css'
 
 const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
     const { hauntId } = useParams();
+    console.log(hauntId);
     const sessionUser = useSelector(state => state.session.user);
     const haunts = useSelector(state => state.haunts);
     let haunt = haunts[hauntId];
+    const reviewState = useSelector(state => state.reviews.list);
+    console.log(reviewState);
+    const reviews = reviewState.filter(review => {
+        return +review.hauntId === +hauntId;
+    });
+    console.log(reviews);
     const [ isOwner, setIsOwner ] = useState(false);
     const [ showEditHauntModal, setShowEditHauntModal ] = useState(false);
     const [ showDeleteHauntModal, setShowDeleteHauntModal ] = useState(false);
+    const [ reviewSection, setReviewSection ] = useState(false);
     const history = useHistory();
+
+    useEffect(() => {
+        if (reviews.length) {
+            setReviewSection(true);
+        }
+    }, [reviews])
 
     useEffect(() => {
         if (sessionUser && isLoaded) {
@@ -25,6 +39,28 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
             }
         }
     }, [sessionUser, isLoaded]);
+
+    const getReviewMonth = (date) => {
+        const justDate = date.split('T')[0];
+        const parts = justDate.split('-');
+        return `${months[parts[1]-1]}`;
+    }
+
+    const getReviewYear = (date) => {
+        const justDate = date.split('T')[0];
+        const parts = justDate.split('-');
+        return `${parts[0]}`;
+    }
+
+    const generateRating = (rating) => {
+        const result = [];
+        for (let i = 1; i <= rating; i++) {
+            result.push(i);
+        }
+        return result;
+    }
+
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
     const defaultHauntUrl = '/images/hauntedhouse.jpg';
     const defaultUserUrl = '/images/user-icon-lavender.png';
@@ -91,6 +127,45 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
                             <div id='haunt-description'>
                                 <p>{haunt?.description}</p>
                             </div>
+                            {reviewSection && (
+                                <div id='haunt-reviews'>
+                                    {reviews.map(review => {
+                                        return (
+                                            <div id='haunt-detail-review'>
+                                                <div id='haunt-detail-review-upper'>
+                                                    <div id='haunt-detail-review-user'>
+                                                        <div id='haunt-detail-review-image' style={{backgroundImage: `url(${review.User.Images[0].url})`}}></div>
+                                                        <div id='haunt-detail-review-user-info'>
+                                                            <div id='haunt-detail-review-user-username'>
+                                                                {review.User.username}
+                                                            </div>
+                                                            <div id='haunt-detail-review-user-date'>
+                                                                {getReviewMonth(review.updatedAt)} {getReviewYear(review.updatedAt)}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id='haunt-detail-review-rating'>
+                                                        <div>
+                                                            {generateRating(review.rating).map(point => {
+                                                                return (
+                                                                    <i id={point} className="fa-solid fa-spider"></i>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id='haunt-detail-review-lower'>
+                                                    {review.content}
+                                                </div>
+                                                <div id='haunt-detail-review-edit-delete'>
+                                                    <i className="fa-solid fa-pen haunt-detail-review-edit"></i>
+                                                    <i className="fa-solid fa-trash-can haunt-detail-review-delete"></i>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )}
                         </div>
                         <div>
                             {(!sessionUser || sessionUser.id !== haunt?.userId) && (

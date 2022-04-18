@@ -16,7 +16,7 @@ const AddReviewForm = ({setShowAddReviewModal, haunt}) => {
         setErrors([]);
         const review = {
             userId: sessionUser.id,
-            hauntId: haunt.id,
+            hauntId: +haunt.id,
             rating,
             content
         };
