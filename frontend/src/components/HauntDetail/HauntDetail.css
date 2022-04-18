@@ -215,3 +215,27 @@
 .haunt-detail-review-delete:hover {
     color: gray;
 }
+
+#haunt-detail-review-button-div {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#haunt-detail-review-button {
+    background-color:#6f50a0;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 14px;
+    font-size: 14px;
+    width: 120px;
+    margin-bottom: 8px;
+}
+
+#haunt-detail-review-button:hover {
+    background-color:#ad76c7;
+    cursor: pointer;
+}

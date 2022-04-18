@@ -1,0 +1,156 @@
+.review-errors-normal {
+    background-color: pink;
+    color: red;
+    margin: 0 0 10px;
+    border-radius: 12px;
+    width: 300px;
+    padding: 5px 20px;
+    font-size: 14px;
+}
+
+.review-errors-ul {
+    padding: 0 0 0 20px;
+}
+
+.errors-hidden {
+    display: none;
+}
+
+#edit-review-form {
+    width: 300px;
+    /* max-height: 650px; */
+    /* overflow-y: auto; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#content {
+    resize: none;
+}
+
+#edit-review-form-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#description {
+    resize: none;
+
+}
+
+
+#edit-review-form-inner-grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+#separator-one {
+    padding-right: 20px;
+    height: 100%;
+    border-right: 1px solid lightgray;
+}
+#separator-two {
+    padding-right: 20px;
+}
+
+#edit-review-column-one,
+#edit-review-column-two {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#edit-review-button {
+    width: 50%;
+    font-size: 14px;
+    color: black;
+    border: 1px solid black;
+    background-color: white;
+    font-weight: bold;
+}
+
+#edit-review-button:hover {
+    cursor: pointer;
+    background-color: rgb(236, 236, 236);
+}
+
+#edit-review-images-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#edit-review-image-button-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+#edit-remove-buttons {
+    margin: 12px 0 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#edit-review-button-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0 0;
+    width: 100%;
+}
+
+#edit-review-back{
+    width: 100px;
+}
+#edit-review-submit {
+    width: 100px;
+
+}
+
+#edit-review-form-footer {
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+    position: fixed;
+    width: 50%;
+}
+
+#edit-review-form-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-errors-normal {
+    display: block;
+}
+
+#review-errors-ul {
+    padding: 0 40px 10px;
+    margin: 0;
+}
+
+#country,
+#state {
+    width: 100%;
+    padding-right: 12px;
+}

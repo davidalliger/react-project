@@ -49,14 +49,16 @@ router.put('/:id', requireAuth, asyncHandler(async (req, res) => {
         rating,
         content
     } = req.body;
-    await Review.update(
-        userId,
-        hauntId,
-        rating,
-        content,
+    console.log (userId, hauntId, rating, content);
+    await Review.update({
+        userId: userId,
+        hauntId: hauntId,
+        rating: rating,
+        content: content
+    },
         {
             where: {
-                id
+                id: id
             }
         }
     );
