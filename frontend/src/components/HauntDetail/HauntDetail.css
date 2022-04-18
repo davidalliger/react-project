@@ -143,3 +143,59 @@
     display: flex;
     flex-direction: row;
 }
+
+#haunt-detail-review-image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 10px;
+}
+
+#haunt-detail-review {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+#haunt-detail-review-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+#haunt-detail-review-user-username {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#haunt-detail-review-user-date {
+    font-size: 13px;
+    color: gray;
+}
+
+.fa-solid.fa-spider {
+    color:#6f50a0
+}
+
+#haunt-detail-review-edit-delete {
+    color: darkgray;
+    font-size: 13px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.haunt-detail-review-delete {
+    margin-left: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.haunt-detail-review-edit {
+    cursor: pointer;
+}
+
+.haunt-detail-review-edit:hover,
+.haunt-detail-review-delete:hover {
+    color: gray;
+}
