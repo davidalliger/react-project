@@ -117,6 +117,8 @@
 
 #haunt-description {
     margin-top: 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid lightgray;
 }
 
 #haunt-detail-info-area {
@@ -144,7 +146,12 @@
     flex-direction: row;
 }
 
-#haunt-detail-review-image {
+#haunt-reviews {
+    padding-top: 30px;
+    /* border-top: 1px solid lightgray; */
+}
+
+.haunt-detail-review-image {
     height: 50px;
     width: 50px;
     border-radius: 50%;
@@ -154,22 +161,29 @@
     margin-right: 10px;
 }
 
-#haunt-detail-review {
+.haunt-detail-review {
     width: 100%;
     margin-bottom: 30px;
 }
 
-#haunt-detail-review-upper {
+.haunt-detail-review-upper {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
+}
 
-#haunt-detail-review-user-username {
+.haunt-detail-review-user {
+    display: flex;
+    align-items: center;
+}
+
+.haunt-detail-review-user-username {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-#haunt-detail-review-user-date {
+.haunt-detail-review-user-date {
     font-size: 13px;
     color: gray;
 }
@@ -178,11 +192,13 @@
     color:#6f50a0
 }
 
-#haunt-detail-review-edit-delete {
+.haunt-detail-review-edit-delete {
     color: darkgray;
     font-size: 13px;
     display: flex;
     justify-content: flex-end;
+    align-items: flex-start;
+    height: 20px;
 }
 
 .haunt-detail-review-delete {

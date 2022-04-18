@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const LOAD_SPOOKINGS = 'spookings/LOAD_SPOOKINGS';
 const ADD_SPOOKING = 'spookings/ADD_SPOOKING';
 const DELETE_SPOOKING = 'spookings/DELETE_SPOOKING';
+const CLEAR_SPOOKINGS = 'spookings/CLEAR_SPOOKINGS';
 
 const loadSpookings = spookingsList => {
     return {
@@ -22,6 +23,12 @@ const deleteSpooking = deletedSpookingId => {
     return {
         type: DELETE_SPOOKING,
         deletedSpookingId
+    }
+}
+
+export const clearSpookings = () => {
+    return {
+        type: CLEAR_SPOOKINGS
     }
 }
 
@@ -101,6 +108,9 @@ const spookingsReducer = (state = {}, action) => {
         case DELETE_SPOOKING:
             newState = { ...state };
             delete newState[action.deletedSpookingId];
+            return newState;
+        case CLEAR_SPOOKINGS:
+            newState = {};
             return newState;
         default:
             return state;
