@@ -1,0 +1,20 @@
+#delete-review-button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 24px 0 0;
+}
+
+#delete-review-back {
+    width: 100px;
+    margin-right: 12px;
+}
+
+#delete-review-confirm {
+    width: 100px;
+    background-color: rgb(255, 7, 11);
+}
+
+#delete-review-confirm:hover {
+    background-color: rgb(255, 120, 86);
+}
