@@ -180,9 +180,9 @@ const SpookingDetailPage = () => {
                                                     </div>
                                                     <div id='spooking-detail-review-rating'>
                                                         <div>
-                                                            {generateRating(userReview.rating).map(point => {
+                                                            {generateRating(userReview.rating).map((point, index) => {
                                                                 return (
-                                                                    <i id={point} className="fa-solid fa-spider"></i>
+                                                                    <i id={point} key={index} className="fa-solid fa-spider"></i>
                                                                 )
                                                             })}
                                                         </div>

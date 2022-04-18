@@ -104,6 +104,9 @@ const reviewsReducer = (state = {}, action) => {
         case UPDATE_REVIEW:
             newState = { ...state };
             newState[action.updatedReview.id] = action.updatedReview;
+            const filterOutOldReview = newState.list.filter(review => review.id !== action.updatedReview.id);
+            filterOutOldReview.push(action.updatedReview);
+            newState.list = sortReviews(filterOutOldReview);
             return newState;
         case DELETE_REVIEW:
             newState = { ...state };

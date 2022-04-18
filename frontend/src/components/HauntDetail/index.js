@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import CreateSpookingForm from '../CreateSpookingForm';
 import EditHauntFormModal from '../EditHauntForm';
 import DeleteHauntFormModal from '../DeleteHauntForm';
+import AddReviewFormModal from '../AddReviewForm';
+import EditReviewFormModal from '../EditReviewForm';
 import './HauntDetail.css'
 
 const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
@@ -26,6 +28,8 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
     const [pastSpookings, setPastSpookings] = useState([]);
     const [visited, setVisited] = useState(false);
     const [reviewed, setReviewed] = useState(false);
+    const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+    const [showEditReviewModal, setShowEditReviewModal] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
@@ -161,13 +165,19 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
                                 <p>{haunt?.description}</p>
                             </div>
                             {(visited && !reviewed) && (
-                                <button>Add Review</button>
+                                <div id='haunt-detail-review-button-div'>
+                                    <button id='haunt-detail-review-button'
+                                        onClick={() => setShowAddReviewModal(true)}
+                                    >
+                                        Add Review
+                                    </button>
+                                </div>
                             )}
                             {reviewSection && (
                                 <div id='haunt-reviews'>
-                                    {reviews?.map(review => {
+                                    {reviews?.map((review, index) => {
                                         return (
-                                            <div className='haunt-detail-review'>
+                                            <div className='haunt-detail-review' key={index}>
                                                 <div className='haunt-detail-review-upper'>
                                                     <div className='haunt-detail-review-user'>
                                                         <div className='haunt-detail-review-image' style={{backgroundImage: `url(${review.User.Images[0].url})`}}></div>
@@ -182,9 +192,9 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
                                                     </div>
                                                     <div className='haunt-detail-review-rating'>
                                                         <div>
-                                                            {generateRating(review.rating).map(point => {
+                                                            {generateRating(review.rating).map((point, index) => {
                                                                 return (
-                                                                    <i id={point} className="fa-solid fa-spider"></i>
+                                                                    <i id={point} key={index} className="fa-solid fa-spider"></i>
                                                                 )
                                                             })}
                                                         </div>
@@ -196,11 +206,12 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
                                                 <div className='haunt-detail-review-edit-delete'>
                                                     {(review.userId === sessionUser?.id) && (
                                                         <>
-                                                            <i className="fa-solid fa-pen haunt-detail-review-edit"></i>
+                                                            <i className="fa-solid fa-pen haunt-detail-review-edit" onClick={()=>setShowEditReviewModal(true)}></i>
                                                             <i className="fa-solid fa-trash-can haunt-detail-review-delete"></i>
                                                         </>
                                                     )}
                                                 </div>
+                                                <EditReviewFormModal showEditReviewModal={showEditReviewModal} setShowEditReviewModal={setShowEditReviewModal} haunt={haunt} review={review} />
                                             </div>
                                         )
                                     })}
@@ -217,6 +228,7 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
             )}
             <EditHauntFormModal showEditHauntModal={showEditHauntModal} setShowEditHauntModal={setShowEditHauntModal} />
             <DeleteHauntFormModal showDeleteHauntModal={showDeleteHauntModal} setShowDeleteHauntModal={setShowDeleteHauntModal} handleDelete={handleDelete} />
+            <AddReviewFormModal showAddReviewModal={showAddReviewModal} setShowAddReviewModal={setShowAddReviewModal} haunt={haunt} />
         </>
     )
 }
