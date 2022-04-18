@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import './SpookingDetailPage.css'
 import DeleteSpookingFormModal from '../DeleteSpookingForm';
 import AddReviewFormModal from '../AddReviewForm';
+import EditReviewFormModal from '../EditReviewForm';
+import DeleteReviewFormModal from '../DeleteReviewForm';
 
 const SpookingDetailPage = () => {
     const { spookingId } = useParams();
@@ -17,6 +19,8 @@ const SpookingDetailPage = () => {
     const [userReview, setUserReview] = useState(null);
     const [showDeleteSpookingModal, setShowDeleteSpookingModal] = useState(false);
     const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+    const [showEditReviewModal, setShowEditReviewModal] = useState(false);
+    const [showDeleteReviewModal, setShowDeleteReviewModal] = useState(false);
     let spooking = spookings[spookingId];
     const today = new Date();
 
@@ -26,6 +30,8 @@ const SpookingDetailPage = () => {
         });
         if (reviewed.length) {
             setUserReview(reviewed[0])
+        } else {
+            setUserReview(null);
         }
     }, [spooking, reviews])
 
@@ -192,8 +198,10 @@ const SpookingDetailPage = () => {
                                                     {userReview.content}
                                                 </div>
                                                 <div id='spooking-detail-review-edit-delete'>
-                                                    <i className="fa-solid fa-pen spooking-detail-review-edit"></i>
-                                                    <i className="fa-solid fa-trash-can spooking-detail-review-delete"></i>
+                                                    <i className="fa-solid fa-pen spooking-detail-review-edit" onClick={()=> setShowEditReviewModal(true)}></i>
+                                                    <i className="fa-solid fa-trash-can spooking-detail-review-delete"onClick={()=> setShowDeleteReviewModal(true)}></i>
+                                                    <EditReviewFormModal showEditReviewModal={showEditReviewModal} setShowEditReviewModal={setShowEditReviewModal} haunt={spooking.Haunt} review={userReview} />
+                                                    <DeleteReviewFormModal showDeleteReviewModal={showDeleteReviewModal} setShowDeleteReviewModal={setShowDeleteReviewModal} haunt={spooking.Haunt} review={userReview} />
                                                 </div>
                                             </div>
                                         )}
