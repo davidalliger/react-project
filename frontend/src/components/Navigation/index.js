@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
@@ -10,6 +10,7 @@ import './Navigation.css';
 const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal}) => {
     const sessionUser = useSelector(state => state.session.user)
     const [showAddHauntModal, setShowAddHauntModal] = useState(false);
+    const location = useLocation()
 
     const hostClick = () => {
         if (sessionUser) {
@@ -18,6 +19,46 @@ const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModa
             setShowLoginModal(true);
         }
     }
+
+    let middleDiv;
+    if (location.pathname === '/haunts') {
+        middleDiv = (
+            <div id='nav-search-bar'>
+                <form id='nav-search-form'>
+                    <div id='nav-search-by'>
+                        <div id='nav-search-select'>
+                            Search by
+                        </div>
+                        <div id='nav-search-dropdown-div'>
+                            <select id='nav-search-dropdown'>
+                                <option>
+                                    Location
+                                </option>
+                                <option>
+                                    Name
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <input type='text' id='nav-search-field'/>
+                    </div>
+                    <div id='nav-search-icon'>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </form>
+            </div>
+        )
+    } else {
+        middleDiv = (
+            <NavLink to='/haunts'>
+                <button id='nav-find-haunt'>
+                    Search for haunts
+                </button>
+            </NavLink>
+        )
+    }
+
 
     return (
         <>
@@ -31,11 +72,7 @@ const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModa
                             </NavLink>
                         </div>
                         <div id='nav-middle-div'>
-                            <NavLink to='/haunts'>
-                                <button id='nav-find-haunt'>
-                                    Search for haunts
-                                </button>
-                            </NavLink>
+                            {middleDiv}
                         </div>
                         <div id='nav-user-div'>
                             {/* <NavLink exact to='/haunts/new' id='nav-title-link'> */}

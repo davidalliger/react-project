@@ -72,6 +72,8 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
             } else {
                 setVisited(false);
             }
+        } else {
+            setVisited(false)
         }
     }, [pastSpookings]);
 
@@ -216,11 +218,11 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
                                                         <>
                                                             <i className="fa-solid fa-pen haunt-detail-review-edit" onClick={()=>setShowEditReviewModal(true)}></i>
                                                             <i className="fa-solid fa-trash-can haunt-detail-review-delete" onClick={()=>setShowDeleteReviewModal(true)}></i>
+                                                            <EditReviewFormModal showEditReviewModal={showEditReviewModal} setShowEditReviewModal={setShowEditReviewModal} haunt={haunt} review={review} />
+                                                            <DeleteReviewFormModal showDeleteReviewModal={showDeleteReviewModal} setShowDeleteReviewModal={setShowDeleteReviewModal} haunt={haunt} review={review} />
                                                         </>
                                                     )}
                                                 </div>
-                                                <EditReviewFormModal showEditReviewModal={showEditReviewModal} setShowEditReviewModal={setShowEditReviewModal} haunt={haunt} review={review} />
-                                                <DeleteReviewFormModal showDeleteReviewModal={showDeleteReviewModal} setShowDeleteReviewModal={setShowDeleteReviewModal} haunt={haunt} review={review} />
                                             </div>
                                         )
                                     })}
