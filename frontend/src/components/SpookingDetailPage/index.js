@@ -24,7 +24,7 @@ const SpookingDetailPage = ({showDeleteSpookingModal, setShowDeleteSpookingModal
 
     useEffect(() => {
         const reviewed = reviews.filter(review => {
-            return review.userId === sessionUser.id && review.hauntId === spooking.hauntId;
+            return review.userId === sessionUser.id && review.hauntId === spooking?.hauntId;
         });
         if (reviewed.length) {
             setUserReview(reviewed[0])
@@ -197,8 +197,8 @@ const SpookingDetailPage = ({showDeleteSpookingModal, setShowDeleteSpookingModal
                                                 <div id='spooking-detail-review-edit-delete'>
                                                     <i className="fa-solid fa-pen spooking-detail-review-edit" onClick={()=> setShowEditReviewModal(true)}></i>
                                                     <i className="fa-solid fa-trash-can spooking-detail-review-delete"onClick={()=> setShowDeleteReviewModal(true)}></i>
-                                                    <EditReviewFormModal showEditReviewModal={showEditReviewModal} setShowEditReviewModal={setShowEditReviewModal} haunt={spooking.Haunt} review={userReview} />
-                                                    <DeleteReviewFormModal showDeleteReviewModal={showDeleteReviewModal} setShowDeleteReviewModal={setShowDeleteReviewModal} haunt={spooking.Haunt} review={userReview} />
+                                                    <EditReviewFormModal showEditReviewModal={showEditReviewModal} setShowEditReviewModal={setShowEditReviewModal} haunt={spooking?.Haunt} review={userReview} />
+                                                    <DeleteReviewFormModal showDeleteReviewModal={showDeleteReviewModal} setShowDeleteReviewModal={setShowDeleteReviewModal} haunt={spooking?.Haunt} review={userReview} />
                                                 </div>
                                             </div>
                                         )}
@@ -229,7 +229,7 @@ const SpookingDetailPage = ({showDeleteSpookingModal, setShowDeleteSpookingModal
                 </div>
             )}
             <DeleteSpookingFormModal showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal} handleDelete={handleDelete} spooking={spooking} />
-            <AddReviewFormModal showAddReviewModal={showAddReviewModal} setShowAddReviewModal={setShowAddReviewModal} haunt={spooking.Haunt} />
+            <AddReviewFormModal showAddReviewModal={showAddReviewModal} setShowAddReviewModal={setShowAddReviewModal} haunt={spooking?.Haunt} />
         </>
     )
 }
