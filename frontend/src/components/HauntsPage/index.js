@@ -42,21 +42,23 @@ const HauntsPage = ({searchTerm, searchCategory}) => {
                     No haunts available right now.
                 </div>
             )}
-            <div id='haunts-container'>
-                {haunts.map((haunt, index) => (
-                    <Link to={`/haunts/${haunt.id}`} className='haunt-link' key={haunt.id}>
-                        <div className='haunt-div'>
-                            <div className='haunt-image-container'>
-                                <img alt={`haunt-${haunt.id}-${index + 1}`} src={haunt.Images.length ? haunt.Images[0].url : defaultUrl} className='haunt-image' />
+            {haunts.length && (
+                <div id='haunts-container'>
+                    {haunts.map((haunt, index) => (
+                        <Link to={`/haunts/${haunt.id}`} className='haunt-link' key={haunt.id}>
+                            <div className='haunt-div'>
+                                <div className='haunt-image-container'>
+                                    <img alt={`haunt-${haunt.id}-${index + 1}`} src={haunt.Images.length ? haunt.Images[0].url : defaultUrl} className='haunt-image' />
+                                </div>
+                                <div className='haunt-label-div'>
+                                    <p className='haunt-name'>{haunt.city}, {haunt.state ? haunt.state : haunt.country}</p>
+                                    <p className='haunt-rate'>${Math.round(haunt.rate)} / night</p>
+                                </div>
                             </div>
-                            <div className='haunt-label-div'>
-                                <p className='haunt-name'>{haunt.city}, {haunt.state ? haunt.state : haunt.country}</p>
-                                <p className='haunt-rate'>${Math.round(haunt.rate)} / night</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-            </div>
+                        </Link>
+                    ))}
+                </div>
+            )}
         </>
     )
 };
