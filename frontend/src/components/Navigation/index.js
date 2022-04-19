@@ -7,7 +7,7 @@ import SignupFormModal from '../SignupFormModal';
 import AddHauntFormModal from '../AddHauntForm';
 import './Navigation.css';
 
-const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal}) => {
+const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal, searchTerm, setSearchTerm, searchCategory, setSearchCategory}) => {
     const sessionUser = useSelector(state => state.session.user)
     const [showAddHauntModal, setShowAddHauntModal] = useState(false);
     const location = useLocation()
@@ -20,6 +20,12 @@ const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModa
         }
     }
 
+    useEffect(()=> {
+        if (location.pathname !== '/haunts') {
+            setSearchTerm('');
+        }
+    }, [location])
+
     let middleDiv;
     if (location.pathname === '/haunts') {
         middleDiv = (
@@ -30,18 +36,29 @@ const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModa
                             Search by
                         </div>
                         <div id='nav-search-dropdown-div'>
-                            <select id='nav-search-dropdown'>
-                                <option>
+                            <select id='nav-search-dropdown'
+                                name='nav-search-category'
+                                onChange={e => setSearchCategory(e.target.value)}
+                                value={searchCategory}
+                            >
+                                <option
+                                    value='Location'
+                                >
                                     Location
                                 </option>
-                                <option>
+                                <option
+                                    value='Name'
+                                >
                                     Name
                                 </option>
                             </select>
                         </div>
                     </div>
                     <div>
-                        <input type='text' id='nav-search-field'/>
+                        <input type='text' id='nav-search-field'
+                            onChange={e=> setSearchTerm(e.target.value)}
+                            value={searchTerm}
+                        />
                     </div>
                     <div id='nav-search-icon'>
                         <i class="fa-solid fa-magnifying-glass"></i>

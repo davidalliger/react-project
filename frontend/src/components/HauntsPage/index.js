@@ -1,11 +1,39 @@
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './HauntsPage.css';
 
-const HauntsPage = () => {
-    const haunts = useSelector(state => state.haunts.list);
+const HauntsPage = ({searchTerm, searchCategory}) => {
+    const hauntState = useSelector(state => state.haunts.list);
+    const [haunts, setHaunts] = useState(hauntState);
 
     const defaultUrl = 'images/hauntedhouse.jpg';
+
+    useEffect(()=> {
+        const regex = new RegExp(searchTerm, 'i');
+        console.log(regex);
+        if (searchCategory === 'Location') {
+            if (searchTerm) {
+                const filteredHaunts = hauntState.filter(haunt => regex.test(haunt.country) ||
+                                                regex.test(haunt.state) ||
+                                                regex.test(haunt.city) ||
+                                                regex.test(haunt.address));
+                setHaunts(filteredHaunts);
+            } else {
+                setHaunts(hauntState);
+            }
+        } else if (searchCategory === 'Name') {
+            if (searchTerm) {
+                const otherHaunts = hauntState.filter(haunt => regex.test(haunt.name) ||
+                                                regex.test(haunt.User.username));
+                setHaunts(otherHaunts);
+            } else {
+                setHaunts(hauntState);
+            }
+        }
+        console.log(haunts);
+
+    }, [searchCategory, searchTerm])
 
     return (
         <div id='haunts-container'>
