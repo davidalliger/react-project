@@ -76,13 +76,19 @@ const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
 
     useEffect(() => {
         if (sessionUser && isLoaded) {
-            if(sessionUser.id === haunt.userId) {
+            if(sessionUser.id === haunt?.userId) {
                 setIsOwner(true);
             } else {
                 setIsOwner(false);
             }
         }
     }, [sessionUser, isLoaded]);
+
+    useEffect(() => {
+        if (!haunt) {
+            history.push('/404-not-found')
+        }
+    }, [haunt])
 
     const getReviewMonth = (date) => {
         const justDate = date.split('T')[0];

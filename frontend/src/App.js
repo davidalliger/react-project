@@ -92,6 +92,9 @@ function App() {
             <Route path='/spookings'>
                 <SpookingsPage showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal}/>
             </Route>
+            <Route path='/404-not-found'>
+                <PageNotFound />
+            </Route>
             <Route>
                 <PageNotFound />
             </Route>
