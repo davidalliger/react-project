@@ -8,8 +8,14 @@
     font-size: 14px;
 }
 
-.review-errors-ul {
-    padding: 0 0 0 20px;
+/* .review-errors-normal ul {
+    padding: 0;
+} */
+
+#review-errors-ul {
+    /* padding: 0 0 0 20px; */
+    margin: 0;
+    padding: 0 40px;
 }
 
 .errors-hidden {

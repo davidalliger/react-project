@@ -3,6 +3,8 @@ const asyncHandler = require('express-async-handler');
 const {Review, User, Image} = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const {handleValidationErrors} = require('../../utils/validation');
+const { check, body } = require('express-validator');
+
 
 const router = express.Router();
 
@@ -16,7 +18,20 @@ router.get('/', asyncHandler(async (req, res) => {
     return res.json(reviews);
 }));
 
-router.post('/', requireAuth, asyncHandler(async (req, res) => {
+const validateReview = [
+    check('rating')
+        .exists({ checkFalsy: true })
+        .withMessage('Please give this haunt a rating.')
+        .if(check('rating').exists({checkFalsy: true}))
+        .custom(value => Number(value) > 0 && Number(value) < 6)
+        .withMessage('Rating must be an integer between 1 and 5.'),
+    check('content')
+        .exists({ checkFalsy: true })
+        .withMessage('Please enter a review.'),
+    handleValidationErrors
+];
+
+router.post('/', requireAuth, validateReview, asyncHandler(async (req, res) => {
     const {
         userId,
         hauntId,
