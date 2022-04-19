@@ -61,7 +61,7 @@ const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModa
                         />
                     </div>
                     <div id='nav-search-icon'>
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i className="fa-solid fa-magnifying-glass"></i>
                     </div>
                 </form>
             </div>

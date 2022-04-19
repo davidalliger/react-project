@@ -4,13 +4,14 @@ import { destroySpooking, getSpookings } from '../../store/spookings';
 import { useHistory, useParams, } from 'react-router-dom';
 import './DeleteSpookingForm.css';
 
-const DeleteSpookingForm = ({setShowDeleteSpookingModal, handleDelete}) => {
+const DeleteSpookingForm = ({setShowDeleteSpookingModal, handleDelete, spooking}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const [errors, setErrors] = useState([]);
     const spookings = useSelector(state => state.spookings);
-    const { spookingId } = useParams();
-    const spooking = spookings[spookingId];
+    console.log(spooking);
+    // const { spookingId } = useParams();
+    // const spooking = spookings[spookingId];
     const history = useHistory();
 
 
@@ -19,6 +20,7 @@ const DeleteSpookingForm = ({setShowDeleteSpookingModal, handleDelete}) => {
         try {
             await dispatch(destroySpooking(spooking));
             await dispatch(getSpookings(sessionUser));
+            setShowDeleteSpookingModal(false);
             // handleDelete();
             // history.push('/spookings');
         } catch (err) {

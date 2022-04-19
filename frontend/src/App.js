@@ -29,6 +29,7 @@ function App() {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchCategory, setSearchCategory] = useState('Location');
+  const [showDeleteSpookingModal, setShowDeleteSpookingModal] = useState(false);
 
   useEffect(() => {
     async function loadUserAndHaunts() {
@@ -82,14 +83,14 @@ function App() {
             <Route path='/haunts'>
               <HauntsPage searchTerm={searchTerm} searchCategory={searchCategory}/>
             </Route>
-            <Route path='/spookings/:spookingId/delete'>
+            {/* <Route path='/spookings/:spookingId/delete'>
                 <DeleteSpookingForm />
-            </Route>
+            </Route> */}
             <Route path='/spookings/:spookingId'>
-                <SpookingDetailPage />
+                <SpookingDetailPage showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal}/>
             </Route>
             <Route path='/spookings'>
-                <SpookingsPage />
+                <SpookingsPage showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal}/>
             </Route>
             <Route>
                 <PageNotFound />
