@@ -29,13 +29,13 @@ When first visiting the app, users are greeted by a splash page that displays a 
 
 ![screenshots-1](https://user-images.githubusercontent.com/88861592/164080495-786299e7-2dfe-4aee-86ed-9372f07b6b84.PNG)
 
-## Search Haunts Page
+### Search Haunts Page
 
 A user can click a button in the navigation bar to access the search haunts page, where they can browse through available haunted houses and filter by location and name.
 
 ![screenshots-2](https://user-images.githubusercontent.com/88861592/164081034-de0a1828-9822-4bff-9266-ce374b1ff79b.PNG)
 
-## Haunt Detail
+### Haunt Detail
 
 When a user selects a haunted house from the search haunts page, they will be brought to that haunted house's detail page. Here, they can enter dates for their trip, check availability, book a trip, read a brief description and reviews, and add a review if they've previously stayed at the location.
 
@@ -43,7 +43,7 @@ When a user selects a haunted house from the search haunts page, they will be br
 
 ![screenshots-4](https://user-images.githubusercontent.com/88861592/164082074-a35f532a-de88-4651-9bac-1a73e23fe686.PNG)
 
-## Spookings
+### Spookings
 
 A registered and logged-in user can view their past and future trips.
 
