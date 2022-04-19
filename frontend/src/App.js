@@ -27,6 +27,8 @@ function App() {
   const [ready, setReady] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchCategory, setSearchCategory] = useState('Location');
 
   useEffect(() => {
     async function loadUserAndHaunts() {
@@ -54,7 +56,7 @@ function App() {
     <>
       {isLoaded && (
         <div id='content-wrapper'>
-          <Navigation isLoaded={isLoaded} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} showSignupModal={showSignupModal}  setShowSignupModal={setShowSignupModal} />
+          <Navigation isLoaded={isLoaded} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} showSignupModal={showSignupModal}  setShowSignupModal={setShowSignupModal} searchTerm={searchTerm} setSearchTerm={setSearchTerm} searchCategory={searchCategory} setSearchCategory={setSearchCategory} />
           <Switch>
             <Route exact path='/'>
               <SplashPage />
@@ -78,7 +80,7 @@ function App() {
               <HauntDetail isLoaded={isLoaded} showLoginModal={showLoginModal} setShowLoginModal={setShowLoginModal} />
             </Route>
             <Route path='/haunts'>
-              <HauntsPage />
+              <HauntsPage searchTerm={searchTerm} searchCategory={searchCategory}/>
             </Route>
             <Route path='/spookings/:spookingId/delete'>
                 <DeleteSpookingForm />
