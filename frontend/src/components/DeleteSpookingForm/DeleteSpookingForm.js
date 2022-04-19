@@ -9,9 +9,6 @@ const DeleteSpookingForm = ({setShowDeleteSpookingModal, handleDelete, spooking}
     const sessionUser = useSelector(state => state.session.user);
     const [errors, setErrors] = useState([]);
     const spookings = useSelector(state => state.spookings);
-    console.log(spooking);
-    // const { spookingId } = useParams();
-    // const spooking = spookings[spookingId];
     const history = useHistory();
 
 

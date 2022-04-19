@@ -11,16 +11,13 @@ import './HauntDetail.css'
 
 const HauntDetail = ({isLoaded, showLoginModal, setShowLoginModal}) => {
     const { hauntId } = useParams();
-    console.log(hauntId);
     const sessionUser = useSelector(state => state.session.user);
     const haunts = useSelector(state => state.haunts);
     let haunt = haunts[hauntId];
     const reviewState = useSelector(state => state.reviews.list);
-    console.log(reviewState);
     const reviews = reviewState.filter(review => {
         return +review.hauntId === +hauntId;
     });
-    console.log(reviews);
     const spookings = useSelector(state => state.spookings)
     const [ isOwner, setIsOwner ] = useState(false);
     const [ showEditHauntModal, setShowEditHauntModal ] = useState(false);

@@ -49,7 +49,6 @@ router.put('/:id', requireAuth, asyncHandler(async (req, res) => {
         rating,
         content
     } = req.body;
-    console.log (userId, hauntId, rating, content);
     await Review.update({
         userId: userId,
         hauntId: hauntId,

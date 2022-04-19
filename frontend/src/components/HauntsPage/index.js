@@ -11,7 +11,6 @@ const HauntsPage = ({searchTerm, searchCategory}) => {
 
     useEffect(()=> {
         const regex = new RegExp(searchTerm, 'i');
-        console.log(regex);
         if (searchCategory === 'Location') {
             if (searchTerm) {
                 const filteredHaunts = hauntState.filter(haunt => regex.test(haunt.country) ||
@@ -31,7 +30,6 @@ const HauntsPage = ({searchTerm, searchCategory}) => {
                 setHaunts(hauntState);
             }
         }
-        console.log(haunts);
 
     }, [searchCategory, searchTerm])
 

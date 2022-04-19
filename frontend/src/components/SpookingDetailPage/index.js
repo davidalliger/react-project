@@ -12,7 +12,6 @@ const SpookingDetailPage = ({showDeleteSpookingModal, setShowDeleteSpookingModal
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const reviews = useSelector(state => state.reviews.list);
-    console.log(reviews);
     const spookings = useSelector(state => state.spookings);
     const [futureSpooking, setFutureSpooking] = useState(false);
     const [pastSpooking, setPastSpooking] = useState(false);
@@ -118,7 +117,6 @@ const SpookingDetailPage = ({showDeleteSpookingModal, setShowDeleteSpookingModal
         history.push('/spookings');
     }
 
-    console.log(userReview);
 
     return (
         <>

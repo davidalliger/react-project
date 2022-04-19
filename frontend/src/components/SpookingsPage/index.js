@@ -36,9 +36,7 @@ const SpookingsPage = ({showDeleteSpookingModal, setShowDeleteSpookingModal}) =>
 
     const handleCancel = e => {
         const spookingId = +e.target.id;
-        console.log(spookingId);
         const spooking = futureSpookings.filter(spooking => spooking.id === spookingId)[0];
-        console.log(spooking);
         setCurrentSpooking(spooking);
         setShowDeleteSpookingModal(true);
     }
