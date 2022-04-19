@@ -26,11 +26,17 @@ const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModa
         }
     }, [location])
 
+    const handleSubmit = e => {
+        e.preventDefault();
+    }
+
     let middleDiv;
     if (location.pathname === '/haunts') {
         middleDiv = (
             <div id='nav-search-bar'>
-                <form id='nav-search-form'>
+                <form id='nav-search-form'
+                    onSubmit={handleSubmit}
+                >
                     <div id='nav-search-by'>
                         <div id='nav-search-select'>
                             Search by
