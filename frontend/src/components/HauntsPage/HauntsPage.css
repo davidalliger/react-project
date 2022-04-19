@@ -6,6 +6,7 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-column-gap: 24px;
     grid-row-gap: 35px;
+    padding-bottom: 80px;
 }
 
 .haunt-div:hover {

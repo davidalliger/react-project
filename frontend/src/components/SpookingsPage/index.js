@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import DeleteSpookingFormModal from '../DeleteSpookingForm';
 import './SpookingsPage.css';
 
-const SpookingsPage = () => {
+const SpookingsPage = ({showDeleteSpookingModal, setShowDeleteSpookingModal}) => {
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const spookings = useSelector(state => state.spookings);
@@ -13,6 +14,8 @@ const SpookingsPage = () => {
     const [showNoTrips, setShowNoTrips] = useState(false);
     const [showFuture, setShowFuture] = useState(false);
     const [showPast, setShowPast] = useState(false);
+    const [currentSpooking, setCurrentSpooking] = useState({});
+
     useEffect(() => {
         if (!sessionUser) {
             history.push('/');
@@ -30,6 +33,15 @@ const SpookingsPage = () => {
 
     const defaultHauntUrl = '/images/hauntedhouse.jpg';
     const defaultUserUrl = '/images/user-icon-lavender.png';
+
+    const handleCancel = e => {
+        const spookingId = +e.target.id;
+        console.log(spookingId);
+        const spooking = futureSpookings.filter(spooking => spooking.id === spookingId)[0];
+        console.log(spooking);
+        setCurrentSpooking(spooking);
+        setShowDeleteSpookingModal(true);
+    }
 
     const getDuration = (startDate, endDate) => {
         const start = new Date(startDate).getTime();
@@ -145,11 +157,14 @@ const SpookingsPage = () => {
                                                     See Details
                                                 </button>
                                             </Link>
-                                            <Link to={`/spookings/${spooking.id}/delete`}>
-                                                <button className='spooking-cancel-button'>
+                                            {/* <Link to={`/spookings/${spooking.id}/delete`}> */}
+                                                <button className='spooking-cancel-button'
+                                                    id={`${spooking.id}`}
+                                                    onClick={handleCancel}
+                                                >
                                                     Cancel Trip
                                                 </button>
-                                            </Link>
+                                            {/* </Link> */}
                                         </div>
                                     </div>
                                 ))}
@@ -218,6 +233,7 @@ const SpookingsPage = () => {
                         ))}
                     </div>
                 )}
+                <DeleteSpookingFormModal showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal} spooking={currentSpooking}/>
             </div>
     )
 }

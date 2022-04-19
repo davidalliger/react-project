@@ -7,7 +7,7 @@ import AddReviewFormModal from '../AddReviewForm';
 import EditReviewFormModal from '../EditReviewForm';
 import DeleteReviewFormModal from '../DeleteReviewForm';
 
-const SpookingDetailPage = () => {
+const SpookingDetailPage = ({showDeleteSpookingModal, setShowDeleteSpookingModal}) => {
     const { spookingId } = useParams();
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
@@ -17,7 +17,6 @@ const SpookingDetailPage = () => {
     const [futureSpooking, setFutureSpooking] = useState(false);
     const [pastSpooking, setPastSpooking] = useState(false);
     const [userReview, setUserReview] = useState(null);
-    const [showDeleteSpookingModal, setShowDeleteSpookingModal] = useState(false);
     const [showAddReviewModal, setShowAddReviewModal] = useState(false);
     const [showEditReviewModal, setShowEditReviewModal] = useState(false);
     const [showDeleteReviewModal, setShowDeleteReviewModal] = useState(false);
@@ -231,7 +230,7 @@ const SpookingDetailPage = () => {
                     </div>
                 </div>
             )}
-            <DeleteSpookingFormModal showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal} handleDelete={handleDelete} />
+            <DeleteSpookingFormModal showDeleteSpookingModal={showDeleteSpookingModal} setShowDeleteSpookingModal={setShowDeleteSpookingModal} handleDelete={handleDelete} spooking={spooking} />
             <AddReviewFormModal showAddReviewModal={showAddReviewModal} setShowAddReviewModal={setShowAddReviewModal} haunt={spooking.Haunt} />
         </>
     )
