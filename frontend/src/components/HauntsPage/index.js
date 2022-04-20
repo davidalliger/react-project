@@ -37,7 +37,7 @@ const HauntsPage = ({searchTerm, searchCategory}) => {
         <>
             {!haunts.length && (
                 <div id='no-haunts'>
-                    No haunts available right now.
+                    No haunts matched your search.
                 </div>
             )}
             {haunts.length && (

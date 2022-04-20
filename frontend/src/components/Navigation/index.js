@@ -10,6 +10,7 @@ import './Navigation.css';
 const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal, searchTerm, setSearchTerm, searchCategory, setSearchCategory}) => {
     const sessionUser = useSelector(state => state.session.user)
     const [showAddHauntModal, setShowAddHauntModal] = useState(false);
+    const [placeholder, setPlaceholder] = useState('')
     const location = useLocation()
 
     const hostClick = () => {
@@ -28,6 +29,14 @@ const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModa
 
     const handleSubmit = e => {
         e.preventDefault();
+        if (searchTerm === '') {
+            setPlaceholder('Please enter a search term.')
+        }
+    }
+
+    const handleType = e => {
+        setSearchTerm(e.target.value);
+        setPlaceholder('');
     }
 
     let middleDiv;
@@ -62,12 +71,13 @@ const Navigation = ({isLoaded, showLoginModal, setShowLoginModal, showSignupModa
                     </div>
                     <div>
                         <input type='text' id='nav-search-field'
-                            onChange={e=> setSearchTerm(e.target.value)}
+                            onChange={handleType}
                             value={searchTerm}
+                            placeholder={placeholder}
                         />
                     </div>
                     <div id='nav-search-icon'>
-                        <i className="fa-solid fa-magnifying-glass"></i>
+                        <button id='nav-search-button'><i className="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </form>
             </div>

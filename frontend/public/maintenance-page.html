@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <script src="https://kit.fontawesome.com/c3bc042fe8.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./maintenance-page.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
+        <meta name="description" property="og:description" content="An AirBnB clone designed for ghosts and haunted houses" />
+        <meta name="title" property="og:title" content="ScareBnB" />
+        <meta property="og:type" content="Full-Stack App" />
+        <meta name="image" property="og:image" content="https://user-images.githubusercontent.com/88861592/160903311-9a6dda63-e8c5-404c-a46b-698545b5cd4c.PNG" />
+        <meta name="author" content="David Alliger" />
+        <title>Scarebnb</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <nav id='nav-bar' className='normal'>
+            <div id='nav-container'>
+                <div id='nav-title-div'>
+                    <img src='./logo-white-20.png' id='nav-logo' />
+                    scarebnb
+                </div>
+                <div id='nav-middle-div'>
+                </div>
+                <div id='nav-user-div'>
+                    <button
+                id='profile-button'
+                onClick={openMenu}
+            >
+                <img src='./hamburger.png' id='nav-hamburger' />
+                <img src='./user-icon-gray.png' id='nav-user-icon' />
+            </button>
+                </div>
+            </div>
+        </nav>
+        <div id="maintenance-body">
+            <div id="maintenance-card">
+                <div id="maintenance-image">
+                </div>
+                <div id="maintenance-message">
+                    <h1>Hello!</h1>
+                    <div>
+                        This app is temporarily down (I am currently using Heroku's free, limited Dyno plan), but it should be up and running within a day or two. In the meantime, feel free to check out more of my work at the following links:
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="https://fluentsy.herokuapp.com" target="_blank">Fluentsy</a>
+                        </li>
+                        <li>
+                            <a href="https://petsagram-app.herokuapp.com" target="_blank">Petsagram</a>
+                        </li>
+                        <li>
+                            <a href="https://davidalliger.github.io" target="_blank">Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/david-alliger-a73351208/" target="_blank">LinkedIn</a>
+                        </li>
+                        <li>
+                            <a href="https://angel.co/u/david-alliger" target="_blank">AngelList</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/davidalliger/scarebnb" target="_blank">GitHub</a>
+                        </li>
+                    </ul>
+                    <div>
+                        Or message me at <a href="mailto:alligerdavidj@gmail.com">alligerdavidj@gmail.com</a> and we can schedule a time to walk through a locally hosted version of this application! I hope to hear from you soon. Thank you!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
