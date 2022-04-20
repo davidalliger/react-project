@@ -1,56 +1,92 @@
-# scarebnb
-## React project
+# ScareBnB
+[ScareBnB](https://scarebnb-react-app.herokuapp.com) is an AirBnB clone specifically designed for spooky spirits in search of the perfect haunted houses for their next ghostly getaways. Users can list and browse creepy accomodations, make reservations, and leave reviews for the places they've visited.
 
-ScareBnB is a web application for ghosts in search of the perfect haunted holiday. Users can advertise their paranormal property to prospective polterguests, or book their ideal haunted house for a ghostly getaway of their own.
+The app was created using a React frontend with Redux state managment, an Express backend, and a PostgreSQL database. Currently, ScareBnB has three full-CRUD features, as well as a search functionality, but I would like to work on additional features like user profiles and direct messaging in the future. I would also like to utilize S3 for uploading and storing images.
 
-Here's how you can launch ScareBnB on your local machine:
+## Implementation
 
-### Instructions
+One aspect of this project I'm proud of is how I gave users a way to check availability for a particular listing and set of dates. When viewing a listing, a user can enter a start date and end date for their trip, and click a button to check availiability. This will cause the checkAvailability function to be excuted, sending a fetch request to a special route handler on the backend.
 
-#### 1. Clone this repository by running the following command:
-```
-git clone git@github.com:davidalliger/scarebnb.git
-```
-#### 2. Navigate into the root directory and install dependencies.
-```
-npm install
-```
-#### 3. In psql, create a POSTGRESQL user with PASSWORD and CREATEDB privileges.
-```
-CREATE USER <username> WITH PASSWORD '<password>'
-```
-#### 4. Using the .envexample file in the backend folder as a guide, create a .env file in the same folder.
-#### 5. For the DB_USERNAME and DB_PASSWORD fields, be sure to use the username and password that you just created in psql. 
-#### 6. Enter the name you would like to use for your database into the DB_DATABASE field.
-#### 7. Run the following command in your shell and add the resulting string to the JWT_SECRET field.
-```
-openssl rand -base64 10
-```
-#### 8. For JWT_EXPIRES_IN, you can use 604800, the number of seconds in a week.
-#### 9. Give DB_HOST a value of localhost.
-#### 10. Don't forget to assign a PORT, like 5000.
-#### 11. Inside the package.json file in your frontend folder, find the following line and replace '5000' with the port you specified in your .env file:
-```
-"proxy": "http://localhost:5000"
-```
-#### 12. Create the database using sequelize by running the following command in your backend directory:
-```
-npx dotenv sequelize db:create
-```
-#### 13. Next run all of the migrations.
-```
-npx dotenv sequelize db:migrate
-```
-#### 14. Seed the database with seed data using the provided seeder files.
-```
-npx dotenv sequelize db:seed:all
-```
-#### 15. Run ```npm start``` in the backend directory to start the server.
-#### 16. Run ```npm start``` in your frontend directory. 
-#### 17. If the project doesn't open in your browser automatically, type the following into the address bar:
-```
-http://localhost:3000
-```
-#### 18. You're ready to start using ScareBnB! Sign up for an account or use the conveniently provided Demo user login.
-#### 19. That's it! Go get your haunt on!
+![availability-1](https://user-images.githubusercontent.com/88861592/164079203-e67a5dd7-2aef-4b27-8036-6d569db40ef0.PNG)
 
+This route handler grabs the listing id from the parameters and the dates from the query string, then queries the database to check for any conflicting reservations at that listing that would overlap with the requested dates. If there are any conflicting reservations, it returns false. Otherwise, it returns true.
+
+![availability-2](https://user-images.githubusercontent.com/88861592/164079733-1a5b6cda-15bc-48f5-a981-cdf9e00b4bb7.PNG)
+
+## Technologies
+This app utilizes the following technologies:
+- PostgreSQL
+- Sequelize
+- Express
+- React
+- Redux
+
+## Screenshots
+
+### Splash Page
+
+When first visiting the app, users are greeted by a splash page that displays a call to action and a spooky image from Peter H at Pixabay. The splash page also has a profile button in the navigation bar, which opens a menu with options for signing up or logging in if one already has an account. About links can be found in the footer; one leads to this github repository and one leads to my LinkedIn page.
+
+![screenshots-1](https://user-images.githubusercontent.com/88861592/164080495-786299e7-2dfe-4aee-86ed-9372f07b6b84.PNG)
+
+### Search Haunts Page
+
+A user can click a button in the navigation bar to access the search haunts page, where they can browse through available haunted houses and filter by location and name.
+
+![screenshots-2](https://user-images.githubusercontent.com/88861592/164081034-de0a1828-9822-4bff-9266-ce374b1ff79b.PNG)
+
+### Haunt Detail
+
+When a user selects a haunted house from the search haunts page, they will be brought to that haunted house's detail page. Here, they can enter dates for their trip, check availability, book a trip, read a brief description and reviews, and add a review if they've previously stayed at the location.
+
+![screenshots-3](https://user-images.githubusercontent.com/88861592/164082014-fdbb0dd8-bae8-48ef-8c5d-c188be657efc.PNG)
+
+![screenshots-4](https://user-images.githubusercontent.com/88861592/164082074-a35f532a-de88-4651-9bac-1a73e23fe686.PNG)
+
+### Spookings
+
+A registered and logged-in user can view their past and future trips.
+
+![screenshots-5](https://user-images.githubusercontent.com/88861592/164082436-137e8afd-ec52-4ca8-b6bb-0a0a19cfbe80.PNG)
+
+## Features
+
+### Authentication
+- A user can sign up for an account
+- A registered user can log in
+- A registered and logged-in user can log out
+
+### Haunts
+- A registered and logged-in user can create a haunt.
+- A user can view haunts.
+- A registered and logged-in user can edit his or her haunt.
+- A registered and logged-in user can delete his or her haunt.
+
+### Spookings
+- A registered and logged-in user can create a spooking.
+- A registered and logged-in user can view their past and future spookings.
+- A registered and logged-in user can cancel a future spooking.
+
+### Reviews
+- A registered and logged-in user can add a review to a haunt they've previously visited.
+- A user can read reviews.
+- A registered and logged-in user can edit a review they've written.
+- A registered and logged-in user can delete a review they've written.
+
+### Search
+- Search by location
+- Search by name
+
+## Possible Future Features
+
+### Profiles
+- Create a profile
+- View other users' profiles
+- Update a profile
+- Delete a profile
+
+### Direct Messaging
+- Send a message
+- Read messages
+- Edit a message
+- Delete a message
