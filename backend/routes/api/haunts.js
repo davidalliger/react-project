@@ -43,21 +43,15 @@ router.get('/:id/spookings', asyncHandler(async (req, res) => {
                         }
                     },
                     {
-                        endDate: {
-                            [Op.gt]: newStartDate,
-                            [Op.lte]: newEndDate
-                        }
-                    },
-                    {
-                        [Op.and]: [
+                        [Op.and] : [
                             {
                                 startDate: {
-                                    [Op.lte]: newStartDate
+                                    [Op.lte]: newStartDate,
                                 }
                             },
                             {
                                 endDate: {
-                                    [Op.gte]: newEndDate
+                                    [Op.gt]: newStartDate
                                 }
                             }
                         ]
